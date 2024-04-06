@@ -1,0 +1,5 @@
+DAL\UTILS\hibernate_util.class
+BLL\DTO\thanh_vien.class
+BLL\DTO\thong_tin_sd.class
+BLL\DTO\thiet_bi.class
+BLL\DTO\xu_ly.class
