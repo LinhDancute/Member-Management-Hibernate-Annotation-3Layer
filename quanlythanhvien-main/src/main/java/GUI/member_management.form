@@ -100,9 +100,7 @@
                       <Component id="jLabel12" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="text_find_member" max="32767" attributes="0"/>
-                      <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
-                      <Component id="button_find_member" min="-2" pref="106" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -113,9 +111,8 @@
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel12" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="text_find_member" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="button_find_member" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace max="32767" attributes="0"/>
+                      <EmptySpace pref="7" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -127,11 +124,6 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="text_find_member">
-            </Component>
-            <Component class="javax.swing.JButton" name="button_find_member">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="T&#xec;m ki&#x1ebf;m"/>
-              </Properties>
             </Component>
           </SubComponents>
         </Container>
@@ -212,13 +204,11 @@
                                   <Component id="combobox_department" alignment="0" max="32767" attributes="0"/>
                                   <Component id="text_email" alignment="0" max="32767" attributes="0"/>
                               </Group>
-                              <EmptySpace max="32767" attributes="0"/>
+                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           </Group>
-                          <Group type="102" attributes="0">
-                              <Component id="text_member_id" min="-2" pref="426" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                          </Group>
+                          <Component id="text_member_id" min="-2" pref="426" max="-2" attributes="0"/>
                       </Group>
+                      <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>

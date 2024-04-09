@@ -32,7 +32,6 @@ public class device_management extends javax.swing.JInternalFrame {
         jPanel11 = new javax.swing.JPanel();
         jLabel15 = new javax.swing.JLabel();
         text_find_device = new javax.swing.JTextField();
-        button_find_device = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         table_device = new javax.swing.JTable();
         jPanel12 = new javax.swing.JPanel();
@@ -61,13 +60,6 @@ public class device_management extends javax.swing.JInternalFrame {
 
         jLabel15.setText("Thông tin tìm kiếm:");
 
-        button_find_device.setText("Tìm kiếm");
-        button_find_device.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                button_find_deviceActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel11Layout = new javax.swing.GroupLayout(jPanel11);
         jPanel11.setLayout(jPanel11Layout);
         jPanel11Layout.setHorizontalGroup(
@@ -76,10 +68,8 @@ public class device_management extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addComponent(jLabel15)
                 .addGap(18, 18, 18)
-                .addComponent(text_find_device)
-                .addGap(30, 30, 30)
-                .addComponent(button_find_device, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(24, 24, 24))
+                .addComponent(text_find_device, javax.swing.GroupLayout.DEFAULT_SIZE, 569, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jPanel11Layout.setVerticalGroup(
             jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -87,9 +77,8 @@ public class device_management extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel15)
-                    .addComponent(text_find_device, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(button_find_device))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(text_find_device, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(7, Short.MAX_VALUE))
         );
 
         table_device.setModel(new javax.swing.table.DefaultTableModel(
@@ -350,17 +339,12 @@ public class device_management extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_button_delete_deviceActionPerformed
 
-    private void button_find_deviceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_find_deviceActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_button_find_deviceActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton button_add_device;
     private javax.swing.JButton button_close_device;
     private javax.swing.JButton button_delete_all_device;
     private javax.swing.JButton button_delete_device;
-    private javax.swing.JButton button_find_device;
     private javax.swing.JButton button_import_excel_device;
     private javax.swing.JButton button_refresh_device;
     private javax.swing.JButton button_update_device;

@@ -33,7 +33,6 @@ public class handle_violations extends javax.swing.JInternalFrame {
         jPanel17 = new javax.swing.JPanel();
         jLabel19 = new javax.swing.JLabel();
         text_find_handle_violation = new javax.swing.JTextField();
-        button_find_handle_violation = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
         table_handle_violation = new javax.swing.JTable();
         jPanel18 = new javax.swing.JPanel();
@@ -64,8 +63,6 @@ public class handle_violations extends javax.swing.JInternalFrame {
 
         jLabel19.setText("Thông tin tìm kiếm:");
 
-        button_find_handle_violation.setText("Tìm kiếm");
-
         javax.swing.GroupLayout jPanel17Layout = new javax.swing.GroupLayout(jPanel17);
         jPanel17.setLayout(jPanel17Layout);
         jPanel17Layout.setHorizontalGroup(
@@ -74,9 +71,7 @@ public class handle_violations extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addComponent(jLabel19)
                 .addGap(18, 18, 18)
-                .addComponent(text_find_handle_violation, javax.swing.GroupLayout.DEFAULT_SIZE, 406, Short.MAX_VALUE)
-                .addGap(48, 48, 48)
-                .addComponent(button_find_handle_violation, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(text_find_handle_violation, javax.swing.GroupLayout.DEFAULT_SIZE, 560, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel17Layout.setVerticalGroup(
@@ -85,9 +80,8 @@ public class handle_violations extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel19)
-                    .addComponent(text_find_handle_violation, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(button_find_handle_violation))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(text_find_handle_violation, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(7, Short.MAX_VALUE))
         );
 
         table_handle_violation.setModel(new javax.swing.table.DefaultTableModel(
@@ -371,7 +365,6 @@ public class handle_violations extends javax.swing.JInternalFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton button_add_handle_violation;
     private javax.swing.JButton button_close_handle_violation;
-    private javax.swing.JButton button_find_handle_violation;
     private javax.swing.JButton button_import_excel_handle_violation;
     private javax.swing.JButton button_refresh_handle_violation;
     private javax.swing.JButton button_update_handle_violation;

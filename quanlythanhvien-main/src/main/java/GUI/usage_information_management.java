@@ -33,7 +33,11 @@ public class usage_information_management extends javax.swing.JInternalFrame {
         jPanel17 = new javax.swing.JPanel();
         jLabel19 = new javax.swing.JLabel();
         text_find_usage_information = new javax.swing.JTextField();
-        button_find_usage_information = new javax.swing.JButton();
+        jLabel7 = new javax.swing.JLabel();
+        date_from_income = new com.toedter.calendar.JDateChooser();
+        date_to_income = new com.toedter.calendar.JDateChooser();
+        jLabel8 = new javax.swing.JLabel();
+        button_find_date_income = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
         table_usage_information = new javax.swing.JTable();
         jPanel18 = new javax.swing.JPanel();
@@ -42,7 +46,6 @@ public class usage_information_management extends javax.swing.JInternalFrame {
         jLabel22 = new javax.swing.JLabel();
         jLabel24 = new javax.swing.JLabel();
         text_member_id_listen = new javax.swing.JTextField();
-        combobox_member = new javax.swing.JComboBox<>();
         jLabel27 = new javax.swing.JLabel();
         combobox_service_name = new javax.swing.JComboBox<>();
         jLabel28 = new javax.swing.JLabel();
@@ -55,6 +58,7 @@ public class usage_information_management extends javax.swing.JInternalFrame {
         jLabel4 = new javax.swing.JLabel();
         jTextField2 = new javax.swing.JTextField();
         jTextField3 = new javax.swing.JTextField();
+        text_member_name = new javax.swing.JTextField();
         jPanel19 = new javax.swing.JPanel();
         button_add_usage_information = new javax.swing.JButton();
         button_update_service1 = new javax.swing.JButton();
@@ -66,7 +70,11 @@ public class usage_information_management extends javax.swing.JInternalFrame {
 
         jLabel19.setText("Thông tin tìm kiếm:");
 
-        button_find_usage_information.setText("Tìm kiếm");
+        jLabel7.setText("Từ:");
+
+        jLabel8.setText("Đến:");
+
+        button_find_date_income.setText("Lọc");
 
         javax.swing.GroupLayout jPanel17Layout = new javax.swing.GroupLayout(jPanel17);
         jPanel17.setLayout(jPanel17Layout);
@@ -74,12 +82,22 @@ public class usage_information_management extends javax.swing.JInternalFrame {
             jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel17Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel19)
-                .addGap(18, 18, 18)
-                .addComponent(text_find_usage_information)
-                .addGap(30, 30, 30)
-                .addComponent(button_find_usage_information, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(24, 24, 24))
+                .addGroup(jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel17Layout.createSequentialGroup()
+                        .addComponent(jLabel19)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(text_find_usage_information))
+                    .addGroup(jPanel17Layout.createSequentialGroup()
+                        .addComponent(jLabel7)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(date_from_income, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel8)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(date_to_income, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(button_find_date_income, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
         );
         jPanel17Layout.setVerticalGroup(
             jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -87,8 +105,15 @@ public class usage_information_management extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel19)
-                    .addComponent(text_find_usage_information, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(button_find_usage_information))
+                    .addComponent(text_find_usage_information, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(jLabel8)
+                        .addComponent(date_to_income, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel7)
+                        .addComponent(date_from_income, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(button_find_date_income))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -153,6 +178,13 @@ public class usage_information_management extends javax.swing.JInternalFrame {
 
         jTextField3.setEnabled(false);
 
+        text_member_name.setEnabled(false);
+        text_member_name.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                text_member_nameActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel18Layout = new javax.swing.GroupLayout(jPanel18);
         jPanel18.setLayout(jPanel18Layout);
         jPanel18Layout.setHorizontalGroup(
@@ -165,21 +197,26 @@ public class usage_information_management extends javax.swing.JInternalFrame {
                             .addComponent(jLabel21)
                             .addComponent(jLabel22)
                             .addComponent(jLabel27))
-                        .addGap(13, 13, 13)
                         .addGroup(jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel18Layout.createSequentialGroup()
+                                .addGap(13, 13, 13)
+                                .addComponent(text_service_id1))
+                            .addGroup(jPanel18Layout.createSequentialGroup()
                                 .addGroup(jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(combobox_service_name, 0, 195, Short.MAX_VALUE)
-                                    .addComponent(combobox_member, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addGroup(jPanel18Layout.createSequentialGroup()
+                                        .addGap(13, 13, 13)
+                                        .addComponent(combobox_service_name, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(jPanel18Layout.createSequentialGroup()
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(text_member_name)))
+                                .addGap(18, 18, 18)
                                 .addGroup(jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel28)
-                                    .addComponent(jLabel24))
-                                .addGap(25, 25, 25)
+                                    .addComponent(jLabel24)
+                                    .addComponent(jLabel28))
+                                .addGap(18, 18, 18)
                                 .addGroup(jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(text_service_id_listen)
-                                    .addComponent(text_member_id_listen)))
-                            .addComponent(text_service_id1)))
+                                    .addComponent(text_member_id_listen)
+                                    .addComponent(text_service_id_listen)))))
                     .addGroup(jPanel18Layout.createSequentialGroup()
                         .addGroup(jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel18Layout.createSequentialGroup()
@@ -199,7 +236,7 @@ public class usage_information_management extends javax.swing.JInternalFrame {
                             .addGroup(jPanel18Layout.createSequentialGroup()
                                 .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 0, Short.MAX_VALUE))
-                            .addComponent(jDateChooser1, javax.swing.GroupLayout.DEFAULT_SIZE, 169, Short.MAX_VALUE))))
+                            .addComponent(jDateChooser1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap())
         );
         jPanel18Layout.setVerticalGroup(
@@ -214,7 +251,7 @@ public class usage_information_management extends javax.swing.JInternalFrame {
                     .addComponent(jLabel22)
                     .addComponent(jLabel24)
                     .addComponent(text_member_id_listen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(combobox_member, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(text_member_name, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel27)
@@ -236,7 +273,7 @@ public class usage_information_management extends javax.swing.JInternalFrame {
                     .addGroup(jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel4)
                         .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(0, 11, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         jPanel19.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -259,10 +296,10 @@ public class usage_information_management extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(button_add_usage_information, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(button_import_excel_service1, javax.swing.GroupLayout.DEFAULT_SIZE, 102, Short.MAX_VALUE)
-                    .addComponent(button_update_service1, javax.swing.GroupLayout.DEFAULT_SIZE, 102, Short.MAX_VALUE)
-                    .addComponent(button_refresh_service1, javax.swing.GroupLayout.DEFAULT_SIZE, 102, Short.MAX_VALUE)
-                    .addComponent(button_close_service, javax.swing.GroupLayout.DEFAULT_SIZE, 102, Short.MAX_VALUE))
+                    .addComponent(button_import_excel_service1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(button_update_service1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(button_refresh_service1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(button_close_service, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel19Layout.setVerticalGroup(
@@ -299,7 +336,7 @@ public class usage_information_management extends javax.swing.JInternalFrame {
             .addGroup(jPanel16Layout.createSequentialGroup()
                 .addGap(264, 264, 264)
                 .addComponent(jLabel18)
-                .addContainerGap(276, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel16Layout.setVerticalGroup(
             jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -308,8 +345,8 @@ public class usage_information_management extends javax.swing.JInternalFrame {
                 .addComponent(jLabel18)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel17, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 239, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel19, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -321,21 +358,17 @@ public class usage_information_management extends javax.swing.JInternalFrame {
         jPanel15.setLayout(jPanel15Layout);
         jPanel15Layout.setHorizontalGroup(
             jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 744, Short.MAX_VALUE)
-            .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel15Layout.createSequentialGroup()
-                    .addGap(0, 9, Short.MAX_VALUE)
-                    .addComponent(jPanel16, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 9, Short.MAX_VALUE)))
+            .addGroup(jPanel15Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel16, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(16, Short.MAX_VALUE))
         );
         jPanel15Layout.setVerticalGroup(
             jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 523, Short.MAX_VALUE)
-            .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel15Layout.createSequentialGroup()
-                    .addGap(0, 7, Short.MAX_VALUE)
-                    .addComponent(jPanel16, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 8, Short.MAX_VALUE)))
+            .addGroup(jPanel15Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel16, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
@@ -387,16 +420,21 @@ public class usage_information_management extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_text_service_id_listenActionPerformed
 
+    private void text_member_nameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_text_member_nameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_text_member_nameActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton button_add_usage_information;
     private javax.swing.JButton button_close_service;
-    private javax.swing.JButton button_find_usage_information;
+    private javax.swing.JButton button_find_date_income;
     private javax.swing.JButton button_import_excel_service1;
     private javax.swing.JButton button_refresh_service1;
     private javax.swing.JButton button_update_service1;
-    private javax.swing.JComboBox<String> combobox_member;
     private javax.swing.JComboBox<String> combobox_service_name;
+    private com.toedter.calendar.JDateChooser date_from_income;
+    private com.toedter.calendar.JDateChooser date_to_income;
     private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel18;
@@ -409,6 +447,8 @@ public class usage_information_management extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel28;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel15;
     private javax.swing.JPanel jPanel16;
     private javax.swing.JPanel jPanel17;
@@ -422,6 +462,7 @@ public class usage_information_management extends javax.swing.JInternalFrame {
     private javax.swing.JTable table_usage_information;
     private javax.swing.JTextField text_find_usage_information;
     private javax.swing.JTextField text_member_id_listen;
+    private javax.swing.JTextField text_member_name;
     private javax.swing.JTextField text_service_id1;
     private javax.swing.JTextField text_service_id_listen;
     // End of variables declaration//GEN-END:variables

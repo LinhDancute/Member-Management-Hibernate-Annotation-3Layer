@@ -62,7 +62,7 @@
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Component id="jTabbedPane1" alignment="0" max="32767" attributes="0"/>
+              <Component id="jTabbedPane1" alignment="0" pref="501" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
       </Layout>
@@ -99,7 +99,7 @@
                           <EmptySpace min="-2" pref="173" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="1" attributes="0">
-                          <EmptySpace max="32767" attributes="0"/>
+                          <EmptySpace pref="344" max="32767" attributes="0"/>
                           <Component id="jLabel7" min="-2" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="259" max="-2" attributes="0"/>
                       </Group>
@@ -113,13 +113,13 @@
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="jPanel5" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jScrollPane1" min="-2" pref="278" max="-2" attributes="0"/>
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="jScrollPane1" min="-2" pref="301" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="button_export_excel_statistical_member" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="button_close_statistical_member" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace max="32767" attributes="0"/>
+                          <EmptySpace pref="11" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -140,36 +140,33 @@
                           <Group type="102" attributes="0">
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Group type="102" alignment="0" attributes="0">
-                                              <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
-                                              <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
-                                              <Component id="combobox_statistical_department" min="-2" pref="130" max="-2" attributes="0"/>
-                                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                                              <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
-                                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                              <Component id="combobox_statistical_major" min="-2" pref="130" max="-2" attributes="0"/>
-                                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                                              <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
-                                              <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
-                                              <Component id="combobox_statistical_member_date" pref="125" max="32767" attributes="0"/>
-                                          </Group>
-                                          <Group type="102" alignment="0" attributes="0">
-                                              <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
-                                              <EmptySpace max="-2" attributes="0"/>
-                                              <Component id="text_find_statistical_member" max="32767" attributes="0"/>
-                                          </Group>
-                                      </Group>
-                                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                          <Component id="button_statistical_member" max="32767" attributes="0"/>
-                                          <Component id="button_find_statistical_member" min="-2" pref="109" max="-2" attributes="0"/>
-                                      </Group>
+                                  <Group type="102" attributes="0">
+                                      <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="text_find_statistical_member" max="32767" attributes="0"/>
                                   </Group>
-                                  <Group type="102" alignment="0" attributes="0">
+                                  <Group type="102" attributes="0">
                                       <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" attributes="0">
+                                      <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace min="-2" max="-2" attributes="0"/>
+                                      <Component id="combobox_statistical_department" min="-2" pref="130" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="combobox_statistical_major" min="-2" pref="130" max="-2" attributes="0"/>
+                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                      <Component id="jLabel26" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="date_statistical_from_income" min="-2" pref="125" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="jLabel27" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="date_statistical_to_income" min="-2" pref="143" max="-2" attributes="0"/>
+                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                      <Component id="button_statistical_member" max="32767" attributes="0"/>
                                   </Group>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
@@ -185,17 +182,22 @@
                               <Group type="103" groupAlignment="3" attributes="0">
                                   <Component id="jLabel5" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="text_find_statistical_member" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="button_find_statistical_member" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="combobox_statistical_department" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="combobox_statistical_major" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="combobox_statistical_member_date" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="button_statistical_member" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="103" groupAlignment="3" attributes="0">
+                                      <Component id="combobox_statistical_department" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="combobox_statistical_major" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="button_statistical_member" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="date_statistical_to_income" alignment="1" min="-2" max="-2" attributes="0"/>
+                                      <Component id="jLabel27" alignment="1" min="-2" max="-2" attributes="0"/>
+                                      <Component id="date_statistical_from_income" alignment="1" min="-2" max="-2" attributes="0"/>
+                                      <Component id="jLabel26" alignment="1" min="-2" max="-2" attributes="0"/>
+                                  </Group>
                               </Group>
                               <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
                           </Group>
@@ -210,34 +212,9 @@
                     </Component>
                     <Component class="javax.swing.JTextField" name="text_find_statistical_member">
                     </Component>
-                    <Component class="javax.swing.JButton" name="button_find_statistical_member">
-                      <Properties>
-                        <Property name="text" type="java.lang.String" value="T&#xec;m ki&#x1ebf;m"/>
-                      </Properties>
-                    </Component>
                     <Component class="javax.swing.JButton" name="button_statistical_member">
                       <Properties>
                         <Property name="text" type="java.lang.String" value="Th&#x1ed1;ng k&#xea;"/>
-                      </Properties>
-                    </Component>
-                    <Component class="javax.swing.JComboBox" name="combobox_statistical_member_date">
-                      <Properties>
-                        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                          <StringArray count="4">
-                            <StringItem index="0" value="Ng&#xe0;y"/>
-                            <StringItem index="1" value="Tu&#x1ea7;n"/>
-                            <StringItem index="2" value="Th&#xe1;ng"/>
-                            <StringItem index="3" value="N&#x103;m"/>
-                          </StringArray>
-                        </Property>
-                      </Properties>
-                      <AuxValues>
-                        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
-                      </AuxValues>
-                    </Component>
-                    <Component class="javax.swing.JLabel" name="jLabel4">
-                      <Properties>
-                        <Property name="text" type="java.lang.String" value="Th&#x1edd;i gian:"/>
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JComboBox" name="combobox_statistical_major">
@@ -274,6 +251,20 @@
                       <Properties>
                         <Property name="text" type="java.lang.String" value="CH&#x1ecc;N &#x110;I&#x1ec0;U KI&#x1ec6;N:"/>
                       </Properties>
+                    </Component>
+                    <Component class="com.toedter.calendar.JDateChooser" name="date_statistical_from_income">
+                    </Component>
+                    <Component class="javax.swing.JLabel" name="jLabel26">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="T&#x1eeb;:"/>
+                      </Properties>
+                    </Component>
+                    <Component class="javax.swing.JLabel" name="jLabel27">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="&#x110;&#x1ebf;n:"/>
+                      </Properties>
+                    </Component>
+                    <Component class="com.toedter.calendar.JDateChooser" name="date_statistical_to_income">
                     </Component>
                   </SubComponents>
                 </Container>
@@ -389,7 +380,7 @@
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="jPanel7" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jScrollPane2" min="-2" pref="286" max="-2" attributes="0"/>
+                          <Component id="jScrollPane2" min="-2" pref="303" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="button_statistical_export_excel_available_device" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -419,38 +410,34 @@
                     <DimensionLayout dim="0">
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="jLabel13" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Group type="102" alignment="0" attributes="0">
-                                              <Component id="jLabel12" min="-2" max="-2" attributes="0"/>
-                                              <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
-                                              <Component id="combobox_statistical_device_name" min="-2" pref="130" max="-2" attributes="0"/>
-                                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                                              <Component id="jLabel11" min="-2" max="-2" attributes="0"/>
-                                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                              <Component id="text_statistical_device_id" min="-2" pref="141" max="-2" attributes="0"/>
-                                              <EmptySpace max="-2" attributes="0"/>
-                                              <Component id="jLabel10" min="-2" max="-2" attributes="0"/>
-                                              <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
-                                              <Component id="combobox_statistical_device_date" pref="73" max="32767" attributes="0"/>
-                                          </Group>
-                                          <Group type="102" alignment="0" attributes="0">
-                                              <Component id="jLabel9" min="-2" max="-2" attributes="0"/>
-                                              <EmptySpace max="-2" attributes="0"/>
-                                              <Component id="text_find_statistical_available_device" max="32767" attributes="0"/>
-                                          </Group>
-                                      </Group>
-                                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                          <Component id="button_statistical_available_device" alignment="0" max="32767" attributes="0"/>
-                                          <Component id="button_find_statistical_available_device" alignment="0" min="-2" pref="109" max="-2" attributes="0"/>
-                                      </Group>
+                                  <Group type="102" attributes="0">
+                                      <Component id="jLabel25" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="date_statistical_from_available_device" min="-2" pref="125" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="jLabel24" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="date_statistical_to_available_device" min="-2" pref="143" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="jLabel12" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace min="-2" max="-2" attributes="0"/>
+                                      <Component id="combobox_statistical_device_name" min="-2" pref="130" max="-2" attributes="0"/>
+                                      <EmptySpace min="-2" max="-2" attributes="0"/>
+                                      <Component id="jLabel11" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="text_statistical_device_id" pref="125" max="32767" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="button_statistical_available_device" min="-2" max="-2" attributes="0"/>
                                   </Group>
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <Component id="jLabel13" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                                  <Group type="102" attributes="0">
+                                      <Component id="jLabel9" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="text_find_statistical_available_device" max="32767" attributes="0"/>
                                   </Group>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
@@ -460,25 +447,34 @@
                     <DimensionLayout dim="1">
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="1" attributes="0">
-                              <EmptySpace max="32767" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
                               <Component id="jLabel13" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
                                   <Component id="jLabel9" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="text_find_statistical_available_device" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="button_find_statistical_available_device" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="combobox_statistical_device_name" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jLabel12" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jLabel11" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jLabel10" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="combobox_statistical_device_date" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="button_statistical_available_device" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="text_statistical_device_id" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace pref="11" max="32767" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="103" alignment="1" groupAlignment="0" attributes="0">
+                                      <Group type="103" alignment="0" groupAlignment="3" attributes="0">
+                                          <Component id="combobox_statistical_device_name" alignment="3" min="-2" max="-2" attributes="0"/>
+                                          <Component id="jLabel12" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                      <Group type="103" alignment="0" groupAlignment="1" attributes="0">
+                                          <Component id="date_statistical_to_available_device" alignment="1" min="-2" max="-2" attributes="0"/>
+                                          <Component id="jLabel24" min="-2" max="-2" attributes="0"/>
+                                          <Component id="date_statistical_from_available_device" alignment="1" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                  </Group>
+                                  <Group type="103" alignment="1" groupAlignment="3" attributes="0">
+                                      <Component id="jLabel11" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="text_statistical_device_id" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="button_statistical_available_device" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Component id="jLabel25" alignment="1" min="-2" max="-2" attributes="0"/>
                               </Group>
-                              <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
@@ -491,34 +487,9 @@
                     </Component>
                     <Component class="javax.swing.JTextField" name="text_find_statistical_available_device">
                     </Component>
-                    <Component class="javax.swing.JButton" name="button_find_statistical_available_device">
-                      <Properties>
-                        <Property name="text" type="java.lang.String" value="T&#xec;m ki&#x1ebf;m"/>
-                      </Properties>
-                    </Component>
                     <Component class="javax.swing.JButton" name="button_statistical_available_device">
                       <Properties>
                         <Property name="text" type="java.lang.String" value="Th&#x1ed1;ng k&#xea;"/>
-                      </Properties>
-                    </Component>
-                    <Component class="javax.swing.JComboBox" name="combobox_statistical_device_date">
-                      <Properties>
-                        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                          <StringArray count="4">
-                            <StringItem index="0" value="Ng&#xe0;y"/>
-                            <StringItem index="1" value="Tu&#x1ea7;n"/>
-                            <StringItem index="2" value="Th&#xe1;ng"/>
-                            <StringItem index="3" value="N&#x103;m"/>
-                          </StringArray>
-                        </Property>
-                      </Properties>
-                      <AuxValues>
-                        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
-                      </AuxValues>
-                    </Component>
-                    <Component class="javax.swing.JLabel" name="jLabel10">
-                      <Properties>
-                        <Property name="text" type="java.lang.String" value="Th&#x1edd;i gian:"/>
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JLabel" name="jLabel11">
@@ -549,6 +520,20 @@
                     <Component class="javax.swing.JTextField" name="text_statistical_device_id">
                       <Properties>
                         <Property name="enabled" type="boolean" value="false"/>
+                      </Properties>
+                    </Component>
+                    <Component class="com.toedter.calendar.JDateChooser" name="date_statistical_to_available_device">
+                    </Component>
+                    <Component class="javax.swing.JLabel" name="jLabel24">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="&#x110;&#x1ebf;n:"/>
+                      </Properties>
+                    </Component>
+                    <Component class="com.toedter.calendar.JDateChooser" name="date_statistical_from_available_device">
+                    </Component>
+                    <Component class="javax.swing.JLabel" name="jLabel25">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="T&#x1eeb;:"/>
                       </Properties>
                     </Component>
                   </SubComponents>
@@ -598,18 +583,18 @@
               <Layout>
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" alignment="1" attributes="0">
-                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace max="-2" attributes="0"/>
                           <Component id="jPanel8" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace pref="76" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
                 <DimensionLayout dim="1">
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jPanel8" min="-2" pref="445" max="-2" attributes="0"/>
-                          <EmptySpace pref="12" max="32767" attributes="0"/>
+                          <Component id="jPanel8" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="0" pref="2" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -630,9 +615,9 @@
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace min="-2" pref="143" max="-2" attributes="0"/>
-                              <Component id="jButton10" min="-2" max="-2" attributes="0"/>
+                              <Component id="button_statistical_export_excel_device" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="32767" attributes="0"/>
-                              <Component id="jButton11" min="-2" max="-2" attributes="0"/>
+                              <Component id="button_close_device" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="173" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="1" attributes="0">
@@ -648,15 +633,15 @@
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="jLabel19" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jPanel9" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jScrollPane3" min="-2" pref="313" max="-2" attributes="0"/>
+                              <Component id="jPanel9" min="-2" pref="88" max="-2" attributes="0"/>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Component id="jScrollPane3" min="-2" pref="297" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="jButton10" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jButton11" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="button_statistical_export_excel_device" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="button_close_device" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
-                              <EmptySpace max="32767" attributes="0"/>
+                              <EmptySpace pref="10" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
@@ -674,45 +659,62 @@
                       <Layout>
                         <DimensionLayout dim="0">
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" alignment="0" attributes="0">
+                              <Group type="102" attributes="0">
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="jLabel18" min="-2" max="-2" attributes="0"/>
                                       <Group type="102" alignment="0" attributes="0">
-                                          <Component id="jLabel14" min="-2" max="-2" attributes="0"/>
-                                          <EmptySpace max="-2" attributes="0"/>
-                                          <Component id="text_find_statistical_device" min="-2" pref="177" max="-2" attributes="0"/>
+                                          <Group type="103" groupAlignment="0" attributes="0">
+                                              <Component id="jLabel14" alignment="0" min="-2" max="-2" attributes="0"/>
+                                              <Group type="102" alignment="0" attributes="0">
+                                                  <Component id="jLabel15" min="-2" max="-2" attributes="0"/>
+                                                  <EmptySpace max="-2" attributes="0"/>
+                                                  <Component id="jLabel23" min="-2" max="-2" attributes="0"/>
+                                              </Group>
+                                          </Group>
                                           <EmptySpace type="separate" max="-2" attributes="0"/>
-                                          <Component id="button_find_statistical_device" min="-2" pref="109" max="-2" attributes="0"/>
-                                          <EmptySpace min="-2" pref="42" max="-2" attributes="0"/>
-                                          <Component id="jLabel15" min="-2" max="-2" attributes="0"/>
-                                          <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
-                                          <Component id="jComboBox5" pref="125" max="32767" attributes="0"/>
-                                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                                          <Component id="jButton9" min="-2" pref="109" max="-2" attributes="0"/>
+                                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                              <Group type="102" attributes="0">
+                                                  <Component id="date_statistical_from_device" min="-2" pref="194" max="-2" attributes="0"/>
+                                                  <EmptySpace max="32767" attributes="0"/>
+                                                  <Component id="jLabel22" min="-2" max="-2" attributes="0"/>
+                                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                                  <Component id="date_statistical_to_device" min="-2" pref="208" max="-2" attributes="0"/>
+                                                  <EmptySpace min="-2" pref="62" max="-2" attributes="0"/>
+                                                  <Component id="button_statistical_device" min="-2" pref="109" max="-2" attributes="0"/>
+                                              </Group>
+                                              <Component id="text_find_statistical_device" min="-2" pref="651" max="-2" attributes="0"/>
+                                          </Group>
                                       </Group>
-                                      <Component id="jLabel18" alignment="0" min="-2" max="-2" attributes="0"/>
                                   </Group>
-                                  <EmptySpace max="-2" attributes="0"/>
+                                  <EmptySpace max="32767" attributes="0"/>
                               </Group>
                           </Group>
                         </DimensionLayout>
                         <DimensionLayout dim="1">
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" alignment="1" attributes="0">
-                                  <EmptySpace max="32767" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
                                   <Component id="jLabel18" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="3" attributes="0">
                                       <Component id="jLabel14" alignment="3" min="-2" max="-2" attributes="0"/>
                                       <Component id="text_find_statistical_device" alignment="3" min="-2" max="-2" attributes="0"/>
-                                      <Component id="button_find_statistical_device" alignment="3" min="-2" max="-2" attributes="0"/>
-                                      <Group type="103" alignment="3" groupAlignment="3" attributes="0">
-                                          <Component id="jLabel15" alignment="3" min="-2" max="-2" attributes="0"/>
-                                          <Component id="jComboBox5" alignment="3" min="-2" max="-2" attributes="0"/>
-                                          <Component id="jButton9" alignment="3" min="-2" max="-2" attributes="0"/>
-                                      </Group>
                                   </Group>
-                                  <EmptySpace min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace max="32767" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Group type="103" groupAlignment="3" attributes="0">
+                                          <Component id="jLabel15" alignment="3" min="-2" max="-2" attributes="0"/>
+                                          <Component id="button_statistical_device" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                      <Group type="103" groupAlignment="1" attributes="0">
+                                          <Component id="jLabel22" alignment="1" min="-2" max="-2" attributes="0"/>
+                                          <Component id="date_statistical_to_device" alignment="1" min="-2" max="-2" attributes="0"/>
+                                          <Component id="jLabel23" alignment="1" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                      <Component id="date_statistical_from_device" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace max="-2" attributes="0"/>
                               </Group>
                           </Group>
                         </DimensionLayout>
@@ -725,39 +727,30 @@
                         </Component>
                         <Component class="javax.swing.JTextField" name="text_find_statistical_device">
                         </Component>
-                        <Component class="javax.swing.JButton" name="button_find_statistical_device">
-                          <Properties>
-                            <Property name="text" type="java.lang.String" value="T&#xec;m ki&#x1ebf;m"/>
-                          </Properties>
-                        </Component>
-                        <Component class="javax.swing.JButton" name="jButton9">
+                        <Component class="javax.swing.JButton" name="button_statistical_device">
                           <Properties>
                             <Property name="text" type="java.lang.String" value="Th&#x1ed1;ng k&#xea;"/>
                           </Properties>
                         </Component>
-                        <Component class="javax.swing.JComboBox" name="jComboBox5">
-                          <Properties>
-                            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                              <StringArray count="4">
-                                <StringItem index="0" value="Ng&#xe0;y"/>
-                                <StringItem index="1" value="Tu&#x1ea7;n"/>
-                                <StringItem index="2" value="Th&#xe1;ng"/>
-                                <StringItem index="3" value="N&#x103;m"/>
-                              </StringArray>
-                            </Property>
-                          </Properties>
-                          <AuxValues>
-                            <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
-                          </AuxValues>
-                        </Component>
                         <Component class="javax.swing.JLabel" name="jLabel15">
-                          <Properties>
-                            <Property name="text" type="java.lang.String" value="Th&#x1edd;i gian:"/>
-                          </Properties>
                         </Component>
                         <Component class="javax.swing.JLabel" name="jLabel18">
                           <Properties>
                             <Property name="text" type="java.lang.String" value="CH&#x1ecc;N &#x110;I&#x1ec0;U KI&#x1ec6;N:"/>
+                          </Properties>
+                        </Component>
+                        <Component class="com.toedter.calendar.JDateChooser" name="date_statistical_to_device">
+                        </Component>
+                        <Component class="javax.swing.JLabel" name="jLabel22">
+                          <Properties>
+                            <Property name="text" type="java.lang.String" value="&#x110;&#x1ebf;n:"/>
+                          </Properties>
+                        </Component>
+                        <Component class="com.toedter.calendar.JDateChooser" name="date_statistical_from_device">
+                        </Component>
+                        <Component class="javax.swing.JLabel" name="jLabel23">
+                          <Properties>
+                            <Property name="text" type="java.lang.String" value="T&#x1eeb;:"/>
                           </Properties>
                         </Component>
                       </SubComponents>
@@ -769,7 +762,7 @@
 
                       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
                       <SubComponents>
-                        <Component class="javax.swing.JTable" name="jTable3">
+                        <Component class="javax.swing.JTable" name="table_statistical_device">
                           <Properties>
                             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                               <Table columnCount="4" rowCount="4">
@@ -810,12 +803,12 @@
                         </Component>
                       </SubComponents>
                     </Container>
-                    <Component class="javax.swing.JButton" name="jButton10">
+                    <Component class="javax.swing.JButton" name="button_statistical_export_excel_device">
                       <Properties>
                         <Property name="text" type="java.lang.String" value="Export Excel"/>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JButton" name="jButton11">
+                    <Component class="javax.swing.JButton" name="button_close_device">
                       <Properties>
                         <Property name="text" type="java.lang.String" value="&#x110;&#xf3;ng"/>
                       </Properties>
@@ -858,9 +851,9 @@
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="153" max="-2" attributes="0"/>
-                          <Component id="jButton12" min="-2" max="-2" attributes="0"/>
+                          <Component id="button_statistical_export_excel_handle_violations" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="32767" attributes="0"/>
-                          <Component id="jButton13" min="-2" max="-2" attributes="0"/>
+                          <Component id="button_close_statistical_handle_violations" min="-2" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="207" max="-2" attributes="0"/>
                       </Group>
                   </Group>
@@ -876,10 +869,10 @@
                           <Component id="jScrollPane4" min="-2" pref="325" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="jButton12" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="jButton13" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="button_statistical_export_excel_handle_violations" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="button_close_statistical_handle_violations" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace pref="19" max="32767" attributes="0"/>
+                          <EmptySpace pref="22" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -902,14 +895,14 @@
                                   <Group type="102" alignment="0" attributes="0">
                                       <Component id="jLabel20" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                                      <Component id="jComboBox7" min="-2" pref="136" max="-2" attributes="0"/>
+                                      <Component id="combobox_statistical_status" min="-2" pref="136" max="-2" attributes="0"/>
                                       <EmptySpace min="-2" pref="66" max="-2" attributes="0"/>
                                       <Component id="jLabel21" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                      <Component id="jTextField5" min="-2" pref="167" max="-2" attributes="0"/>
+                                      <Component id="text_statistical_money" min="-2" pref="167" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
-                              <EmptySpace pref="156" max="32767" attributes="0"/>
+                              <EmptySpace pref="238" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
@@ -921,9 +914,9 @@
                               <EmptySpace max="32767" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
                                   <Component id="jLabel20" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jComboBox7" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="combobox_statistical_status" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="jLabel21" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jTextField5" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="text_statistical_money" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
                           </Group>
@@ -941,7 +934,7 @@
                         <Property name="text" type="java.lang.String" value="T&#xec;nh tr&#x1ea1;ng x&#x1eed; l&#xfd;:"/>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JComboBox" name="jComboBox7">
+                    <Component class="javax.swing.JComboBox" name="combobox_statistical_status">
                       <Properties>
                         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
                           <StringArray count="2">
@@ -959,7 +952,7 @@
                         <Property name="text" type="java.lang.String" value="T&#x1ed5;ng b&#x1ed3;i th&#x1b0;&#x1edd;ng:"/>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JTextField" name="jTextField5">
+                    <Component class="javax.swing.JTextField" name="text_statistical_money">
                       <Properties>
                         <Property name="enabled" type="boolean" value="false"/>
                       </Properties>
@@ -973,7 +966,7 @@
 
                   <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
                   <SubComponents>
-                    <Component class="javax.swing.JTable" name="jTable4">
+                    <Component class="javax.swing.JTable" name="table_statistical_handle_violations">
                       <Properties>
                         <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                           <Table columnCount="4" rowCount="4">
@@ -987,12 +980,12 @@
                     </Component>
                   </SubComponents>
                 </Container>
-                <Component class="javax.swing.JButton" name="jButton12">
+                <Component class="javax.swing.JButton" name="button_statistical_export_excel_handle_violations">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Export Excel"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JButton" name="jButton13">
+                <Component class="javax.swing.JButton" name="button_close_statistical_handle_violations">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="&#x110;&#xf3;ng"/>
                   </Properties>

@@ -31,7 +31,6 @@ public class member_management extends javax.swing.JInternalFrame {
         jPanel7 = new javax.swing.JPanel();
         jLabel12 = new javax.swing.JLabel();
         text_find_member = new javax.swing.JTextField();
-        button_find_member = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         table_member = new javax.swing.JTable();
         jPanel8 = new javax.swing.JPanel();
@@ -70,8 +69,6 @@ public class member_management extends javax.swing.JInternalFrame {
 
         jLabel12.setText("Thông tin tìm kiếm:");
 
-        button_find_member.setText("Tìm kiếm");
-
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
         jPanel7Layout.setHorizontalGroup(
@@ -81,9 +78,7 @@ public class member_management extends javax.swing.JInternalFrame {
                 .addComponent(jLabel12)
                 .addGap(18, 18, 18)
                 .addComponent(text_find_member)
-                .addGap(30, 30, 30)
-                .addComponent(button_find_member, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(24, 24, 24))
+                .addContainerGap())
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -91,9 +86,8 @@ public class member_management extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel12)
-                    .addComponent(text_find_member, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(button_find_member))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(text_find_member, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(7, Short.MAX_VALUE))
         );
 
         table_member.setModel(new javax.swing.table.DefaultTableModel(
@@ -170,10 +164,9 @@ public class member_management extends javax.swing.JInternalFrame {
                                 .addComponent(text_phone_number, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(combobox_department, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(text_email))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel8Layout.createSequentialGroup()
-                        .addComponent(text_member_id, javax.swing.GroupLayout.PREFERRED_SIZE, 426, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(text_member_id, javax.swing.GroupLayout.PREFERRED_SIZE, 426, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
         );
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -384,7 +377,6 @@ public class member_management extends javax.swing.JInternalFrame {
     private javax.swing.JButton button_close_member;
     private javax.swing.JButton button_delete_all_member;
     private javax.swing.JButton button_delete_member;
-    private javax.swing.JButton button_find_member;
     private javax.swing.JButton button_import_excel_member;
     private javax.swing.JButton button_refresh_member;
     private javax.swing.JButton button_update_member;

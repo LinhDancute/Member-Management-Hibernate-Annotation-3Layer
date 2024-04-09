@@ -31,6 +31,7 @@ public class main_menu extends javax.swing.JFrame {
         jMenu1 = new javax.swing.JMenu();
         item_member_management = new javax.swing.JMenuItem();
         item_service_management = new javax.swing.JMenuItem();
+        item_income_member_management = new javax.swing.JMenuItem();
         item_usage_information_management = new javax.swing.JMenuItem();
         item_handle_violations = new javax.swing.JMenuItem();
         item_statistical = new javax.swing.JMenuItem();
@@ -65,6 +66,14 @@ public class main_menu extends javax.swing.JFrame {
             }
         });
         jMenu1.add(item_service_management);
+
+        item_income_member_management.setText("Quản lý thành viên vào");
+        item_income_member_management.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                item_income_member_managementActionPerformed(evt);
+            }
+        });
+        jMenu1.add(item_income_member_management);
 
         item_usage_information_management.setText("Quản lý thông tin sử dụng");
         item_usage_information_management.addActionListener(new java.awt.event.ActionListener() {
@@ -157,6 +166,15 @@ public class main_menu extends javax.swing.JFrame {
         statistical.setVisible(true);
     }//GEN-LAST:event_item_statisticalActionPerformed
 
+    private void item_income_member_managementActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_item_income_member_managementActionPerformed
+        DesktopShow.removeAll();
+        DesktopShow.repaint();
+        
+        income_member_management income_member = new income_member_management();
+        DesktopShow.add(income_member);
+        income_member.setVisible(true);
+    }//GEN-LAST:event_item_income_member_managementActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -195,6 +213,7 @@ public class main_menu extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JDesktopPane DesktopShow;
     private javax.swing.JMenuItem item_handle_violations;
+    private javax.swing.JMenuItem item_income_member_management;
     private javax.swing.JMenuItem item_member_management;
     private javax.swing.JMenuItem item_service_management;
     private javax.swing.JMenuItem item_statistical;

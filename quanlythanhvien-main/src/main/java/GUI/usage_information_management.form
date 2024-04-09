@@ -65,25 +65,19 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <EmptySpace min="0" pref="744" max="32767" attributes="0"/>
-                  <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
-                      <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace min="0" pref="9" max="32767" attributes="0"/>
-                          <Component id="jPanel16" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="0" pref="9" max="32767" attributes="0"/>
-                      </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jPanel16" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace pref="16" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <EmptySpace min="0" pref="523" max="32767" attributes="0"/>
-                  <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
-                      <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace min="0" pref="7" max="32767" attributes="0"/>
-                          <Component id="jPanel16" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="0" pref="8" max="32767" attributes="0"/>
-                      </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jPanel16" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -111,7 +105,7 @@
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="264" max="-2" attributes="0"/>
                           <Component id="jLabel18" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace pref="276" max="32767" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -122,8 +116,8 @@
                           <Component id="jLabel18" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="jPanel17" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="jScrollPane3" min="-2" pref="230" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="jScrollPane3" min="-2" pref="239" max="-2" attributes="0"/>
                           <EmptySpace max="32767" attributes="0"/>
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
                               <Component id="jPanel19" max="32767" attributes="0"/>
@@ -145,14 +139,27 @@
                   <Layout>
                     <DimensionLayout dim="0">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="0" attributes="0">
+                          <Group type="102" attributes="0">
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jLabel19" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="text_find_usage_information" max="32767" attributes="0"/>
-                              <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
-                              <Component id="button_find_usage_information" min="-2" pref="106" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="102" attributes="0">
+                                      <Component id="jLabel19" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="text_find_usage_information" max="32767" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" attributes="0">
+                                      <Component id="jLabel7" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="32767" attributes="0"/>
+                                      <Component id="date_from_income" min="-2" pref="210" max="-2" attributes="0"/>
+                                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                                      <Component id="jLabel8" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                      <Component id="date_to_income" min="-2" pref="208" max="-2" attributes="0"/>
+                                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                                      <Component id="button_find_date_income" min="-2" pref="100" max="-2" attributes="0"/>
+                                  </Group>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
@@ -163,7 +170,16 @@
                               <Group type="103" groupAlignment="3" attributes="0">
                                   <Component id="jLabel19" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="text_find_usage_information" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="button_find_usage_information" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="103" alignment="0" groupAlignment="1" attributes="0">
+                                      <Component id="jLabel8" alignment="1" min="-2" max="-2" attributes="0"/>
+                                      <Component id="date_to_income" alignment="1" min="-2" max="-2" attributes="0"/>
+                                      <Component id="jLabel7" alignment="1" min="-2" max="-2" attributes="0"/>
+                                      <Component id="date_from_income" alignment="1" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Component id="button_find_date_income" alignment="0" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace max="32767" attributes="0"/>
                           </Group>
@@ -178,9 +194,23 @@
                     </Component>
                     <Component class="javax.swing.JTextField" name="text_find_usage_information">
                     </Component>
-                    <Component class="javax.swing.JButton" name="button_find_usage_information">
+                    <Component class="javax.swing.JLabel" name="jLabel7">
                       <Properties>
-                        <Property name="text" type="java.lang.String" value="T&#xec;m ki&#x1ebf;m"/>
+                        <Property name="text" type="java.lang.String" value="T&#x1eeb;:"/>
+                      </Properties>
+                    </Component>
+                    <Component class="com.toedter.calendar.JDateChooser" name="date_from_income">
+                    </Component>
+                    <Component class="com.toedter.calendar.JDateChooser" name="date_to_income">
+                    </Component>
+                    <Component class="javax.swing.JLabel" name="jLabel8">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="&#x110;&#x1ebf;n:"/>
+                      </Properties>
+                    </Component>
+                    <Component class="javax.swing.JButton" name="button_find_date_income">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="L&#x1ecd;c"/>
                       </Properties>
                     </Component>
                   </SubComponents>
@@ -233,25 +263,33 @@
                                           <Component id="jLabel22" alignment="0" min="-2" max="-2" attributes="0"/>
                                           <Component id="jLabel27" alignment="0" min="-2" max="-2" attributes="0"/>
                                       </Group>
-                                      <EmptySpace min="-2" pref="13" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="0" attributes="0">
-                                          <Group type="102" attributes="0">
+                                          <Group type="102" alignment="0" attributes="0">
+                                              <EmptySpace min="-2" pref="13" max="-2" attributes="0"/>
+                                              <Component id="text_service_id1" max="32767" attributes="0"/>
+                                          </Group>
+                                          <Group type="102" alignment="0" attributes="0">
                                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                                  <Component id="combobox_service_name" pref="195" max="32767" attributes="0"/>
-                                                  <Component id="combobox_member" max="32767" attributes="0"/>
+                                                  <Group type="102" attributes="0">
+                                                      <EmptySpace min="-2" pref="13" max="-2" attributes="0"/>
+                                                      <Component id="combobox_service_name" min="-2" pref="195" max="-2" attributes="0"/>
+                                                  </Group>
+                                                  <Group type="102" attributes="0">
+                                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                                      <Component id="text_member_name" max="32767" attributes="0"/>
+                                                  </Group>
                                               </Group>
-                                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                              <EmptySpace type="separate" max="-2" attributes="0"/>
                                               <Group type="103" groupAlignment="0" attributes="0">
-                                                  <Component id="jLabel28" min="-2" max="-2" attributes="0"/>
                                                   <Component id="jLabel24" min="-2" max="-2" attributes="0"/>
+                                                  <Component id="jLabel28" min="-2" max="-2" attributes="0"/>
                                               </Group>
-                                              <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
+                                              <EmptySpace type="separate" max="-2" attributes="0"/>
                                               <Group type="103" groupAlignment="0" attributes="0">
-                                                  <Component id="text_service_id_listen" max="32767" attributes="0"/>
                                                   <Component id="text_member_id_listen" max="32767" attributes="0"/>
+                                                  <Component id="text_service_id_listen" max="32767" attributes="0"/>
                                               </Group>
                                           </Group>
-                                          <Component id="text_service_id1" max="32767" attributes="0"/>
                                       </Group>
                                   </Group>
                                   <Group type="102" alignment="0" attributes="0">
@@ -278,7 +316,7 @@
                                               <Component id="jTextField3" min="-2" pref="169" max="-2" attributes="0"/>
                                               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                                           </Group>
-                                          <Component id="jDateChooser1" pref="169" max="32767" attributes="0"/>
+                                          <Component id="jDateChooser1" max="32767" attributes="0"/>
                                       </Group>
                                   </Group>
                               </Group>
@@ -299,7 +337,7 @@
                                   <Component id="jLabel22" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="jLabel24" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="text_member_id_listen" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="combobox_member" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="text_member_name" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
@@ -328,7 +366,7 @@
                                       <Component id="jTextField3" alignment="3" min="-2" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
-                              <EmptySpace min="0" pref="11" max="32767" attributes="0"/>
+                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
@@ -361,16 +399,6 @@
                       <Events>
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="text_member_id_listenActionPerformed"/>
                       </Events>
-                    </Component>
-                    <Component class="javax.swing.JComboBox" name="combobox_member">
-                      <Properties>
-                        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                          <StringArray count="0"/>
-                        </Property>
-                      </Properties>
-                      <AuxValues>
-                        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
-                      </AuxValues>
                     </Component>
                     <Component class="javax.swing.JLabel" name="jLabel27">
                       <Properties>
@@ -440,6 +468,14 @@
                         <Property name="enabled" type="boolean" value="false"/>
                       </Properties>
                     </Component>
+                    <Component class="javax.swing.JTextField" name="text_member_name">
+                      <Properties>
+                        <Property name="enabled" type="boolean" value="false"/>
+                      </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="text_member_nameActionPerformed"/>
+                      </Events>
+                    </Component>
                   </SubComponents>
                 </Container>
                 <Container class="javax.swing.JPanel" name="jPanel19">
@@ -458,10 +494,10 @@
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                   <Component id="button_add_usage_information" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="button_import_excel_service1" alignment="0" pref="102" max="32767" attributes="0"/>
-                                  <Component id="button_update_service1" alignment="0" pref="102" max="32767" attributes="0"/>
-                                  <Component id="button_refresh_service1" alignment="0" pref="102" max="32767" attributes="0"/>
-                                  <Component id="button_close_service" alignment="0" pref="102" max="32767" attributes="0"/>
+                                  <Component id="button_import_excel_service1" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="button_update_service1" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="button_refresh_service1" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="button_close_service" alignment="0" max="32767" attributes="0"/>
                               </Group>
                               <EmptySpace max="32767" attributes="0"/>
                           </Group>
