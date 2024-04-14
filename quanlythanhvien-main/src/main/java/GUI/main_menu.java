@@ -4,6 +4,9 @@
  */
 package GUI;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author ACER
@@ -131,12 +134,16 @@ public class main_menu extends javax.swing.JFrame {
     }//GEN-LAST:event_item_service_managementActionPerformed
 
     private void item_member_managementActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_item_member_managementActionPerformed
-        DesktopShow.removeAll();
-        DesktopShow.repaint();
-        
-        member_management member = new member_management();
-        DesktopShow.add(member);
-        member.setVisible(true);
+        try {
+            DesktopShow.removeAll();
+            DesktopShow.repaint();
+            
+            member_management member = new member_management();
+            DesktopShow.add(member);
+            member.setVisible(true);
+        } catch (Exception ex) {
+            Logger.getLogger(main_menu.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_item_member_managementActionPerformed
 
     private void item_usage_information_managementActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_item_usage_information_managementActionPerformed

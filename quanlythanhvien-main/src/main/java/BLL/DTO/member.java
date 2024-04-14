@@ -6,8 +6,6 @@ package BLL.DTO;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
@@ -15,6 +13,7 @@ import java.util.Set;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import lombok.experimental.Accessors;
 
 /**
  *
@@ -25,29 +24,43 @@ import lombok.ToString;
 @Entity
 @ToString
 @Table(name = "thanhvien")
-public class thanh_vien {
+@Accessors(chain = true)
+public class member {
     
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "MaTV")
     public int MaTV;
+    
+    @Column(name = "HoTen")
     public String HoTen;
+    
+    @Column(name = "Khoa")
     public String Khoa;
+    
+    @Column(name = "Nganh")
     public String Nganh;
-    @Column(unique = true)
+    
+    @Column(unique = true, nullable = true)
     public String SDT;
+    public String Password;
+    
+    @Column(unique = true, nullable = true)
+    public String Email;
 
     @OneToMany(mappedBy = "thanhvien")
-    private Set<thong_tin_sd> thongtinsd;
+    private Set<usage_information> thongtinsd;
     
-    public thanh_vien(int MaTV, String HoTen, String Khoa, String Nganh, String SDT) {
+    public member(int MaTV, String HoTen, String Khoa, String Nganh, String SDT, String Password, String Email) {
         this.MaTV = MaTV;
         this.HoTen = HoTen;
         this.Khoa = Khoa;
         this.Nganh = Nganh;
         this.SDT = SDT;
+        this.Password = Password;
+        this.Email = Email;
     }
 
-    public thanh_vien() {
+    public member() {
     }
     
 }

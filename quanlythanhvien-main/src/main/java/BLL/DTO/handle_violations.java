@@ -4,6 +4,7 @@
  */
 package BLL.DTO;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import java.util.Date;
 import jakarta.persistence.GeneratedValue;
@@ -14,28 +15,35 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 
 @Setter
 @Getter
 @Entity
-@ToString
 @Table(name = "xuly")
-public class xu_ly {
+public class handle_violations {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "MaXL")
     public int MaXL;
+    
+    @Column(name = "HinhThucXL")
     public String HinhThucXL;
+    
+    @Column(name = "SoTien", nullable = true)
     public double SoTien;
+    
+    @Column(name = "NgayXL")
     public Date NgayXL;
+    
+    @Column(name = "TrangThaiXL")
     public int TrangThaiXL;
 
     @ManyToOne
     @JoinColumn(name = "MaTV")
-    private thanh_vien thanhvien;
+    private member thanhvien;
     
     
-    public xu_ly(int MaXL, int MaTV, String HinhThucXL, double SoTien, Date NgayXL, int TrangThaiXL) {
+    public handle_violations(int MaXL, int MaTV, String HinhThucXL, double SoTien, Date NgayXL, int TrangThaiXL) {
         this.MaXL = MaXL;
         this.HinhThucXL = HinhThucXL;
         this.SoTien = SoTien;
@@ -43,6 +51,6 @@ public class xu_ly {
         this.TrangThaiXL = TrangThaiXL;
     }
 
-    public xu_ly() {
+    public handle_violations() {
     }
 }

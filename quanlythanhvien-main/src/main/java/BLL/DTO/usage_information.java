@@ -4,6 +4,7 @@
  */
 package BLL.DTO;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import java.util.Date;
 import jakarta.persistence.GeneratedValue;
@@ -14,7 +15,6 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 /**
  *
  * @author ACER
@@ -22,28 +22,41 @@ import lombok.ToString;
 @Setter
 @Getter
 @Entity
-@ToString
 @Table(name = "thongtinsd")
-public class thong_tin_sd {
+public class usage_information {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "MaTT")
     public int MaTT;
-    public Date TGMuon, TGTra;
+    
+    @Column(name = "TGVao")
+    public Date TGVao;
+    
+    @Column(name = "TGMuon")
+    public Date TGMuon;
+    
+    @Column(name = "TGTra")
+    public Date TGTra;
+    
+    @Column(name = "TGDatcho", nullable = true)
+    public Date TGDatcho;
 
     @ManyToOne
     @JoinColumn(name = "MaTB")
-    private thiet_bi thietbi;
+    private device thietbi;
     
     @ManyToOne
     @JoinColumn(name = "MaTV")
-    private thanh_vien thanhvien;
+    private member thanhvien;
     
-    public thong_tin_sd(int MaTT, int MaTV, int MaTB, Date TGMuon, Date TGTra) {
+    public usage_information(int MaTT, int MaTV, int MaTB, Date TGVao, Date TGMuon, Date TGTra, Date TGDatcho) {
         this.MaTT = MaTT;
+        this.TGVao = TGVao;
         this.TGMuon = TGMuon;
         this.TGTra = TGTra;
+        this.TGDatcho = TGDatcho;
     }
 
-    public thong_tin_sd() {
+    public usage_information() {
     }
 }

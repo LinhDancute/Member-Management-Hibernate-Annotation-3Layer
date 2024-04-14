@@ -4,10 +4,6 @@
  */
 package DAL.UTILS;
 
-import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.Persistence;
-import lombok.Getter;
-import lombok.Setter;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
@@ -16,12 +12,7 @@ import org.hibernate.cfg.Configuration;
  * @author ACER
  */
 public class hibernate_util {
-//    private EntityManagerFactory factory;
     private static final SessionFactory SESSION_FACTORY;
-
-//    public hibernate_util(){
-//        this.factory = Persistence.createEntityManagerFactory("quanlythanhvien-main");
-//    }
 
     static {
         Configuration configuration = new Configuration();

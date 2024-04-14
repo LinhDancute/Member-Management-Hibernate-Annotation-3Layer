@@ -4,6 +4,7 @@
  */
 package BLL.DTO;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -13,7 +14,6 @@ import jakarta.persistence.Table;
 import java.util.Set;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 
 /**
  *
@@ -22,25 +22,29 @@ import lombok.ToString;
 @Setter
 @Getter
 @Entity
-@ToString
 @Table(name = "thietbi")
-public class thiet_bi {
+public class device {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "MaTB")
     public int MaTB;
+    
+    @Column(name = "TenTB")
     public String TenTB;
+    
+    @Column(name = "MotaTB")
     public String MotaTB;
 
     @OneToMany(mappedBy = "thietbi")
-    private Set<thong_tin_sd> thongtinsd;
+    private Set<usage_information> thongtinsd;
     
-    public thiet_bi(int MaTB, String TenTB, String MotaTB) {
+    public device(int MaTB, String TenTB, String MotaTB) {
         this.MaTB = MaTB;
         this.TenTB = TenTB;
         this.MotaTB = MotaTB;
     }
 
-    public thiet_bi() {
+    public device() {
     }
 }
