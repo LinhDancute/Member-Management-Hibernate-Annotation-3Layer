@@ -1,14 +1,16 @@
-D:\Studying\Junior\Semester 2\Xay dung phan mem theo mo hinh phan lop\MemberManagement_BTL02\quanlythanhvien-main\src\main\java\GUI\usage_information_management.java
-D:\Studying\Junior\Semester 2\Xay dung phan mem theo mo hinh phan lop\MemberManagement_BTL02\quanlythanhvien-main\src\main\java\GUI\statistical.java
-D:\Studying\Junior\Semester 2\Xay dung phan mem theo mo hinh phan lop\MemberManagement_BTL02\quanlythanhvien-main\src\main\java\GUI\income_member_management.java
-D:\Studying\Junior\Semester 2\Xay dung phan mem theo mo hinh phan lop\MemberManagement_BTL02\quanlythanhvien-main\src\main\java\BLL\DTO\usage_information.java
-D:\Studying\Junior\Semester 2\Xay dung phan mem theo mo hinh phan lop\MemberManagement_BTL02\quanlythanhvien-main\src\main\java\BLL\DTO\handle_violations.java
-D:\Studying\Junior\Semester 2\Xay dung phan mem theo mo hinh phan lop\MemberManagement_BTL02\quanlythanhvien-main\src\main\java\BLL\DTO\device.java
-D:\Studying\Junior\Semester 2\Xay dung phan mem theo mo hinh phan lop\MemberManagement_BTL02\quanlythanhvien-main\src\main\java\DAL\member_DAL.java
-D:\Studying\Junior\Semester 2\Xay dung phan mem theo mo hinh phan lop\MemberManagement_BTL02\quanlythanhvien-main\src\main\java\BLL\DTO\member.java
-D:\Studying\Junior\Semester 2\Xay dung phan mem theo mo hinh phan lop\MemberManagement_BTL02\quanlythanhvien-main\src\main\java\GUI\main_menu.java
-D:\Studying\Junior\Semester 2\Xay dung phan mem theo mo hinh phan lop\MemberManagement_BTL02\quanlythanhvien-main\src\main\java\GUI\device_management.java
-D:\Studying\Junior\Semester 2\Xay dung phan mem theo mo hinh phan lop\MemberManagement_BTL02\quanlythanhvien-main\src\main\java\GUI\member_management.java
-D:\Studying\Junior\Semester 2\Xay dung phan mem theo mo hinh phan lop\MemberManagement_BTL02\quanlythanhvien-main\src\main\java\DAL\UTILS\hibernate_util.java
-D:\Studying\Junior\Semester 2\Xay dung phan mem theo mo hinh phan lop\MemberManagement_BTL02\quanlythanhvien-main\src\main\java\BLL\member_BLL.java
-D:\Studying\Junior\Semester 2\Xay dung phan mem theo mo hinh phan lop\MemberManagement_BTL02\quanlythanhvien-main\src\main\java\GUI\handle_violations.java
+D:\java\Member-Management-Hibernate-Annotation-3Layer\quanlythanhvien-main\src\main\java\BLL\device_BLL.java
+D:\java\Member-Management-Hibernate-Annotation-3Layer\quanlythanhvien-main\src\main\java\GUI\main_menu.java
+D:\java\Member-Management-Hibernate-Annotation-3Layer\quanlythanhvien-main\src\main\java\GUI\usage_information_management.java
+D:\java\Member-Management-Hibernate-Annotation-3Layer\quanlythanhvien-main\src\main\java\BLL\DTO\member.java
+D:\java\Member-Management-Hibernate-Annotation-3Layer\quanlythanhvien-main\src\main\java\GUI\income_member_management.java
+D:\java\Member-Management-Hibernate-Annotation-3Layer\quanlythanhvien-main\src\main\java\GUI\handle_violations.java
+D:\java\Member-Management-Hibernate-Annotation-3Layer\quanlythanhvien-main\src\main\java\DAL\UTILS\hibernate_util.java
+D:\java\Member-Management-Hibernate-Annotation-3Layer\quanlythanhvien-main\src\main\java\GUI\statistical.java
+D:\java\Member-Management-Hibernate-Annotation-3Layer\quanlythanhvien-main\src\main\java\BLL\member_BLL.java
+D:\java\Member-Management-Hibernate-Annotation-3Layer\quanlythanhvien-main\src\main\java\GUI\member_management.java
+D:\java\Member-Management-Hibernate-Annotation-3Layer\quanlythanhvien-main\src\main\java\GUI\device_management.java
+D:\java\Member-Management-Hibernate-Annotation-3Layer\quanlythanhvien-main\src\main\java\BLL\DTO\handle_violations.java
+D:\java\Member-Management-Hibernate-Annotation-3Layer\quanlythanhvien-main\src\main\java\BLL\DTO\usage_information.java
+D:\java\Member-Management-Hibernate-Annotation-3Layer\quanlythanhvien-main\src\main\java\BLL\DTO\device.java
+D:\java\Member-Management-Hibernate-Annotation-3Layer\quanlythanhvien-main\src\main\java\DAL\device_DAL.java
+D:\java\Member-Management-Hibernate-Annotation-3Layer\quanlythanhvien-main\src\main\java\DAL\member_DAL.java

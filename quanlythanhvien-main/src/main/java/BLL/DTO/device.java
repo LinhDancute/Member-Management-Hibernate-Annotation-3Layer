@@ -26,7 +26,6 @@ import lombok.Setter;
 public class device {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "MaTB")
     public int MaTB;
     
