@@ -6,12 +6,9 @@ package BLL;
 
 import BLL.DTO.member;
 import DAL.member_DAL;
-import com.mysql.cj.result.Row;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.List;
 
 /**
  *
@@ -38,6 +35,31 @@ public class member_BLL {
         return (ArrayList<member>) data.load_member();
     }
     
+    //HIỂN THỊ KHÓA
+    public List<String> load_batch() {
+        return data.load_batch();
+    }
+    
+    //HIỂN THỊ NGÀNH
+    public List<String> load_department() {
+        return data.load_department();
+    }
+
+    //HIỂN THỊ KHOA
+    public List<String> load_major() {
+        return data.load_major();
+    }
+    
+    //HIỂN THỊ KHOA THEO KHÓA
+    public List<String> load_departments_by_batch(String department) {
+        return data.get_departments_by_batch(department);
+    }
+
+    //HIỂN THỊ NGÀNH THEO KHOA
+    public List<String> load_majors_by_department(String major, String batch) {
+        return data.get_majors_by_department(major, batch);
+    }
+    
     //THÊM
     public void add_member(member m) throws Exception {
         if (list_member == null) {
@@ -60,6 +82,15 @@ public class member_BLL {
             }
         }
     }
+    
+    //XÓA NHIỀU THEO ĐIỀU KIỆN
+    public void delete_all_member(String department, String major, String batch) throws Exception {
+        try {
+            data.delete_all_member(department, major, batch);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     //CẬP NHẬT
     public void update_member(int id, member m) throws Exception {
@@ -76,45 +107,22 @@ public class member_BLL {
         }
     }
 
-    public void import_excel(File selectedFile) throws IOException {
-//            // Load Excel file
-//            FileInputStream inputStream = new FileInputStream(selectedFile);
-//            XSSFWorkbook workbook = new XSSFWorkbook(inputStream);
-//
-//            // Get the first sheet from the workbook
-//            org.apache.poi.ss.usermodel.Sheet sheet = workbook.getSheetAt(0);
-//
-//            // Iterate through each row of the sheet
-//            Iterator<Row> rowIterator = sheet.iterator();
-//            while (rowIterator.hasNext()) {
-//                Row row = rowIterator.next();
-//
-//                // Skip the header row
-//                if (row.getRowNum() == 0) {
-//                    continue;
-//                }
-//
-//                // Read data from each cell and create a new member object
-//                int memberId = (int) row.getCell(0).getNumericCellValue();
-//                String memberName = row.getCell(1).getStringCellValue();
-//                String department = row.getCell(2).getStringCellValue();
-//                String major = row.getCell(3).getStringCellValue();
-//                String phoneNumber = row.getCell(4).getStringCellValue();
-//                String password = String.valueOf(memberId);
-//                String email = memberId + "@sv.sgu.edu.vn";
-//
-//                member newMember = new member(memberId, memberName, department, major, phoneNumber, password, email);
-//
-//                // Add the new member to the list
-//                if (list_member == null) {
-//                    list_member = new ArrayList<>();
-//                }
-//                list_member.add(newMember);
-//            }
-//
-//            // Close workbook and input stream
-//            workbook.close();
-//            inputStream.close();
-//        }
+    //IMPORT EXCEL
+    public void import_excel(ArrayList<member> member) throws IOException, Exception {
+        for (member m : member) {
+            if (data.is_member_existed(m.getMaTV())) {
+                throw new Exception("Mã thành viên đã tồn tại: " + m.getMaTV());
+            }
+            data.add_member(m);
+        }
+    }
+
+    public boolean is_member_existed(int member_id) {
+        try {
+            return data.is_member_existed(member_id);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false; 
+        }
     }
 }

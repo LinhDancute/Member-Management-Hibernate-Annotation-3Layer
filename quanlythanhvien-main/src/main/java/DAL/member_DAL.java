@@ -6,10 +6,15 @@ package DAL;
 
 import BLL.DTO.member;
 import DAL.UTILS.hibernate_util;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 
 /**
  *
@@ -18,6 +23,7 @@ import org.hibernate.Transaction;
 public class member_DAL {
     static final SessionFactory FACTORY = hibernate_util.getSessionFactory();
     
+    //LẤY DỮ LIỆU
     public List<member> load_member() {
         Transaction transaction = null;
         List<member> mem_list = null;
@@ -32,7 +38,127 @@ public class member_DAL {
         }
         return mem_list;
     }
+    
+    //LẤY KHÓA (CẮT)
+    public List<String> load_batch() {
+        Transaction transaction = null;
+        List<member> batch_list = null;
+        Set<String> unique_values = new HashSet<>(); 
+        try (Session session = FACTORY.openSession()) {
+            transaction = session.beginTransaction();
+            batch_list = session.createQuery("FROM member").list();
+            transaction.commit();
+            for (member m : batch_list) {
+                String maTV = String.valueOf(m.getMaTV());
+                if (maTV.length() >= 4) {
+                    String extracted_value = maTV.substring(2, 4);
+                    unique_values.add(extracted_value); 
+                }
+            }
+        } catch (Exception e){
+            if (transaction != null) {
+                transaction.rollback();
+            }
+        }
+        List<String> sorted_values = new ArrayList<>(unique_values); 
+        Collections.sort(sorted_values); 
+        return sorted_values;
+    }
+    
+    //LẤY KHOA
+    public List<String> load_department() {
+        Transaction transaction = null;
+        List<member> department_list = null;
+        Set<String> unique_values = new HashSet<>(); 
+        try (Session session = FACTORY.openSession()) {
+            transaction = session.beginTransaction();
+            department_list = session.createQuery("FROM member").list();
+            transaction.commit();
+            for (member m : department_list) {
+                String department = String.valueOf(m.getKhoa());
+                unique_values.add(department);
+            }
+        } catch (Exception e){
+            if (transaction != null) {
+                transaction.rollback();
+            }
+        }
+        List<String> sorted_values = new ArrayList<>(unique_values); 
+        Collections.sort(sorted_values); 
+        return sorted_values;
+    }
+    
+    //LẤY NGÀNH
+    public List<String> load_major() {
+        Transaction transaction = null;
+        List<member> department_list = null;
+        Set<String> unique_values = new HashSet<>(); 
+        try (Session session = FACTORY.openSession()) {
+            transaction = session.beginTransaction();
+            department_list = session.createQuery("FROM member").list();
+            transaction.commit();
+            for (member m : department_list) {
+                String department = String.valueOf(m.getNganh());
+                unique_values.add(department);
+            }
+        } catch (Exception e){
+            if (transaction != null) {
+                transaction.rollback();
+            }
+        }
+        List<String> sorted_values = new ArrayList<>(unique_values); 
+        Collections.sort(sorted_values); 
+        return sorted_values;
+    }
+    
+    //LẤY KHOA CÓ TRONG KHÓA 
+    public List<String> get_departments_by_batch(String batch) {
+        Transaction transaction = null;
+        List<String> departments = new ArrayList<>();
+        try (Session session = FACTORY.openSession()) {
+            transaction = session.beginTransaction();
+            
+            Query<String> query = session.createQuery(
+                "SELECT DISTINCT m.Khoa FROM member m WHERE substring(cast(m.MaTV as string), 3, 2) = :batch",
+                String.class
+            );
+            query.setParameter("batch", batch);
+            departments = query.list();
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        }
+        return departments;
+    }
+    
+    //LẤY NGÀNH CÓ TRONG KHOA
+    public List<String> get_majors_by_department(String major, String batch) {
+        Transaction transaction = null;
+        List<String> majors = new ArrayList<>();
+        try (Session session = FACTORY.openSession()) {
+            transaction = session.beginTransaction();
+            
+            Query<String> query = session.createQuery(
+                "SELECT DISTINCT m.Nganh FROM member m WHERE m.Khoa = :department AND substring(cast(m.MaTV as string), 3, 2) = :batch",
+                String.class
+            );
+            query.setParameter("department", major);
+            query.setParameter("batch", batch);
+            majors = query.list();
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        }
+        return majors;
+    }
 
+    //THÊM
     public void add_member(member m) throws Exception {
         try (Session session = FACTORY.openSession()) {
             Transaction transaction = session.beginTransaction();
@@ -43,6 +169,7 @@ public class member_DAL {
         }
     }
 
+    //XÓA
     public void delete_member(int member_id) throws Exception {
         try (Session session = FACTORY.openSession()) {
             Transaction transaction = session.beginTransaction();
@@ -55,7 +182,32 @@ public class member_DAL {
             e.printStackTrace();
         }
     }
+    
+    //XÓA NHIỀU
+    public void delete_all_member(String department, String major, String batch) throws Exception {
+        try (Session session = FACTORY.openSession()) {
+            Transaction transaction = session.beginTransaction();
 
+            System.out.println("Department: " + department);
+            System.out.println("Major: " + major);
+            System.out.println("Batch: " + batch);
+            
+            Query query = session.createQuery("DELETE FROM member WHERE Khoa = :department AND Nganh = :major AND substring(cast(MaTV as string), 3, 2) = :batch");
+            query.setParameter("department", department);
+            query.setParameter("major", major);
+            query.setParameter("batch", batch);
+
+            int rowsAffected = query.executeUpdate();
+
+            transaction.commit();
+
+            System.out.println(rowsAffected + " member(s) deleted successfully.");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    //CẬP NHẬT
     public void update_member(int id, member m) throws Exception {
         try (Session session = FACTORY.openSession()) {
             Transaction transaction = session.beginTransaction();
@@ -73,6 +225,16 @@ public class member_DAL {
             }
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    public boolean is_member_existed(int member_id) {
+        try (Session session = FACTORY.openSession()) {
+            member existing_member = session.get(member.class, member_id);
+            return existing_member != null;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false; 
         }
     }
 }

@@ -1,8 +1,10 @@
 GUI\handle_violations$1.class
 GUI\main_menu$6.class
 GUI\device_management$2.class
+GUI\member_management$10.class
 DAL\member_DAL.class
 GUI\member_management$4.class
+GUI\member_management$9.class
 GUI\member_management$2.class
 GUI\device_management.class
 GUI\main_menu$4.class
@@ -14,6 +16,7 @@ GUI\member_management$6.class
 GUI\main_menu$2.class
 BLL\member_BLL.class
 BLL\DTO\usage_information.class
+GUI\member_management$8.class
 GUI\device_management$1.class
 BLL\DTO\handle_violations.class
 GUI\member_management.class
@@ -25,6 +28,7 @@ GUI\main_menu$5.class
 GUI\usage_information_management$4.class
 GUI\main_menu$7.class
 GUI\member_management$5.class
+GUI\member_management$11.class
 GUI\member_management$1.class
 BLL\DTO\device.class
 DAL\UTILS\hibernate_util.class
