@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th4 06, 2024 lúc 06:41 PM
+-- Thời gian đã tạo: Th4 20, 2024 lúc 07:34 PM
 -- Phiên bản máy phục vụ: 10.4.27-MariaDB
 -- Phiên bản PHP: 8.2.0
 
@@ -28,24 +28,28 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `thanhvien` (
-  `MaTV` int(10) NOT NULL,
-  `HoTen` varchar(100) NOT NULL,
-  `Khoa` varchar(100) DEFAULT NULL,
-  `Nganh` varchar(100) DEFAULT NULL,
-  `SDT` varchar(15) DEFAULT NULL,
-  `Password` varchar(10) NOT NULL,
-  `Email` varchar(25) DEFAULT NULL
+  `MaTV` int(11) NOT NULL,
+  `Email` varchar(255) DEFAULT NULL,
+  `HoTen` varchar(255) DEFAULT NULL,
+  `Khoa` varchar(255) DEFAULT NULL,
+  `Nganh` varchar(255) DEFAULT NULL,
+  `Password` varchar(255) DEFAULT NULL,
+  `SDT` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Đang đổ dữ liệu cho bảng `thanhvien`
 --
 
-INSERT INTO `thanhvien` (`MaTV`, `HoTen`, `Khoa`, `Nganh`, `SDT`, `Password`, `Email`) VALUES
-(1120150184, 'Trần Thị Nữ', 'GDTH', 'GDTH', '1111111111', '', NULL),
-(1121530087, 'Trần Thiếu Nam', 'TLH', 'QLGD', '1111111112', '', NULL),
-(1123330257, 'Ngô Tuyết Nhi', 'QTKD', 'QTKD', '1111111113', '', NULL),
-(2147483647, 'Nguyễn Văn Nam', 'CNTT', 'HTTT', '123456789', '', NULL);
+INSERT INTO `thanhvien` (`MaTV`, `Email`, `HoTen`, `Khoa`, `Nganh`, `Password`, `SDT`) VALUES
+(1120150184, '1120150184@sv.sgu.edu.vn', 'Trần Thị Nữ', 'GDTH', 'GDTH', '1120150184', '0986777444'),
+(1121410321, '1121410321@sv.sgu.edu.vn', 'Nguyễn Hoàng Minh', 'CNTT', 'KTPM', '1121410321', '0986555666'),
+(1121410322, '1121410322@sv.sgu.edu.vn', 'Hoàng Thị Thanh Huyền', 'QTKD', 'KDTM', '1121410322', '0266777552'),
+(1121410326, '1121410326@sv.sgu.edu.vn', 'Võ Thị Diễm My', 'CNTT', 'KTPM', '1121410326', '0266777555'),
+(1121530087, '1121530087@sv.sgu.edu.vn', 'Trần Thiếu Nam', 'CNTT', 'KTPM', '1121530087', '1111111112'),
+(1123330250, '1123330250@sv.sgu.edu.vn', 'Lương Nhật Hà', 'QTKD', 'QTKS', '1123330250', '0111111120'),
+(1123330251, '1123330251@sv.sgu.edu.vn', 'Đặng Văn Anh', 'SP', 'NNA', '1123330251', '0111111123'),
+(1123330257, '1123330257@sv.sgu.edu.vn', 'Ngô Tuyết Nhi', 'QTKD', 'QTKD', '1123330257', '0111111113');
 
 -- --------------------------------------------------------
 
@@ -54,19 +58,10 @@ INSERT INTO `thanhvien` (`MaTV`, `HoTen`, `Khoa`, `Nganh`, `SDT`, `Password`, `E
 --
 
 CREATE TABLE `thietbi` (
-  `MaTB` int(10) NOT NULL,
-  `TenTB` varchar(100) NOT NULL,
-  `MoTaTB` text DEFAULT NULL
+  `MaTB` int(11) NOT NULL,
+  `MotaTB` varchar(255) DEFAULT NULL,
+  `TenTB` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Đang đổ dữ liệu cho bảng `thietbi`
---
-
-INSERT INTO `thietbi` (`MaTB`, `TenTB`, `MoTaTB`) VALUES
-(1000001, 'Micro', 'Micro không dây MS2023'),
-(1000002, 'Micro', 'Micro không dây MS2024'),
-(1000003, 'Bảng điện tử', 'Bản điện tử trình chiếu');
 
 -- --------------------------------------------------------
 
@@ -78,9 +73,20 @@ CREATE TABLE `thongtinsd` (
   `MaTB` int(11) DEFAULT NULL,
   `MaTT` int(11) NOT NULL,
   `MaTV` int(11) DEFAULT NULL,
+  `TGDatcho` datetime(6) DEFAULT NULL,
   `TGMuon` datetime(6) DEFAULT NULL,
-  `TGTra` datetime(6) DEFAULT NULL
+  `TGTra` datetime(6) DEFAULT NULL,
+  `TGVao` datetime(6) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `thongtinsd`
+--
+
+INSERT INTO `thongtinsd` (`MaTB`, `MaTT`, `MaTV`, `TGDatcho`, `TGMuon`, `TGTra`, `TGVao`) VALUES
+(NULL, 1, 1120150184, NULL, NULL, NULL, '2022-04-22 12:30:00.523000'),
+(NULL, 2, 1121530087, NULL, NULL, NULL, '2022-04-23 10:15:30.137236'),
+(NULL, 3, 1121410322, NULL, NULL, NULL, '2022-04-24 08:45:15.138400');
 
 -- --------------------------------------------------------
 
@@ -91,8 +97,8 @@ CREATE TABLE `thongtinsd` (
 CREATE TABLE `xuly` (
   `MaTV` int(11) DEFAULT NULL,
   `MaXL` int(11) NOT NULL,
-  `SoTien` double NOT NULL,
-  `TrangThaiXL` int(11) NOT NULL,
+  `SoTien` double DEFAULT NULL,
+  `TrangThaiXL` int(11) DEFAULT NULL,
   `NgayXL` datetime(6) DEFAULT NULL,
   `HinhThucXL` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -106,6 +112,7 @@ CREATE TABLE `xuly` (
 --
 ALTER TABLE `thanhvien`
   ADD PRIMARY KEY (`MaTV`),
+  ADD UNIQUE KEY `UK_jw2o9kryprbnc6esvv4dw3y4t` (`Email`),
   ADD UNIQUE KEY `UK_mj6iyyblc7l1550a6e1dq17li` (`SDT`);
 
 --
@@ -134,10 +141,22 @@ ALTER TABLE `xuly`
 --
 
 --
+-- AUTO_INCREMENT cho bảng `thanhvien`
+--
+ALTER TABLE `thanhvien`
+  MODIFY `MaTV` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2147483648;
+
+--
+-- AUTO_INCREMENT cho bảng `thietbi`
+--
+ALTER TABLE `thietbi`
+  MODIFY `MaTB` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT cho bảng `thongtinsd`
 --
 ALTER TABLE `thongtinsd`
-  MODIFY `MaTT` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `MaTT` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT cho bảng `xuly`

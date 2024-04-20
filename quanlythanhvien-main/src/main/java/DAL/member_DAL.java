@@ -237,4 +237,19 @@ public class member_DAL {
             return false; 
         }
     }
+
+    public String get_member_name_by_member_id(int member_id) {
+        try (Session session = FACTORY.openSession()) {
+            member member = session.get(member.class, member_id);
+            
+            if (member != null) {
+                return member.getHoTen();
+            } else {
+                return null;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null; 
+        }
+    }
 }

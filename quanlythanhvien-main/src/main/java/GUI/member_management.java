@@ -23,6 +23,7 @@ import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
+import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
@@ -734,68 +735,51 @@ public class member_management extends javax.swing.JInternalFrame {
         JFileChooser file_chooser = new JFileChooser();
         int result = file_chooser.showOpenDialog(this);
         if (result == JFileChooser.APPROVE_OPTION) {
-        File selectedFile = file_chooser.getSelectedFile();
-        try {
-            FileInputStream file_input_stream = new FileInputStream(selectedFile);
-            XSSFWorkbook workbook = new XSSFWorkbook(file_input_stream);
-            XSSFSheet sheet = workbook.getSheetAt(0);
+            File selectedFile = file_chooser.getSelectedFile();
+            try {
+                FileInputStream file_input_stream = new FileInputStream(selectedFile);
+                XSSFWorkbook workbook = new XSSFWorkbook(file_input_stream);
+                XSSFSheet sheet = workbook.getSheetAt(0);
 
-            ArrayList<member> new_member = new ArrayList<>();
-            ArrayList<Integer> existing_member_ids = new ArrayList<>();
-            
-            for (org.apache.poi.ss.usermodel.Row row : sheet) {
-                if (row.getRowNum() == 0) {
-                    continue; 
+                ArrayList<member> new_members = new ArrayList<>();
+
+                for (int i = 1; i <= sheet.getLastRowNum(); i++) {
+                    XSSFRow row = sheet.getRow(i);
+
+                    String MaTV = String.valueOf((int) row.getCell(0).getNumericCellValue());
+                    String HoTen = row.getCell(1).getStringCellValue();
+                    String Khoa = row.getCell(2).getStringCellValue();
+                    String Nganh = row.getCell(3).getStringCellValue();
+                    String SDT = row.getCell(4).getStringCellValue();
+                    String Password = row.getCell(5).getStringCellValue();
+                    String Email = row.getCell(6).getStringCellValue();
+
+                    member new_member = new member(Integer.parseInt(MaTV), HoTen, Khoa, Nganh, SDT, Password, Email);
+                    new_members.add(new_member);
                 }
 
-                int member_id;
-                try {
-                    member_id = (int) row.getCell(0).getNumericCellValue();
-                    } catch (IllegalStateException e) {
-                        try {
-                            member_id = Integer.parseInt(row.getCell(0).getStringCellValue());
-                        } catch (NumberFormatException ex) {
-                            System.out.println("Error at row " + (row.getRowNum() + 1) + ", column 1: " + ex.getMessage());
-                            ex.printStackTrace();
-                            continue;
-                        }
-                    }
-
-                    String member_name = row.getCell(1).getStringCellValue();
-                    String department = row.getCell(2).getStringCellValue();
-                    String major = row.getCell(3).getStringCellValue();
-                    String phone_number = row.getCell(4).getStringCellValue();
-                    String password = row.getCell(5).getStringCellValue();
-                    String email = row.getCell(6).getStringCellValue();
-
-                    member member = new member(member_id, member_name, department, major, phone_number, password, email);
-                    new_member.add(member);
-                }
-
-
-//            if (!existing_member_ids.isEmpty()) {
-//                int choice = JOptionPane.showConfirmDialog(this, "Một số thành viên trong tệp Excel đã tồn tại trong CSDL. "
-//                        + "Bạn có muốn ghi đè chúng không?", 
-//                        "Xác nhận", JOptionPane.YES_NO_OPTION);
-//                if (choice == JOptionPane.NO_OPTION) {
-//                    return; 
-//                }
-//            }
-            mem_BLL.import_excel(new_member);
-            refresh_database();
-            JOptionPane.showMessageDialog(this, "Import thành công từ file Excel.");
-            
-            workbook.close();
-            file_input_stream.close();
-        } catch (IOException e) {
-            JOptionPane.showMessageDialog(this, "Lỗi khi đọc file Excel: " + e.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Lỗi khi import dữ liệu từ Excel: " + e.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
-        }
-    }
+                mem_BLL.import_excel(new_members);
+                refresh_database();
+                show_database();
+                JOptionPane.showMessageDialog(this, "Import thành công từ file Excel.");
+            } catch (IOException e) {
+                JOptionPane.showMessageDialog(this, "Lỗi khi đọc file Excel: " + e.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Lỗi khi import dữ liệu từ Excel: " + e.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
+            }
+        } 
 
     }//GEN-LAST:event_button_import_excel_memberActionPerformed
 
+    //                if (!existing_member_ids.isEmpty()) {
+//                    int choice = JOptionPane.showConfirmDialog(this, "Một số thành viên trong tệp Excel đã tồn tại trong CSDL. "
+//                            + "Bạn có muốn ghi đè chúng không?", 
+//                            "Xác nhận", JOptionPane.YES_NO_OPTION);
+//                    if (choice == JOptionPane.NO_OPTION) {
+//                        return; 
+//                    }
+//                }
+    
     private void button_delete_all_memberActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_delete_all_memberActionPerformed
         int confirm = JOptionPane.showConfirmDialog(null, "Bạn chắc chắn muốn xóa?",
                 "Thông báo", JOptionPane.YES_NO_OPTION);

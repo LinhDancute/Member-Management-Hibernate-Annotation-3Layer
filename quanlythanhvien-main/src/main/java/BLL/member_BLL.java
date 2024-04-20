@@ -125,4 +125,8 @@ public class member_BLL {
             return false; 
         }
     }
+
+    public String get_member_name(int member_id) {
+        return data.get_member_name_by_member_id(member_id);
+    }
 }
