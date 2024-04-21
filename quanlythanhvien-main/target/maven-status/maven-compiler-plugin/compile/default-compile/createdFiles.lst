@@ -11,9 +11,11 @@ GUI\device_management$1.class
 GUI\member_management$12.class
 BLL\DTO\handle_violations.class
 GUI\handle_violations$2.class
+GUI\statistical$2.class
 GUI\handle_violations.class
 GUI\main_menu$5.class
 GUI\main_menu$7.class
+GUI\statistical$3.class
 GUI\income_member_management$2.class
 BLL\device_BLL.class
 GUI\device_management$3.class
@@ -56,4 +58,5 @@ GUI\handle_violations$3.class
 GUI\usage_information_management$1.class
 GUI\income_member_management$1.class
 DAL\device_DAL.class
+GUI\statistical$1.class
 GUI\main_menu.class
