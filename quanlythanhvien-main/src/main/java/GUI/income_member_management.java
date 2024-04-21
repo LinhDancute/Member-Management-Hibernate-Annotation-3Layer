@@ -9,8 +9,11 @@ import BLL.DTO.usage_information;
 import BLL.usage_information_BLL;
 import BLL.member_BLL;
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -30,6 +33,8 @@ public class income_member_management extends javax.swing.JInternalFrame {
     
     public income_member_management() {
         initComponents();
+        information_BLL = new usage_information_BLL();
+        member_BLL = new member_BLL();
         try {
             information_BLL = new usage_information_BLL();
             show_database();
@@ -37,28 +42,35 @@ public class income_member_management extends javax.swing.JInternalFrame {
                 filter_table();
             });
             
-//            text_member_id.addKeyListener(new KeyListener() {
-//            @Override
-//            public void keyTyped(KeyEvent e) {}
-//
-//            @Override
-//            public void keyPressed(KeyEvent e) {
-//                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-//                    int member_id = Integer.parseInt(text_member_id.getText());
-//        
-//                    if (member_BLL.is_member_existed(member_id)) {
-//                        String member_name = member_BLL.get_member_name(member_id);
-//                        text_member_name_listen.setText(member_name);
-//                    } else {
-//                        JOptionPane.showMessageDialog(text_member_id, "Thành viên không tồn tại");
-//                        text_member_name_listen.setText("");
-//                    }
-//                }
-//            }
-//
-//            @Override
-//            public void keyReleased(KeyEvent e) {}
-//        });
+            text_member_id.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {}
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    int member_id = Integer.parseInt(text_member_id.getText());
+                    System.out.println("entered_member_id: " + member_id); 
+
+                    if (member_BLL != null) {
+                        if (member_BLL.is_member_existed(member_id)) {
+                            String member_name = member_BLL.get_member_name(member_id);
+                            System.out.println("member_name_listen: " + member_name); 
+                            text_member_name_listen.setText(member_name);
+                        } else {
+                            JOptionPane.showMessageDialog(text_member_id, "Thành viên không tồn tại");
+                            text_member_name_listen.setText("");
+                        }
+                    } else {
+                        System.out.println("member_BLL không được khởi tạo."); 
+                    }
+                }
+            }
+
+
+            @Override
+            public void keyReleased(KeyEvent e) {}
+        });
             
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -96,7 +108,8 @@ public class income_member_management extends javax.swing.JInternalFrame {
                 usage_information_BLL.set_list_usage_information(usage_information_list); 
             }
             insert_header();
-            out_model(model, usage_information_BLL.get_list_usage_information());
+
+            out_model(model, information_BLL.get_list_usage_information());
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Không thể load dữ liệu",
                     "Thông báo lỗi", JOptionPane.ERROR_MESSAGE);
@@ -126,32 +139,22 @@ public class income_member_management extends javax.swing.JInternalFrame {
         header.add("Thời gian vào");
 
         model = new DefaultTableModel(header, 0);
-        table_income_member.setModel(model);
     }
     
     // XUẤT RA TABLE TỪ ARRAYLIST
-    private void out_model(DefaultTableModel model, ArrayList<usage_information> income_member) {
-        if (income_member == null) {
-            return;
-        }
-
+    private void out_model(DefaultTableModel model, ArrayList<usage_information> usage_information){
         Vector data;
         model.setRowCount(0);
-        int stt = 1;
-        for (usage_information i_m : income_member) {
+        for (usage_information usage : usage_information){
             data = new Vector();
-            data.add(stt++);
-            data.add(i_m.getMaTT());
-
-            if (i_m.getThanhvien() != null) {
-                data.add(i_m.getThanhvien().getMaTV());
-            } else {
-                data.add(null); 
-            }
-            data.add(i_m.getTGVao());
+            data.add(usage.getMaTT());
+            data.add(usage.getThanhvien().MaTV);
+            data.add(usage.getTGVao());
             model.addRow(data);
         }
+        table_income_member.setModel(model);
     }
+
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -439,20 +442,32 @@ public class income_member_management extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_table_income_memberMouseClicked
 
     private void button_add_incomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_add_incomeActionPerformed
-        int usage_information_id = Integer.parseInt(text_usage_information_id.getText());
-        int member_id = Integer.parseInt(text_member_id.getText());
-        LocalDateTime time_in = LocalDateTime.now();
-        member mem;
         try {
-            usage_information income_member = new usage_information(usage_information_id, member_id, time_in);
-            information_BLL.add_income_member_information(income_member);
-            JOptionPane.showMessageDialog(this, "Thêm mới thành viên thành công",
-                    "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            String member_id_str = text_member_id.getText().trim();
+            if (member_id_str.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Mã thành viên vào không được để trống",
+                        "Lỗi", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            int member_id = Integer.parseInt(member_id_str);
+            LocalDateTime time_in = LocalDateTime.now();
+
+            usage_information newUsageInformation = new usage_information();
+            newUsageInformation.setThanhvien(new member(member_id));
+
+            newUsageInformation.setTGVao(time_in);
+            information_BLL.add_income_member_information(newUsageInformation);
             clear_all();
             refresh_database();
-            
+            JOptionPane.showMessageDialog(this, "Thông tin đã được lưu thành công",
+                    "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+        } catch (NumberFormatException ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Mã thành viên vào không hợp lệ",
+                    "Input Error", JOptionPane.ERROR_MESSAGE);
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, "Không thể thêm mới thành viên",
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Không thể lưu thông tin",
                     "Thông báo lỗi", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_button_add_incomeActionPerformed

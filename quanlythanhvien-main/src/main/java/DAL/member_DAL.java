@@ -76,7 +76,9 @@ public class member_DAL {
             transaction.commit();
             for (member m : department_list) {
                 String department = String.valueOf(m.getKhoa());
-                unique_values.add(department);
+                if (department != null && !department.isEmpty() && !department.equalsIgnoreCase("null")) {
+                    unique_values.add(department);
+                }
             }
         } catch (Exception e){
             if (transaction != null) {
@@ -87,6 +89,7 @@ public class member_DAL {
         Collections.sort(sorted_values); 
         return sorted_values;
     }
+
     
     //LẤY NGÀNH
     public List<String> load_major() {
@@ -98,8 +101,10 @@ public class member_DAL {
             department_list = session.createQuery("FROM member").list();
             transaction.commit();
             for (member m : department_list) {
-                String department = String.valueOf(m.getNganh());
-                unique_values.add(department);
+                String major = m.getNganh();
+                if (major != null && !major.isEmpty() && !major.equalsIgnoreCase("null")) {
+                    unique_values.add(major);
+                }
             }
         } catch (Exception e){
             if (transaction != null) {
@@ -110,7 +115,8 @@ public class member_DAL {
         Collections.sort(sorted_values); 
         return sorted_values;
     }
-    
+
+
     //LẤY KHOA CÓ TRONG KHÓA 
     public List<String> get_departments_by_batch(String batch) {
         Transaction transaction = null;
@@ -241,15 +247,36 @@ public class member_DAL {
     public String get_member_name_by_member_id(int member_id) {
         try (Session session = FACTORY.openSession()) {
             member member = session.get(member.class, member_id);
-            
+
             if (member != null) {
-                return member.getHoTen();
+                String memberName = member.getHoTen();
+                System.out.println("Retrieved member name: " + memberName); // Add logging
+                return memberName;
             } else {
+                System.out.println("Member with ID " + member_id + " not found."); // Add logging
                 return null;
             }
         } catch (Exception e) {
             e.printStackTrace();
             return null; 
+        }
+    }
+
+    public member get_member_by_member_id(int member_id) {
+        try (Session session = FACTORY.openSession()) {
+            String hql = "FROM member WHERE MaTV = :member_id";
+            Query<member> query = session.createQuery(hql, member.class);
+            query.setParameter("member_id", member_id);
+            List<member> result_list = query.getResultList();
+            
+            if (!result_list.isEmpty()) {
+                return result_list.get(0); 
+            } else {
+                return null; 
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return null;
         }
     }
 }

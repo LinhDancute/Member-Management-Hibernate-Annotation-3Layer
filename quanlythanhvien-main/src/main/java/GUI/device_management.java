@@ -4,17 +4,85 @@
  */
 package GUI;
 
+import BLL.DTO.device;
+import BLL.device_BLL;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.ArrayList;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.table.DefaultTableModel;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
 /**
  *
  * @author ACER
  */
 public class device_management extends javax.swing.JInternalFrame {
+    
+    private final device_BLL deviceBLL = new device_BLL();
 
     /**
      * Creates new form service_management
      */
     public device_management() {
         initComponents();
+        loadDevicesToTable();
+        
+        // Gắn sự kiện lắng nghe khi chọn hàng trong bảng
+        table_device.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent event) {
+                if (!event.getValueIsAdjusting()) {
+                    int selectedRow = table_device.getSelectedRow();
+                    if (selectedRow != -1) { // Đảm bảo rằng có ít nhất một hàng được chọn
+                        showDeviceInfo(selectedRow);
+                    }
+                }
+            }
+        });
+    }
+    
+    
+    private void showDeviceInfo(int row) {
+        DefaultTableModel model = (DefaultTableModel) table_device.getModel();
+        int deviceID = (int) model.getValueAt(row, 0); // Lấy mã thiết bị từ hàng đã chọn
+        device selectedDevice = null;
+        
+        // Lấy thông tin của thiết bị đã chọn từ BLL
+        ArrayList<device> devices = deviceBLL.getAllDevices();
+        for (device d : devices) {
+            if (d.getMaTB() == deviceID) {
+                selectedDevice = d;
+                break;
+            }
+        }
+        
+        // Hiển thị thông tin của thiết bị đã chọn trên các textfield
+        if (selectedDevice != null) {
+            text_device_id.setText(String.valueOf(selectedDevice.getMaTB()));
+            text_device_name.setText(selectedDevice.getTenTB());
+            text_device_description.setText(selectedDevice.getMotaTB());
+        }
+    }
+        
+    
+    private void loadDevicesToTable() {
+        DefaultTableModel model = (DefaultTableModel) table_device.getModel();
+        model.setRowCount(0); // Clear table
+
+        ArrayList<device> devices = deviceBLL.getAllDevices();
+        for (device d : devices) {
+            model.addRow(new Object[]{
+                d.getMaTB(),
+                d.getTenTB(),
+                d.getMotaTB()
+            });
+        }
     }
 
     /**
@@ -98,7 +166,11 @@ public class device_management extends javax.swing.JInternalFrame {
 
         jLabel16.setText("Mã thiết bị: ");
 
-        text_device_id.setEnabled(false);
+        text_device_id.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                text_device_idActionPerformed(evt);
+            }
+        });
 
         jLabel17.setText("Tên thiết bị:");
 
@@ -149,10 +221,25 @@ public class device_management extends javax.swing.JInternalFrame {
         jPanel13.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         button_add_device.setText("Thêm mới");
+        button_add_device.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_add_deviceActionPerformed(evt);
+            }
+        });
 
         button_update_device.setText("Cập nhật");
+        button_update_device.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_update_deviceActionPerformed(evt);
+            }
+        });
 
         button_import_excel_device.setText("Import excel");
+        button_import_excel_device.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_import_excel_deviceActionPerformed(evt);
+            }
+        });
 
         button_delete_device.setText("Xóa");
         button_delete_device.addActionListener(new java.awt.event.ActionListener() {
@@ -162,8 +249,18 @@ public class device_management extends javax.swing.JInternalFrame {
         });
 
         button_refresh_device.setText("Làm mới");
+        button_refresh_device.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_refresh_deviceActionPerformed(evt);
+            }
+        });
 
         button_close_device.setText("Đóng");
+        button_close_device.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_close_deviceActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel13Layout = new javax.swing.GroupLayout(jPanel13);
         jPanel13.setLayout(jPanel13Layout);
@@ -290,7 +387,7 @@ public class device_management extends javax.swing.JInternalFrame {
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 738, Short.MAX_VALUE)
+            .addGap(0, 739, Short.MAX_VALUE)
             .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel4Layout.createSequentialGroup()
                     .addGap(0, 12, Short.MAX_VALUE)
@@ -331,13 +428,179 @@ public class device_management extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+     private void clearFields() {
+        text_device_id.setText("");
+        text_device_name.setText("");
+        text_device_description.setText("");
+    }
     private void text_device_descriptionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_text_device_descriptionActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_text_device_descriptionActionPerformed
 
     private void button_delete_deviceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_delete_deviceActionPerformed
         // TODO add your handling code here:
+        try {
+            int selectedRow = table_device.getSelectedRow();
+            if (selectedRow != -1) {
+                DefaultTableModel model = (DefaultTableModel) table_device.getModel();
+                int deviceID = (int) model.getValueAt(selectedRow, 0); // Lấy mã thiết bị từ hàng đã chọn
+                
+                // Xác nhận xóa thiết bị
+                int confirm = JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn muốn xóa thiết bị này?", "Xác nhận xóa", JOptionPane.YES_NO_OPTION);
+                if (confirm == JOptionPane.YES_OPTION) {
+                    deviceBLL.deleteDevice(deviceID);
+                    model.removeRow(selectedRow); // Xóa hàng khỏi bảng
+                    clearFields(); // Xóa nội dung trên các textfield
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "Vui lòng chọn một thiết bị để xóa.", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Lỗi xóa thiết bị: " + e.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_button_delete_deviceActionPerformed
+
+    private void text_device_idActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_text_device_idActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_text_device_idActionPerformed
+
+    private void button_add_deviceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_add_deviceActionPerformed
+        // TODO add your handling code here:
+       
+        try {
+            int deviceID = Integer.parseInt(text_device_id.getText());
+            String deviceName = text_device_name.getText();
+            String deviceDescription = text_device_description.getText();
+            
+            // Kiểm tra xem tên và mô tả thiết bị có được nhập hay không
+            if(deviceName.isEmpty() || deviceDescription.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Tên và mô tả thiết bị không được để trống.", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            // Kiểm tra xem mã thiết bị đã tồn tại chưa
+            for (device d : deviceBLL.getAllDevices()) {
+                if (d.getMaTB() == deviceID) {
+                    JOptionPane.showMessageDialog(this, "Mã thiết bị đã tồn tại!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                    return; // Kết thúc phương thức nếu mã đã tồn tại
+                }
+            }
+
+            device newDevice = new device(deviceID, deviceName, deviceDescription);
+
+            deviceBLL.addDevice(newDevice);
+
+            loadDevicesToTable();
+            
+            // Sau khi thêm thành công, làm trống các textfield
+            clearFields();
+            JOptionPane.showMessageDialog(this, "Device added successfully.");
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Please enter a valid device ID.", "Error", JOptionPane.ERROR_MESSAGE);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error adding device: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_button_add_deviceActionPerformed
+
+    private void button_close_deviceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_close_deviceActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+    }//GEN-LAST:event_button_close_deviceActionPerformed
+
+    private void button_update_deviceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_update_deviceActionPerformed
+        // TODO add your handling code here:
+        try {
+        // Lấy thông tin từ các textfield
+        int deviceID = Integer.parseInt(text_device_id.getText());
+        String deviceName = text_device_name.getText();
+        String deviceDescription = text_device_description.getText();
+        
+        // Kiểm tra xem tên và mô tả thiết bị có được nhập hay không
+        if(deviceName.isEmpty() || deviceDescription.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Tên và mô tả thiết bị không được để trống.", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        // Kiểm tra xem thiết bị có tồn tại trong danh sách hay không
+        boolean deviceExists = false;
+        for (device d : deviceBLL.getAllDevices()) {
+            if (d.getMaTB() == deviceID) {
+                deviceExists = true;
+                break;
+            }
+        }
+        if (!deviceExists) {
+            JOptionPane.showMessageDialog(this, "Thiết bị không tồn tại.", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        // Tạo đối tượng thiết bị mới với thông tin được cập nhật
+        device updatedDevice = new device(deviceID, deviceName, deviceDescription);
+
+        // Gọi phương thức cập nhật thiết bị từ BLL
+        deviceBLL.updateDevice(deviceID, updatedDevice);
+
+        // Cập nhật lại bảng hiển thị thiết bị
+        loadDevicesToTable();
+         // Sau khi thêm thành công, làm trống các textfield
+            clearFields();
+        
+        // Hiển thị thông báo thành công
+        JOptionPane.showMessageDialog(this, "Thông tin thiết bị đã được cập nhật thành công.");
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Vui lòng nhập một ID thiết bị hợp lệ.", "Lỗi", JOptionPane.ERROR_MESSAGE);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Lỗi khi cập nhật thông tin thiết bị: " + e.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_button_update_deviceActionPerformed
+
+    private void button_refresh_deviceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_refresh_deviceActionPerformed
+        // TODO add your handling code here:
+        clearFields();
+    }//GEN-LAST:event_button_refresh_deviceActionPerformed
+
+    private void button_import_excel_deviceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_import_excel_deviceActionPerformed
+        // TODO add your handling code here:
+        JFileChooser fileChooser = new JFileChooser();
+        int result = fileChooser.showOpenDialog(this);
+        if (result == JFileChooser.APPROVE_OPTION) {
+            File selectedFile = fileChooser.getSelectedFile();
+            try {
+                FileInputStream fileInputStream = new FileInputStream(selectedFile);
+                XSSFWorkbook workbook = new XSSFWorkbook(fileInputStream);
+                XSSFSheet sheet = workbook.getSheetAt(0);
+
+                ArrayList<device> newDevices = new ArrayList<>();
+
+                for (org.apache.poi.ss.usermodel.Row row : sheet) {
+                    if (row.getRowNum() == 0) {
+                        continue; // Bỏ qua dòng tiêu đề
+                    }
+                    int deviceID = (int) row.getCell(0).getNumericCellValue();
+                    String deviceName = row.getCell(1).getStringCellValue();
+                    String deviceDescription = row.getCell(2).getStringCellValue();
+
+                    device newDevice = new device(deviceID, deviceName, deviceDescription);
+                    newDevices.add(newDevice);
+                }
+
+                // Thêm danh sách thiết bị mới vào cơ sở dữ liệu
+                deviceBLL.addDevices(newDevices);
+
+                // Cập nhật bảng hiển thị
+                loadDevicesToTable();
+
+                JOptionPane.showMessageDialog(this, "Import thành công từ file Excel.");
+
+                workbook.close();
+                fileInputStream.close();
+            } catch (IOException e) {
+                JOptionPane.showMessageDialog(this, "Lỗi khi đọc file Excel: " + e.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Lỗi khi import dữ liệu từ Excel: " + e.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }//GEN-LAST:event_button_import_excel_deviceActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

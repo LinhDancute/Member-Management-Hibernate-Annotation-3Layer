@@ -110,9 +110,6 @@ public class member_BLL {
     //IMPORT EXCEL
     public void import_excel(ArrayList<member> member) throws IOException, Exception {
         for (member m : member) {
-            if (data.is_member_existed(m.getMaTV())) {
-                throw new Exception("Mã thành viên đã tồn tại: " + m.getMaTV());
-            }
             data.add_member(m);
         }
     }
@@ -128,5 +125,9 @@ public class member_BLL {
 
     public String get_member_name(int member_id) {
         return data.get_member_name_by_member_id(member_id);
+    }
+
+    public member get_member_by_member_id(int member_id) {
+        return data.get_member_by_member_id(member_id);
     }
 }

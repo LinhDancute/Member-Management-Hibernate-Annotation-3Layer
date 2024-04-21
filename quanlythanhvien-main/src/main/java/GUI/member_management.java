@@ -23,7 +23,12 @@ import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
-import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import java.util.Iterator;
+import org.apache.poi.ss.usermodel.CellType;
+import org.apache.poi.ss.usermodel.CellValue;
+import org.apache.poi.ss.usermodel.FormulaEvaluator;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
@@ -44,6 +49,9 @@ public class member_management extends javax.swing.JInternalFrame {
                 filter_table();
             });
             load_batch(combobox_d_batch);
+            load_department(combobox_department);
+            load_major(combobox_major);
+
             
             
             //LẮNG NGHE KHÓA -> HIỆN KHOA PHÙ HỢP
@@ -326,10 +334,6 @@ public class member_management extends javax.swing.JInternalFrame {
                 text_phone_numberActionPerformed(evt);
             }
         });
-
-        combobox_department.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "GDTH", "QLGD", "QTKD", "NT", "CNTT", "HTTT", "ATTT", "SP", "KT", "" }));
-
-        combobox_major.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "GDTH", "TLH", "QTKD", "CNTT", "SPA", "SPT", "KT", "KTPM", "NNA", "TT", "QTKS", "KDQT", "KDTM" }));
 
         text_password.setEnabled(false);
 
@@ -732,53 +736,150 @@ public class member_management extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_button_close_memberActionPerformed
 
     private void button_import_excel_memberActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_import_excel_memberActionPerformed
+        boolean continue_import = true;
         JFileChooser file_chooser = new JFileChooser();
         int result = file_chooser.showOpenDialog(this);
         if (result == JFileChooser.APPROVE_OPTION) {
-            File selectedFile = file_chooser.getSelectedFile();
-            try {
-                FileInputStream file_input_stream = new FileInputStream(selectedFile);
-                XSSFWorkbook workbook = new XSSFWorkbook(file_input_stream);
+            File selected_file = file_chooser.getSelectedFile();
+            try (FileInputStream file_input_stream = new FileInputStream(selected_file);
+                 XSSFWorkbook workbook = new XSSFWorkbook(file_input_stream)) {
+
                 XSSFSheet sheet = workbook.getSheetAt(0);
+                ArrayList<member> new_member = new ArrayList<>();
+                int rowIndex = 0;
+                for (Row row : sheet) {
+                    if (row == null) {
+                        continue;
+                    }
+                    if (rowIndex == 0) {
+                        rowIndex++;
+                        continue;
+                    }
+                    Iterator<Cell> cellIterator = row.iterator();
+                    int cellIndex = 0;
+                    member m = new member();
+                    while (cellIterator.hasNext()) {
+                        Cell cell = cellIterator.next();
+                        switch (cellIndex) {
+                            case 0 -> {
+                                if (cell.getCellType() == CellType.NUMERIC) {
+                                    m.setMaTV((int) cell.getNumericCellValue());
+                                    System.out.println("Row " + rowIndex + ", Column " + cellIndex + ": Numeric value - " + cell.getNumericCellValue());
+                                } else {
+                                    System.out.println("Unknown cell type at Row " + rowIndex + ", Column " + cellIndex + ": " + cell.getCellType());
+                                }
+                            }
+                            case 1 -> {
+                                if (cell.getCellType() == CellType.STRING) {
+                                    m.setHoTen(cell.getStringCellValue());
+                                    System.out.println("Row " + rowIndex + ", Column " + cellIndex + ": String value - " + cell.getStringCellValue());
+                                } else {
+                                    System.out.println("Unknown cell type at Row " + rowIndex + ", Column " + cellIndex + ": " + cell.getCellType());
+                                }
+                            }
+                            case 2 -> {
+                                if (cell.getCellType() == CellType.STRING) {
+                                    m.setKhoa(cell.getStringCellValue());
+                                    System.out.println("Row " + rowIndex + ", Column " + cellIndex + ": String value - " + cell.getStringCellValue());
+                                } else {
+                                    System.out.println("Unknown cell type at Row " + rowIndex + ", Column " + cellIndex + ": " + cell.getCellType());
+                                }
+                            }
+                            case 3 -> {
+                                if (cell.getCellType() == CellType.STRING) {
+                                    m.setNganh(cell.getStringCellValue());
+                                    System.out.println("Row " + rowIndex + ", Column " + cellIndex + ": String value - " + cell.getStringCellValue());
+                                } else {
+                                    System.out.println("Unknown cell type at Row " + rowIndex + ", Column " + cellIndex + ": " + cell.getCellType());
+                                }
+                            }
+                            case 4 -> {
+                                switch (cell.getCellType()) {
+                                    case STRING:
+                                        m.setSDT(cell.getStringCellValue());
+                                        System.out.println("Row " + rowIndex + ", Column " + cellIndex + ": String value - " + cell.getStringCellValue());
+                                        break;
+                                    case NUMERIC:
+                                        m.setSDT(String.valueOf((long) cell.getNumericCellValue()));
+                                        System.out.println("Row " + rowIndex + ", Column " + cellIndex + ": Numeric value - " + cell.getNumericCellValue());
+                                        break;
+                                    case FORMULA:
+                                        FormulaEvaluator evaluator = workbook.getCreationHelper().createFormulaEvaluator();
+                                        CellValue cellValue = evaluator.evaluate(cell);
+                                        m.setSDT(cellValue.getStringValue());
+                                        break;
+                                    default:
+                                        System.out.println("Unknown cell type at Row " + rowIndex + ", Column " + cellIndex + ": " + cell.getCellType());
+                                        break;
+                                }
+                            }
 
-                ArrayList<member> new_members = new ArrayList<>();
+                            case 5 -> {
+                                switch (cell.getCellType()) {
+                                    case STRING:
+                                        m.setPassword(cell.getStringCellValue());
+                                        System.out.println("Row " + rowIndex + ", Column " + cellIndex + ": String value - " + cell.getStringCellValue());
+                                        break;
+                                    case NUMERIC:
+                                        m.setPassword(String.valueOf((long) cell.getNumericCellValue()));
+                                        System.out.println("Row " + rowIndex + ", Column " + cellIndex + ": Numeric value - " + cell.getNumericCellValue());
+                                        break;
+                                    default:
+                                        System.out.println("Unknown cell type at Row " + rowIndex + ", Column " + cellIndex + ": " + cell.getCellType());
+                                        break;
+                                }
+                            }
 
-                for (int i = 1; i <= sheet.getLastRowNum(); i++) {
-                    XSSFRow row = sheet.getRow(i);
-
-                    String MaTV = String.valueOf((int) row.getCell(0).getNumericCellValue());
-                    String HoTen = row.getCell(1).getStringCellValue();
-                    String Khoa = row.getCell(2).getStringCellValue();
-                    String Nganh = row.getCell(3).getStringCellValue();
-                    String SDT = row.getCell(4).getStringCellValue();
-                    String Password = row.getCell(5).getStringCellValue();
-                    String Email = row.getCell(6).getStringCellValue();
-
-                    member new_member = new member(Integer.parseInt(MaTV), HoTen, Khoa, Nganh, SDT, Password, Email);
-                    new_members.add(new_member);
+                            case 6 -> {
+                                if (cell.getCellType() == CellType.STRING) {
+                                    m.setEmail(cell.getStringCellValue());
+                                    System.out.println("Row " + rowIndex + ", Column " + cellIndex + ": String value - " + cell.getStringCellValue());
+                                } else {
+                                    System.out.println("Unknown cell type at Row " + rowIndex + ", Column " + cellIndex + ": " + cell.getCellType());
+                                }
+                            }
+                            default -> {
+                                System.out.println("Unknown cell type at Row " + rowIndex + ", Column " + cellIndex + ": " + cell.getCellType());
+                            }
+                        }
+                        cellIndex++;
+                    }
+                    if (m.getMaTV() != 0 && mem_BLL.is_member_existed(m.getMaTV())) {
+                        int choice = JOptionPane.showConfirmDialog(this, "Mã thành viên " + m.getMaTV() + " có tên thành viên là " + m.getHoTen() + " đã tồn tại. Bạn có muốn ghi đè?", "Xác nhận", JOptionPane.YES_NO_OPTION);
+                        if (choice == JOptionPane.YES_OPTION) {
+                            try {
+                                mem_BLL.update_member(m.getMaTV(), m);
+                            } catch (Exception ex) {
+                                Logger.getLogger(member_management.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                        } else {
+                            JOptionPane.showMessageDialog(this, "Hủy bỏ import excel thành công");
+                            continue_import = false; 
+                            break;
+                        }
+                    } else {
+                        new_member.add(m);
+                    }
+                    rowIndex++;
                 }
-
-                mem_BLL.import_excel(new_members);
-                refresh_database();
-                show_database();
-                JOptionPane.showMessageDialog(this, "Import thành công từ file Excel.");
+                if (continue_import) {
+                    try {
+                        mem_BLL.import_excel(new_member);
+                    } catch (Exception ex) {
+                        Logger.getLogger(member_management.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    refresh_database();
+                    show_database();
+                    JOptionPane.showMessageDialog(this, "Import thành công từ file Excel.");
+                }
             } catch (IOException e) {
                 JOptionPane.showMessageDialog(this, "Lỗi khi đọc file Excel: " + e.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(this, "Lỗi khi import dữ liệu từ Excel: " + e.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
             }
-        } 
-
+        }
     }//GEN-LAST:event_button_import_excel_memberActionPerformed
 
-    //                if (!existing_member_ids.isEmpty()) {
-//                    int choice = JOptionPane.showConfirmDialog(this, "Một số thành viên trong tệp Excel đã tồn tại trong CSDL. "
-//                            + "Bạn có muốn ghi đè chúng không?", 
-//                            "Xác nhận", JOptionPane.YES_NO_OPTION);
-//                    if (choice == JOptionPane.NO_OPTION) {
-//                        return; 
-//                    }
-//                }
     
     private void button_delete_all_memberActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_delete_all_memberActionPerformed
         int confirm = JOptionPane.showConfirmDialog(null, "Bạn chắc chắn muốn xóa?",

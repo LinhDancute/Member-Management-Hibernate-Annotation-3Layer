@@ -16,7 +16,7 @@ public class usage_information_BLL {
     static ArrayList<usage_information> list_usage_information;
     private usage_information_DAL data = new usage_information_DAL();
 
-    public static ArrayList get_list_usage_information() {
+    public static ArrayList<usage_information> get_list_usage_information() {
         return list_usage_information;
     }
 

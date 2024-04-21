@@ -26,10 +26,10 @@ public class usage_information_DAL {
         List<usage_information> usage_information_list = null;
         try (Session session = FACTORY.openSession()) {
             transaction = session.beginTransaction();
-            String hql = "SELECT ui.MaTT, ui.thanhvien.MaTV, ui.TGVao FROM usage_information ui";
+            String hql = "FROM usage_information ui ";
             usage_information_list = session.createQuery(hql).list();
             transaction.commit();
-        } catch (Exception e){
+        } catch (Exception e) {
             if (transaction != null) {
                 transaction.rollback();
             }
@@ -38,18 +38,17 @@ public class usage_information_DAL {
         return usage_information_list;
     }
 
-    
     //THÊM
     public void add_income_member_information(usage_information income_member) throws Exception {
         try (Session session = FACTORY.openSession()) {
             Transaction transaction = session.beginTransaction();
-            income_member.setTGVao(LocalDateTime.now());
             session.save(income_member);
             transaction.commit();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
 
     //XÓA
     public void delete_income_member_information(int usage_information_id) throws Exception {

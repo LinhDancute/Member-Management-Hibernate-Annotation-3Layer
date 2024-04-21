@@ -40,11 +40,13 @@ public class member {
     @Column(name = "Nganh")
     public String Nganh;
     
-    @Column(unique = true, nullable = true)
+    @Column(name = "SDT", unique = true, nullable = true)
     public String SDT;
+    
+    @Column(name = "Password")
     public String Password;
     
-    @Column(unique = true, nullable = true)
+    @Column(name = "Email", unique = true, nullable = true)
     public String Email;
 
     @OneToMany(mappedBy = "thanhvien")
@@ -58,6 +60,10 @@ public class member {
         this.SDT = SDT;
         this.Password = Password;
         this.Email = Email;
+    }
+    
+     public member(int MaTV) {
+        this.MaTV = MaTV;
     }
 
     public member() {

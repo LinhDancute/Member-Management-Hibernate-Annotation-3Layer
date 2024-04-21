@@ -15,7 +15,6 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import lombok.Getter;
 import lombok.Setter;
 /**
@@ -69,11 +68,5 @@ public class usage_information {
     }
     
     public usage_information() {
-    }
-    
-    public String get_formatted_TGVao() {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d/yy H:mm");
-
-        return TGVao.format(formatter);
     }
 }
