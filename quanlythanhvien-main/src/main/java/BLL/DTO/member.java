@@ -61,6 +61,8 @@ public class member {
     }
 
     public member() {
+    // Constructor mặc định không có tham số
     }
+
     
 }

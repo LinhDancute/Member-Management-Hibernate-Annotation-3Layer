@@ -54,6 +54,6 @@ Contributor(s):
     <mapping class="BLL.DTO.member"></mapping>
     <mapping class="BLL.DTO.device"></mapping>
     <mapping class="BLL.DTO.usage_information"></mapping>
-    <mapping class="BLL.DTO.handle_violations"></mapping>
+    <mapping class="BLL.DTO.handle_violations_DTO"></mapping>
   </session-factory>
 </hibernate-configuration>

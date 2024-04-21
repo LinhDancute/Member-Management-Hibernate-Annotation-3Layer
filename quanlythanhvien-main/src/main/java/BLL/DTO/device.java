@@ -27,7 +27,7 @@ public class device {
 
     @Id
     @Column(name = "MaTB")
-    public int MaTB;
+    public String MaTB;
     
     @Column(name = "TenTB")
     public String TenTB;
@@ -38,7 +38,7 @@ public class device {
     @OneToMany(mappedBy = "thietbi")
     private Set<usage_information> thongtinsd;
     
-    public device(int MaTB, String TenTB, String MotaTB) {
+    public device(String MaTB, String TenTB, String MotaTB) {
         this.MaTB = MaTB;
         this.TenTB = TenTB;
         this.MotaTB = MotaTB;

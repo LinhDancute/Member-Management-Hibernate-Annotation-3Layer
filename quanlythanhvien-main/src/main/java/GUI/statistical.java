@@ -4,18 +4,113 @@
  */
 package GUI;
 
+import BLL.DTO.handle_violations_DTO;
+import BLL.violation_statistic_BLL;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.ArrayList;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.table.DefaultTableModel;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
 /**
  *
  * @author ACER
  */
 public class statistical extends javax.swing.JInternalFrame {
+    private final violation_statistic_BLL bll = new violation_statistic_BLL();
+    
 
     /**
      * Creates new form statistical
      */
     public statistical() {
         initComponents();
+        loadDataToTable();
+        combobox_statistical_status.addActionListener(new ActionListener() {
+        public void actionPerformed(ActionEvent e) {
+            String selectedStatus = combobox_statistical_status.getSelectedItem().toString();
+            if (selectedStatus.equals("Đang xử lý")) {
+                // Hiển thị tất cả thông tin
+                loadDataToTable();
+                text_statistical_money.setText("");
+            } else if (selectedStatus.equals("Đã xử lý")) {
+                // Hiển thị thông tin những xử lý có trạng thái là 0
+                loadResolvedDataToTable();
+                double totalMoney = violation_statistic_BLL.calculateTotalMoneyOfResolvedViolations();
+                text_statistical_money.setText(String.valueOf(totalMoney));
+            }
+        }
+     });
     }
+    
+   
+    
+    private void loadResolvedDataToTable(){
+        // Trong hàm khởi tạo hoặc hàm khởi động của giao diện
+        violation_statistic_BLL bll = new violation_statistic_BLL();
+        ArrayList<handle_violations_DTO> resolvedViolations = bll.getResolvedHandleViolations();
+        // Hiển thị dữ liệu trên bảng
+
+        // Ví dụ về cách hiển thị dữ liệu lên bảng (cần điều chỉnh phù hợp với giao diện của bạn)
+        DefaultTableModel model = (DefaultTableModel) table_statistical_handle_violations.getModel();
+        model.setRowCount(0);
+        for (handle_violations_DTO violation : resolvedViolations) {
+            Object[] row = {violation.getMaXL(), violation.getHinhThucXL(), violation.getSoTien(), violation.getNgayXL()};
+            model.addRow(row);
+        }
+        
+    }
+    private void loadDataToTable(){
+        // Trong hàm khởi tạo hoặc hàm khởi động của giao diện
+        violation_statistic_BLL bll = new violation_statistic_BLL();
+        ArrayList<handle_violations_DTO> unresolvedViolations = bll.getUnresolvedHandleViolations();
+        // Hiển thị dữ liệu trên bảng
+
+        // Ví dụ về cách hiển thị dữ liệu lên bảng (cần điều chỉnh phù hợp với giao diện của bạn)
+        DefaultTableModel model = (DefaultTableModel) table_statistical_handle_violations.getModel();
+        model.setRowCount(0);
+        for (handle_violations_DTO violation : unresolvedViolations) {
+            Object[] row = {violation.getMaXL(), violation.getHinhThucXL(), violation.getSoTien(), violation.getNgayXL()};
+            model.addRow(row);
+        }
+    }
+    
+    
+    // Phương thức để xuất dữ liệu vào tệp Excel
+    private boolean exportDataToExcel(String filePath, ArrayList<handle_violations_DTO> violations) {
+        try {
+            XSSFWorkbook workbook = new XSSFWorkbook();
+            XSSFSheet sheet = workbook.createSheet("Dữ liệu");
+            
+            // Viết dữ liệu vào các ô trong bảng
+            int rowIndex = 0;
+            for (handle_violations_DTO violation : violations) {
+                Row row = sheet.createRow(rowIndex++);
+                row.createCell(0).setCellValue(violation.getMaXL());
+                row.createCell(1).setCellValue(violation.getHinhThucXL());
+                row.createCell(2).setCellValue(violation.getSoTien());
+                // Tiếp tục thêm dữ liệu cho các cột khác nếu cần
+            }
+            
+            // Lưu workbook vào tệp
+            try (FileOutputStream fileOut = new FileOutputStream(filePath)) {
+                workbook.write(fileOut);
+                return true;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -422,9 +517,8 @@ public class statistical extends javax.swing.JInternalFrame {
                     .addComponent(text_find_statistical_device, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel15)
-                        .addComponent(button_statistical_device))
+                    .addComponent(button_statistical_device)
+                    .addComponent(jLabel15)
                     .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addComponent(jLabel22)
                         .addComponent(date_statistical_to_device, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -513,7 +607,7 @@ public class statistical extends javax.swing.JInternalFrame {
 
         jLabel20.setText("Tình trạng xử lý:");
 
-        combobox_statistical_status.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Đã xử lý", "Đang xử lý" }));
+        combobox_statistical_status.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Đang xử lý"  ,"Đã xử lý"}));
 
         jLabel21.setText("Tổng bồi thường:");
 
@@ -559,14 +653,24 @@ public class statistical extends javax.swing.JInternalFrame {
                 {null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Mã xử lý", "Hình thức xử lý", "Số tiền", "Ngày xử lý"
             }
         ));
         jScrollPane4.setViewportView(table_statistical_handle_violations);
 
         button_statistical_export_excel_handle_violations.setText("Export Excel");
+        button_statistical_export_excel_handle_violations.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_statistical_export_excel_handle_violationsActionPerformed(evt);
+            }
+        });
 
         button_close_statistical_handle_violations.setText("Đóng");
+        button_close_statistical_handle_violations.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_close_statistical_handle_violationsActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -618,7 +722,7 @@ public class statistical extends javax.swing.JInternalFrame {
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 501, Short.MAX_VALUE)
+            .addComponent(jTabbedPane1)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -646,6 +750,47 @@ public class statistical extends javax.swing.JInternalFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void button_close_statistical_handle_violationsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_close_statistical_handle_violationsActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+    }//GEN-LAST:event_button_close_statistical_handle_violationsActionPerformed
+
+    private void button_statistical_export_excel_handle_violationsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_statistical_export_excel_handle_violationsActionPerformed
+        // TODO add your handling code here:
+        // Khởi tạo JFileChooser
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("Chọn nơi lưu tệp");
+        
+        // Tạo bộ lọc để chỉ hiển thị các tệp Excel
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("Excel Files", "xlsx");
+        fileChooser.setFileFilter(filter);
+        
+        // Hiển thị hộp thoại chọn tệp và lấy đường dẫn của thư mục lưu
+        int userSelection = fileChooser.showSaveDialog(this);
+        if (userSelection == JFileChooser.APPROVE_OPTION) {
+            File fileToSave = fileChooser.getSelectedFile();
+            String filePath = fileToSave.getAbsolutePath();
+            
+            // Kiểm tra phần mở rộng của tệp
+            if (!filePath.toLowerCase().endsWith(".xlsx")) {
+                filePath += ".xlsx"; // Nếu không có phần mở rộng, tự động thêm phần mở rộng .xlsx
+            }
+            
+            // Lấy dữ liệu từ BLL
+            ArrayList<handle_violations_DTO> violations = bll.getViolationStatistics(1); // Thay 1 bằng trạng thái mong muốn
+            
+            // Xuất dữ liệu vào tệp Excel
+            boolean exportSuccess = exportDataToExcel(filePath, violations);
+            
+            // Hiển thị thông báo kết quả cho người dùng
+            if (exportSuccess) {
+                JOptionPane.showMessageDialog(this, "Xuất dữ liệu thành công.", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(this, "Xuất dữ liệu không thành công.", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }//GEN-LAST:event_button_statistical_export_excel_handle_violationsActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

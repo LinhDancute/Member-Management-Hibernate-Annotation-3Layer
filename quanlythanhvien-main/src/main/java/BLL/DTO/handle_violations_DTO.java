@@ -20,7 +20,7 @@ import lombok.Setter;
 @Getter
 @Entity
 @Table(name = "xuly")
-public class handle_violations {
+public class handle_violations_DTO {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "MaXL")
@@ -43,14 +43,32 @@ public class handle_violations {
     private member thanhvien;
     
     
-    public handle_violations(int MaXL, int MaTV, String HinhThucXL, double SoTien, Date NgayXL, int TrangThaiXL) {
+    public handle_violations_DTO(int MaXL, int MaTV, String HinhThucXL, double SoTien, Date NgayXL, int TrangThaiXL) {
         this.MaXL = MaXL;
         this.HinhThucXL = HinhThucXL;
         this.SoTien = SoTien;
         this.NgayXL = NgayXL;
         this.TrangThaiXL = TrangThaiXL;
     }
+    
+    public handle_violations_DTO(member thanhvien, String HinhThucXL, double SoTien, Date NgayXL, int TrangThaiXL) {
+        this.thanhvien = thanhvien;
+        this.HinhThucXL = HinhThucXL;
+        this.SoTien = SoTien;
+        this.NgayXL = NgayXL;
+        this.TrangThaiXL = TrangThaiXL;
+    }
+    
+    public handle_violations_DTO(int MaXL, member thanhvien, String HinhThucXL, double SoTien, Date NgayXL, int TrangThaiXL) {
+        this.MaXL = MaXL;
+        this.thanhvien = thanhvien;
+        this.HinhThucXL = HinhThucXL;
+        this.SoTien = SoTien;
+        this.NgayXL = NgayXL;
+        this.TrangThaiXL = TrangThaiXL;
+    }
 
-    public handle_violations() {
+
+    public handle_violations_DTO() {
     }
 }

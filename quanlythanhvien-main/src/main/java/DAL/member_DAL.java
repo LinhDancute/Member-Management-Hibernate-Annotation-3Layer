@@ -10,6 +10,7 @@ import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 
 /**
  *
@@ -17,6 +18,25 @@ import org.hibernate.Transaction;
  */
 public class member_DAL {
     static final SessionFactory FACTORY = hibernate_util.getSessionFactory();
+    
+    public List<member> getAllMembers() {
+        try (Session session = hibernate_util.getSessionFactory().openSession()) {
+            return session.createQuery("from member", member.class).list();
+        }
+    }
+    
+    public member getMemberByName(String memberName) {
+        try (Session session = hibernate_util.getSessionFactory().openSession()) {
+            Query<member> query = session.createQuery("from member where HoTen = :name", member.class);
+            query.setParameter("name", memberName);
+            List<member> members = query.list();
+            if (!members.isEmpty()) {
+                return members.get(0);
+            } else {
+                return null;
+            }
+        }
+    }
     
     public List<member> load_member() {
         Transaction transaction = null;
