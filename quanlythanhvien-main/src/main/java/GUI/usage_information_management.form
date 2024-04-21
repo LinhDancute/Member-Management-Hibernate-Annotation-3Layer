@@ -266,7 +266,7 @@
                                       <Group type="103" groupAlignment="0" attributes="0">
                                           <Group type="102" alignment="0" attributes="0">
                                               <EmptySpace min="-2" pref="13" max="-2" attributes="0"/>
-                                              <Component id="text_service_id1" max="32767" attributes="0"/>
+                                              <Component id="text_service_id" max="32767" attributes="0"/>
                                           </Group>
                                           <Group type="102" alignment="0" attributes="0">
                                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
@@ -302,7 +302,7 @@
                                           <Group type="102" alignment="0" attributes="0">
                                               <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                                               <EmptySpace type="separate" max="-2" attributes="0"/>
-                                              <Component id="jTextField1" min="-2" pref="195" max="-2" attributes="0"/>
+                                              <Component id="text_time_in" min="-2" pref="195" max="-2" attributes="0"/>
                                           </Group>
                                       </Group>
                                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
@@ -330,7 +330,7 @@
                               <EmptySpace min="-2" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
                                   <Component id="jLabel21" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="text_service_id1" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="text_service_id" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
@@ -350,7 +350,7 @@
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="103" groupAlignment="3" attributes="0">
                                       <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
-                                      <Component id="jTextField1" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="text_time_in" alignment="3" min="-2" max="-2" attributes="0"/>
                                       <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
                                   </Group>
                                   <Component id="jDateChooser1" min="-2" max="-2" attributes="0"/>
@@ -377,7 +377,7 @@
                         <Property name="text" type="java.lang.String" value="M&#xe3; th&#xf4;ng tin: "/>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JTextField" name="text_service_id1">
+                    <Component class="javax.swing.JTextField" name="text_service_id">
                       <Properties>
                         <Property name="enabled" type="boolean" value="false"/>
                       </Properties>
@@ -436,7 +436,7 @@
                         <Property name="text" type="java.lang.String" value="Th&#x1edd;i gian v&#xe0;o:"/>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JTextField" name="jTextField1">
+                    <Component class="javax.swing.JTextField" name="text_time_in">
                       <Properties>
                         <Property name="enabled" type="boolean" value="false"/>
                       </Properties>

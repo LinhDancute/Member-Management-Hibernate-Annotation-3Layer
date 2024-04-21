@@ -30,6 +30,7 @@ public class member_DAL {
         try (Session session = FACTORY.openSession()) {
             transaction = session.beginTransaction();
             mem_list = session.createQuery("FROM member").list();
+            System.out.println("list of members: "+mem_list);
             transaction.commit();
         } catch (Exception e){
             if (transaction != null) {

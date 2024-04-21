@@ -42,7 +42,7 @@ public class usage_information_management extends javax.swing.JInternalFrame {
         table_usage_information = new javax.swing.JTable();
         jPanel18 = new javax.swing.JPanel();
         jLabel21 = new javax.swing.JLabel();
-        text_service_id1 = new javax.swing.JTextField();
+        text_service_id = new javax.swing.JTextField();
         jLabel22 = new javax.swing.JLabel();
         jLabel24 = new javax.swing.JLabel();
         text_member_id_listen = new javax.swing.JTextField();
@@ -51,7 +51,7 @@ public class usage_information_management extends javax.swing.JInternalFrame {
         jLabel28 = new javax.swing.JLabel();
         text_service_id_listen = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        text_time_in = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jDateChooser1 = new com.toedter.calendar.JDateChooser();
         jLabel3 = new javax.swing.JLabel();
@@ -134,7 +134,7 @@ public class usage_information_management extends javax.swing.JInternalFrame {
 
         jLabel21.setText("Mã thông tin: ");
 
-        text_service_id1.setEnabled(false);
+        text_service_id.setEnabled(false);
 
         jLabel22.setText("Tên thành viên:");
 
@@ -166,7 +166,7 @@ public class usage_information_management extends javax.swing.JInternalFrame {
 
         jLabel1.setText("Thời gian vào:");
 
-        jTextField1.setEnabled(false);
+        text_time_in.setEnabled(false);
 
         jLabel2.setText("Thời gian đặt chỗ:");
 
@@ -200,7 +200,7 @@ public class usage_information_management extends javax.swing.JInternalFrame {
                         .addGroup(jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel18Layout.createSequentialGroup()
                                 .addGap(13, 13, 13)
-                                .addComponent(text_service_id1))
+                                .addComponent(text_service_id))
                             .addGroup(jPanel18Layout.createSequentialGroup()
                                 .addGroup(jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addGroup(jPanel18Layout.createSequentialGroup()
@@ -226,7 +226,7 @@ public class usage_information_management extends javax.swing.JInternalFrame {
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel18Layout.createSequentialGroup()
                                 .addComponent(jLabel1)
                                 .addGap(18, 18, 18)
-                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(text_time_in, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2)
@@ -245,7 +245,7 @@ public class usage_information_management extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel21)
-                    .addComponent(text_service_id1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(text_service_id, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel22)
@@ -262,7 +262,7 @@ public class usage_information_management extends javax.swing.JInternalFrame {
                 .addGroup(jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel1)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(text_time_in, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel2))
                     .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -456,14 +456,14 @@ public class usage_information_management extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel19;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTable table_usage_information;
     private javax.swing.JTextField text_find_usage_information;
     private javax.swing.JTextField text_member_id_listen;
     private javax.swing.JTextField text_member_name;
-    private javax.swing.JTextField text_service_id1;
+    private javax.swing.JTextField text_service_id;
     private javax.swing.JTextField text_service_id_listen;
+    private javax.swing.JTextField text_time_in;
     // End of variables declaration//GEN-END:variables
 }

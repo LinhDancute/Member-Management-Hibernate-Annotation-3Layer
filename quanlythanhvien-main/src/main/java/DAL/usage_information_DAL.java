@@ -26,8 +26,9 @@ public class usage_information_DAL {
         List<usage_information> usage_information_list = null;
         try (Session session = FACTORY.openSession()) {
             transaction = session.beginTransaction();
-            String hql = "FROM usage_information ui ";
+            String hql = "SELECT ui FROM usage_information ui JOIN FETCH ui.thanhvien";
             usage_information_list = session.createQuery(hql).list();
+            System.out.println("list income member" + usage_information_list);
             transaction.commit();
         } catch (Exception e) {
             if (transaction != null) {

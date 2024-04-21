@@ -103,27 +103,49 @@ public class income_member_management extends javax.swing.JInternalFrame {
     //HIỂN THỊ DỮ LIỆU LÊN TABLE
     private void show_database() throws Exception {
         try {
-            if (usage_information_BLL.get_list_usage_information() == null) {
-                ArrayList<usage_information> usage_information_list = information_BLL.load_usage_information();
-                usage_information_BLL.set_list_usage_information(usage_information_list); 
+            List<usage_information> usage_information_list = usage_information_BLL.get_list_usage_information();
+            if (usage_information_list == null) {
+                usage_information_list = information_BLL.load_usage_information();
+                ArrayList<usage_information> usage_information_array_list = new ArrayList<>(usage_information_list);
+                usage_information_BLL.set_list_usage_information(usage_information_array_list);
             }
-            insert_header();
 
-            out_model(model, information_BLL.get_list_usage_information());
+            List<Object[]> usage_information_array_list = convert_usage_information_to_arraylist(usage_information_list);
+
+            insert_header();
+            out_model(model, usage_information_array_list);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Không thể load dữ liệu",
                     "Thông báo lỗi", JOptionPane.ERROR_MESSAGE);
             e.printStackTrace(); 
         }
     }
+
+
+    //ĐƯA VỀ ARRAYLIST
+    private List<Object[]> convert_usage_information_to_arraylist(List<usage_information> usage_information_list) {
+        List<Object[]> result = new ArrayList<>();
+        for (usage_information usage : usage_information_list) {
+            Object[] data = new Object[] {
+                usage.getMaTT(),
+                usage.getThanhvien().MaTV,
+                usage.getTGVao()
+            };
+            result.add(data);
+        }
+        return result;
+    }
+
+
     
     //LOAD LẠI DỮ LIỆU
     private void refresh_database() throws Exception {
         try {
-            ArrayList<usage_information> usage_information_list = information_BLL.load_usage_information();
-            usage_information_BLL.set_list_usage_information(usage_information_list);
+            usage_information_BLL.set_list_usage_information(information_BLL.load_usage_information());
+            List<Object[]> usage_information_array_list = convert_usage_information_to_arraylist(information_BLL.load_usage_information());
+
             insert_header();
-            out_model(model, usage_information_BLL.get_list_usage_information());
+            out_model(model, usage_information_array_list);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Không thể load dữ liệu ",
                     "Thông Báo Lỗi", JOptionPane.ERROR_MESSAGE);
@@ -132,30 +154,28 @@ public class income_member_management extends javax.swing.JInternalFrame {
 
     //CHÈN HEADER
     private void insert_header() {
-        Vector header = new Vector();
+        Vector<String> header = new Vector<>();
         header.add("STT");
         header.add("Mã thông tin");
         header.add("Mã thành viên");
         header.add("Thời gian vào");
 
-        model = new DefaultTableModel(header, 0);
+        model = new DefaultTableModel(header, 0); 
+        table_income_member.setModel(model); 
     }
-    
-    // XUẤT RA TABLE TỪ ARRAYLIST
-    private void out_model(DefaultTableModel model, ArrayList<usage_information> usage_information){
-        Vector data;
-        model.setRowCount(0);
-        for (usage_information usage : usage_information){
-            data = new Vector();
-            data.add(usage.getMaTT());
-            data.add(usage.getThanhvien().MaTV);
-            data.add(usage.getTGVao());
-            model.addRow(data);
+
+    private void out_model(DefaultTableModel model, List<Object[]> usage_information) {
+        model.setRowCount(0); 
+        int stt = 1;
+        for (Object[] usage : usage_information) {
+            Vector<Object> data = new Vector<>();
+            data.add(stt++);
+            data.add(usage[0]);
+            data.add(usage[1]);
+            data.add(usage[2]);
+            model.addRow(data); 
         }
-        table_income_member.setModel(model);
     }
-
-
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -484,8 +504,10 @@ public class income_member_management extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(this, "Xóa thành công",
                 "Thông báo", JOptionPane.INFORMATION_MESSAGE);
 
+            List<Object[]> usage_information_array_list = convert_usage_information_to_arraylist(information_BLL.load_usage_information());
+
             insert_header();
-            out_model(model, usage_information_BLL.get_list_usage_information());
+            out_model(model, usage_information_array_list);
             clear_all();
 
         } catch (Exception ex) {
