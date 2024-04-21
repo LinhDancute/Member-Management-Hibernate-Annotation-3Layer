@@ -49,8 +49,10 @@ public class usage_information {
     @JoinColumn(name = "MaTV")
     private member thanhvien;
     
-    public usage_information(int MaTT, int MaTV, int MaTB, Date TGVao, Date TGMuon, Date TGTra, Date TGDatcho) {
+    public usage_information(int MaTT, member thanhvien, device thietbi, Date TGVao, Date TGMuon, Date TGTra,Date TGDatcho) {
         this.MaTT = MaTT;
+        this.thanhvien = thanhvien;
+        this.thietbi = thietbi;
         this.TGVao = TGVao;
         this.TGMuon = TGMuon;
         this.TGTra = TGTra;

@@ -4,6 +4,16 @@
  */
 package GUI;
 
+import BLL.DTO.device;
+import BLL.DTO.member;
+import BLL.DTO.usage_information;
+import BLL.usage_information_BLL;
+
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import java.util.ArrayList;
+import java.util.Vector;
+
 /**
  *
  * @author ACER
@@ -13,8 +23,66 @@ public class usage_information_management extends javax.swing.JInternalFrame {
     /**
      * Creates new form usage_information_management
      */
+    private DefaultTableModel model;
+    private usage_information_BLL usageInformationBll;
+
     public usage_information_management() {
         initComponents();
+        try {
+            usageInformationBll = new usage_information_BLL();
+            show_database();
+        } catch (Exception exception){
+            exception.printStackTrace();
+        }
+    }
+
+    private void show_database () throws Exception{
+        try{
+            if (usage_information_BLL.get_usage_information_list() == null){
+                ArrayList<usage_information> usage_information_list = usageInformationBll.load_usage_information_list();
+                usage_information_BLL.setUsage_information_list(usage_information_list);
+            }
+            insert_header();
+            out_model(model, usage_information_BLL.get_usage_information_list());
+        }catch (Exception exception){
+            JOptionPane.showMessageDialog(this, "Không thể tải dữ liệu",
+                    "Thông báo lỗi", JOptionPane.ERROR_MESSAGE);
+            exception.printStackTrace();
+        }
+    }
+
+    private void insert_header() {
+        Vector header = new Vector();
+        header.add("Mã thông tin");
+        header.add("Tên thành viên");
+        header.add("Tên thiết bị");
+        header.add("Thời gian vào");
+        header.add("Thời gian mượn");
+        header.add("Thời gian trả");
+        header.add("Thời gian đặt chỗ");
+
+        model = new DefaultTableModel(header, 0);
+    }
+
+    private void out_model(DefaultTableModel model, ArrayList<usage_information> usage_information){
+        Vector data;
+        model.setRowCount(0);
+        for (usage_information usage : usage_information){
+            data = new Vector();
+            data.add(usage.getMaTT());
+            data.add(usage.getThanhvien().HoTen);
+            if (usage.getThietbi() == null){
+                data.add("");
+            }else
+                data.add(usage.getThietbi().TenTB);
+            data.add(usage.getTGVao());
+            data.add(usage.getTGMuon());
+            data.add(usage.getTGTra());
+            data.add(usage.getTGDatcho());
+
+            model.addRow(data);
+        }
+        table_usage_information.setModel(model);
     }
 
     /**

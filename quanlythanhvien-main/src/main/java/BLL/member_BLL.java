@@ -6,7 +6,6 @@ package BLL;
 
 import BLL.DTO.member;
 import DAL.member_DAL;
-import com.mysql.cj.result.Row;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;

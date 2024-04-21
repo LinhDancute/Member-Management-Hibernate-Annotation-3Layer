@@ -22,7 +22,8 @@ public class hibernate_util {
     public static SessionFactory getSessionFactory(){
         return SESSION_FACTORY;
     }
-    public static void main(String args[]) {
+    public static void main(String args[]){
         getSessionFactory();
     }
 }
+
