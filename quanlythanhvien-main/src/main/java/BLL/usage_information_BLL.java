@@ -70,4 +70,13 @@ public class usage_information_BLL {
 
         return data.fetch_between_dates(start_date_time, end_date_time);
     }
+
+    public List<usage_information> statistical_income_member(Date start_date, Date end_date,String batch, String department) {
+        Instant start_instant = start_date.toInstant();
+        Instant end_instant = end_date.toInstant();
+        LocalDateTime start_date_time = LocalDateTime.ofInstant(start_instant, ZoneId.systemDefault());
+        LocalDateTime end_date_time = LocalDateTime.ofInstant(end_instant, ZoneId.systemDefault());
+
+        return data.statistical_income_member(start_date_time, end_date_time, batch, department);
+    }
 }

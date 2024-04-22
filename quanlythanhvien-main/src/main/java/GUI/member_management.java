@@ -52,8 +52,6 @@ public class member_management extends javax.swing.JInternalFrame {
             load_department(combobox_department);
             load_major(combobox_major);
 
-            
-            
             //LẮNG NGHE KHÓA -> HIỆN KHOA PHÙ HỢP
             combobox_d_batch.addItemListener(new ItemListener() {
                 @Override
@@ -746,62 +744,62 @@ public class member_management extends javax.swing.JInternalFrame {
 
                 XSSFSheet sheet = workbook.getSheetAt(0);
                 ArrayList<member> new_member = new ArrayList<>();
-                int rowIndex = 0;
+                int row_index = 0;
                 for (Row row : sheet) {
                     if (row == null) {
                         continue;
                     }
-                    if (rowIndex == 0) {
-                        rowIndex++;
+                    if (row_index == 0) {
+                        row_index++;
                         continue;
                     }
-                    Iterator<Cell> cellIterator = row.iterator();
-                    int cellIndex = 0;
+                    Iterator<Cell> cell_iterator = row.iterator();
+                    int cell_index = 0;
                     member m = new member();
-                    while (cellIterator.hasNext()) {
-                        Cell cell = cellIterator.next();
-                        switch (cellIndex) {
+                    while (cell_iterator.hasNext()) {
+                        Cell cell = cell_iterator.next();
+                        switch (cell_index) {
                             case 0 -> {
                                 if (cell.getCellType() == CellType.NUMERIC) {
                                     m.setMaTV((int) cell.getNumericCellValue());
-                                    System.out.println("Row " + rowIndex + ", Column " + cellIndex + ": Numeric value - " + cell.getNumericCellValue());
+                                    System.out.println("Row " + row_index + ", Column " + cell_index + ": Numeric value - " + cell.getNumericCellValue());
                                 } else {
-                                    System.out.println("Unknown cell type at Row " + rowIndex + ", Column " + cellIndex + ": " + cell.getCellType());
+                                    System.out.println("Unknown cell type at Row " + row_index + ", Column " + cell_index + ": " + cell.getCellType());
                                 }
                             }
                             case 1 -> {
                                 if (cell.getCellType() == CellType.STRING) {
                                     m.setHoTen(cell.getStringCellValue());
-                                    System.out.println("Row " + rowIndex + ", Column " + cellIndex + ": String value - " + cell.getStringCellValue());
+                                    System.out.println("Row " + row_index + ", Column " + cell_index + ": String value - " + cell.getStringCellValue());
                                 } else {
-                                    System.out.println("Unknown cell type at Row " + rowIndex + ", Column " + cellIndex + ": " + cell.getCellType());
+                                    System.out.println("Unknown cell type at Row " + row_index + ", Column " + cell_index + ": " + cell.getCellType());
                                 }
                             }
                             case 2 -> {
                                 if (cell.getCellType() == CellType.STRING) {
                                     m.setKhoa(cell.getStringCellValue());
-                                    System.out.println("Row " + rowIndex + ", Column " + cellIndex + ": String value - " + cell.getStringCellValue());
+                                    System.out.println("Row " + row_index + ", Column " + cell_index + ": String value - " + cell.getStringCellValue());
                                 } else {
-                                    System.out.println("Unknown cell type at Row " + rowIndex + ", Column " + cellIndex + ": " + cell.getCellType());
+                                    System.out.println("Unknown cell type at Row " + row_index + ", Column " + cell_index + ": " + cell.getCellType());
                                 }
                             }
                             case 3 -> {
                                 if (cell.getCellType() == CellType.STRING) {
                                     m.setNganh(cell.getStringCellValue());
-                                    System.out.println("Row " + rowIndex + ", Column " + cellIndex + ": String value - " + cell.getStringCellValue());
+                                    System.out.println("Row " + row_index + ", Column " + cell_index + ": String value - " + cell.getStringCellValue());
                                 } else {
-                                    System.out.println("Unknown cell type at Row " + rowIndex + ", Column " + cellIndex + ": " + cell.getCellType());
+                                    System.out.println("Unknown cell type at Row " + row_index + ", Column " + cell_index + ": " + cell.getCellType());
                                 }
                             }
                             case 4 -> {
                                 switch (cell.getCellType()) {
                                     case STRING:
                                         m.setSDT(cell.getStringCellValue());
-                                        System.out.println("Row " + rowIndex + ", Column " + cellIndex + ": String value - " + cell.getStringCellValue());
+                                        System.out.println("Row " + row_index + ", Column " + cell_index + ": String value - " + cell.getStringCellValue());
                                         break;
                                     case NUMERIC:
                                         m.setSDT(String.valueOf((long) cell.getNumericCellValue()));
-                                        System.out.println("Row " + rowIndex + ", Column " + cellIndex + ": Numeric value - " + cell.getNumericCellValue());
+                                        System.out.println("Row " + row_index + ", Column " + cell_index + ": Numeric value - " + cell.getNumericCellValue());
                                         break;
                                     case FORMULA:
                                         FormulaEvaluator evaluator = workbook.getCreationHelper().createFormulaEvaluator();
@@ -809,7 +807,7 @@ public class member_management extends javax.swing.JInternalFrame {
                                         m.setSDT(cellValue.getStringValue());
                                         break;
                                     default:
-                                        System.out.println("Unknown cell type at Row " + rowIndex + ", Column " + cellIndex + ": " + cell.getCellType());
+                                        System.out.println("Unknown cell type at Row " + row_index + ", Column " + cell_index + ": " + cell.getCellType());
                                         break;
                                 }
                             }
@@ -818,14 +816,14 @@ public class member_management extends javax.swing.JInternalFrame {
                                 switch (cell.getCellType()) {
                                     case STRING:
                                         m.setPassword(cell.getStringCellValue());
-                                        System.out.println("Row " + rowIndex + ", Column " + cellIndex + ": String value - " + cell.getStringCellValue());
+                                        System.out.println("Row " + row_index + ", Column " + cell_index + ": String value - " + cell.getStringCellValue());
                                         break;
                                     case NUMERIC:
                                         m.setPassword(String.valueOf((long) cell.getNumericCellValue()));
-                                        System.out.println("Row " + rowIndex + ", Column " + cellIndex + ": Numeric value - " + cell.getNumericCellValue());
+                                        System.out.println("Row " + row_index + ", Column " + cell_index + ": Numeric value - " + cell.getNumericCellValue());
                                         break;
                                     default:
-                                        System.out.println("Unknown cell type at Row " + rowIndex + ", Column " + cellIndex + ": " + cell.getCellType());
+                                        System.out.println("Unknown cell type at Row " + row_index + ", Column " + cell_index + ": " + cell.getCellType());
                                         break;
                                 }
                             }
@@ -833,16 +831,16 @@ public class member_management extends javax.swing.JInternalFrame {
                             case 6 -> {
                                 if (cell.getCellType() == CellType.STRING) {
                                     m.setEmail(cell.getStringCellValue());
-                                    System.out.println("Row " + rowIndex + ", Column " + cellIndex + ": String value - " + cell.getStringCellValue());
+                                    System.out.println("Row " + row_index + ", Column " + cell_index + ": String value - " + cell.getStringCellValue());
                                 } else {
-                                    System.out.println("Unknown cell type at Row " + rowIndex + ", Column " + cellIndex + ": " + cell.getCellType());
+                                    System.out.println("Unknown cell type at Row " + row_index + ", Column " + cell_index + ": " + cell.getCellType());
                                 }
                             }
                             default -> {
-                                System.out.println("Unknown cell type at Row " + rowIndex + ", Column " + cellIndex + ": " + cell.getCellType());
+                                System.out.println("Unknown cell type at Row " + row_index + ", Column " + cell_index + ": " + cell.getCellType());
                             }
                         }
-                        cellIndex++;
+                        cell_index++;
                     }
                     if (m.getMaTV() != 0 && mem_BLL.is_member_existed(m.getMaTV())) {
                         int choice = JOptionPane.showConfirmDialog(this, "Mã thành viên " + m.getMaTV() + " có tên thành viên là " + m.getHoTen() + " đã tồn tại. Bạn có muốn ghi đè?", "Xác nhận", JOptionPane.YES_NO_OPTION);
@@ -860,7 +858,7 @@ public class member_management extends javax.swing.JInternalFrame {
                     } else {
                         new_member.add(m);
                     }
-                    rowIndex++;
+                    row_index++;
                 }
                 if (continue_import) {
                     try {

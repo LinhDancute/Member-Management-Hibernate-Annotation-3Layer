@@ -11,11 +11,10 @@ import BLL.member_BLL;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Vector;
+import java.time.ZoneId;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -138,7 +137,15 @@ public class income_member_management extends javax.swing.JInternalFrame {
         return result;
     }
 
-
+    //HIỂN THỊ DỮ LIỆU LÊN TABLE SAU KHI LỌC NGÀY
+    private void filter_by_date(Date start_date, Date end_date) {
+        List<usage_information> filtered_income_member = information_BLL.filter_by_date(start_date, end_date);
+        clear_all();
+        model.setRowCount(0);
+        List<Object[]> usage_information_array_list = convert_usage_information_to_arraylist(filtered_income_member);
+        insert_header();
+        out_model(model, usage_information_array_list);
+    }
     
     //LOAD LẠI DỮ LIỆU
     private void refresh_database() throws Exception {
@@ -535,13 +542,15 @@ public class income_member_management extends javax.swing.JInternalFrame {
             Date start_date = date_from_income.getDate();
             Date end_date = date_to_income.getDate();
 
-            List<usage_information> filtered_income_member = information_BLL.filter_by_date(start_date, end_date);
-            clear_all();
-            
-            model.setRowCount(0);
-            List<Object[]> usage_information_array_list = convert_usage_information_to_arraylist(filtered_income_member);
-            insert_header();
-            out_model(model, usage_information_array_list);
+            if (start_date == null && end_date == null) {
+                LocalDate currentDate = LocalDate.now();
+                Date today = Date.from(currentDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+                filter_by_date(today, today);
+            } else if (start_date != null && end_date != null && !start_date.after(end_date)) {
+                filter_by_date(start_date, end_date);
+            } else {
+                JOptionPane.showMessageDialog(this, "Ngày bắt đầu phải trước ngày kết thúc.", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            }
         } catch (Exception ex) {
             Logger.getLogger(income_member_management.class.getName()).log(Level.SEVERE, null, ex);
         }

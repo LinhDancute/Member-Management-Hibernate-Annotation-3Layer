@@ -7,6 +7,10 @@ package GUI;
 import BLL.DTO.usage_information;
 import BLL.member_BLL;
 import BLL.usage_information_BLL;
+
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.List;
 import java.util.Vector;
 import javax.swing.JComboBox;
@@ -155,9 +159,20 @@ public class statistical extends javax.swing.JInternalFrame {
         }
     }
 
+    //HIỂN THỊ DỮ LIỆU LÊN TABLE SAU KHI LỌC NGÀY
+    private void statistical_member(Date start_date, Date end_date, String batch, String department) {
+        List<usage_information> filtered_income_member = information_BLL.statistical_income_member(start_date, end_date, batch, department);
+        clear_all_member();
+        model.setRowCount(0);
+        List<Object[]> usage_information_array_list = convert_usage_information_to_arraylist(filtered_income_member);
+        insert_header_member();
+        out_model_member(model, usage_information_array_list);
+    }
+
+
     //LỌC THÔNG TIN (INCOME MEMBER)
     private void filter_table_member() {
-        String keyword = text_find_statistical_member.getText().trim(); 
+        String keyword = text_find_statistical_member.getText().trim();
 
         if (!keyword.isEmpty()) {
             DefaultTableModel model = (DefaultTableModel) table_statistical_member.getModel();
@@ -345,6 +360,7 @@ public class statistical extends javax.swing.JInternalFrame {
         button_export_excel_statistical_member = new javax.swing.JButton();
         button_close_statistical_member = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
+        button_statistical_refresh = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
         jPanel7 = new javax.swing.JPanel();
@@ -401,6 +417,11 @@ public class statistical extends javax.swing.JInternalFrame {
         jLabel5.setText("Thông tin:");
 
         button_statistical_member.setText("Thống kê");
+        button_statistical_member.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_statistical_memberActionPerformed(evt);
+            }
+        });
 
         jLabel6.setText("CHỌN ĐIỀU KIỆN:");
 
@@ -423,25 +444,28 @@ public class statistical extends javax.swing.JInternalFrame {
                         .addComponent(jLabel5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(text_find_statistical_member))
-                    .addComponent(jLabel6)
                     .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addComponent(jLabel4)
-                        .addGap(30, 30, 30)
-                        .addComponent(combobox_statistical_batch, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(9, 9, 9)
-                        .addComponent(jLabel10)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(combobox_statistical_department, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel26)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(date_statistical_from_income, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel27)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(date_statistical_to_income, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(button_statistical_member, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel6)
+                            .addGroup(jPanel5Layout.createSequentialGroup()
+                                .addComponent(jLabel4)
+                                .addGap(30, 30, 30)
+                                .addComponent(combobox_statistical_batch, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(9, 9, 9)
+                                .addComponent(jLabel10)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(combobox_statistical_department, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel26)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(date_statistical_from_income, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel27)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(date_statistical_to_income, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(button_statistical_member, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel5Layout.setVerticalGroup(
@@ -498,6 +522,17 @@ public class statistical extends javax.swing.JInternalFrame {
 
         jLabel7.setText("SỐ LƯỢNG SINH VIÊN VÀO KHU HỌC TẬP ");
 
+        button_statistical_refresh.setText("Toàn bộ dữ liệu");
+        button_statistical_refresh.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                try {
+                    button_statistical_member_refreshActionPerformed(evt);
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -511,9 +546,11 @@ public class statistical extends javax.swing.JInternalFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(143, 143, 143)
                 .addComponent(button_export_excel_statistical_member)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(button_close_statistical_member)
-                .addGap(173, 173, 173))
+                .addGap(135, 135, 135)
+                .addComponent(button_statistical_refresh)
+                .addGap(114, 114, 114)
+                .addComponent(button_close_statistical_member, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel7)
@@ -531,7 +568,8 @@ public class statistical extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(button_export_excel_statistical_member)
-                    .addComponent(button_close_statistical_member))
+                    .addComponent(button_close_statistical_member)
+                    .addComponent(button_statistical_refresh))
                 .addContainerGap(11, Short.MAX_VALUE))
         );
 
@@ -1032,6 +1070,31 @@ public class statistical extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_button_export_excel_statistical_memberActionPerformed
 
+    private void button_statistical_memberActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_statistical_memberActionPerformed
+        try {
+            Date start_date = date_statistical_from_income.getDate();
+            Date end_date = date_statistical_to_income.getDate();
+            String department = combobox_statistical_batch.getSelectedItem().toString();
+            String major = combobox_statistical_department.getSelectedItem().toString();
+
+            if (start_date == null && end_date == null) {
+                LocalDate currentDate = LocalDate.now();
+                Date today = Date.from(currentDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+                statistical_member(today, today, department, major);
+            } else if (start_date != null && end_date != null && start_date.before(end_date)) {
+                statistical_member(start_date, end_date, department, major);
+            } else {
+                JOptionPane.showMessageDialog(this, "Ngày bắt đầu phải trước ngày kết thúc.", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(income_member_management.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_button_statistical_memberActionPerformed
+
+    private void button_statistical_member_refreshActionPerformed(java.awt.event.ActionEvent evt) throws Exception {//GEN-FIRST:event_button_statistical_refreshActionPerformed
+        refresh_database_member();
+    }//GEN-LAST:event_button_statistical_refreshActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton button_close_device;
@@ -1045,6 +1108,7 @@ public class statistical extends javax.swing.JInternalFrame {
     private javax.swing.JButton button_statistical_export_excel_device;
     private javax.swing.JButton button_statistical_export_excel_handle_violations;
     private javax.swing.JButton button_statistical_member;
+    private javax.swing.JButton button_statistical_refresh;
     private javax.swing.JComboBox<String> combobox_statistical_batch;
     private javax.swing.JComboBox<String> combobox_statistical_department;
     private javax.swing.JComboBox<String> combobox_statistical_device_name;
