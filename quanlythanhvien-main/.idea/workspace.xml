@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="77cdf265-a29d-4500-8688-b85f981672fc" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/BLL/handle_violations_BLL.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/BLL/violation_statistic_BLL.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/DAL/handle_violations_DAL.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/DAL/violation_statistic_DAL.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/GUI/IntegerFiiter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/BLL/DTO/handle_violations_DTO.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/BLL/handle_violations_BLL.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/BLL/violation_statistic_BLL.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/DAL/handle_violations_DAL.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/DAL/violation_statistic_DAL.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/GUI/IntegerFiiter.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/GUI/device_management$10.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/GUI/handle_violations$4.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/GUI/handle_violations$5.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/GUI/handle_violations$6.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/GUI/handle_violations$7.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/GUI/handle_violations$8.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/GUI/handle_violations$9.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../thongkeXL1.xlsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/BLL/DTO/device.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/BLL/DTO/device.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/BLL/DTO/handle_violations.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/BLL/DTO/handle_violations_DTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/BLL/DTO/member.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/BLL/DTO/member.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/BLL/DTO/usage_information.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/BLL/DTO/usage_information.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/BLL/device_BLL.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/BLL/device_BLL.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/BLL/member_BLL.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/BLL/member_BLL.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/BLL/usage_information_BLL.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/BLL/usage_information_BLL.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DAL/device_DAL.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DAL/device_DAL.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DAL/member_DAL.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DAL/member_DAL.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DAL/usage_information_DAL.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DAL/usage_information_DAL.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/GUI/device_management.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/GUI/device_management.form" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/GUI/device_management.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/GUI/device_management.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/GUI/handle_violations.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/GUI/handle_violations.form" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/GUI/handle_violations.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/GUI/handle_violations.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/GUI/income_member_management.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/GUI/income_member_management.form" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/GUI/income_member_management.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/GUI/income_member_management.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/GUI/main_menu.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/GUI/main_menu.form" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/GUI/main_menu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/GUI/main_menu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/GUI/statistical.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/GUI/statistical.form" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/GUI/statistical.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/GUI/statistical.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/hibernate.cfg.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/hibernate.cfg.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/BLL/DTO/device.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/BLL/DTO/device.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/BLL/DTO/handle_violations.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/BLL/DTO/handle_violations.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/BLL/DTO/member.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/BLL/DTO/member.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/BLL/DTO/usage_information.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/BLL/DTO/usage_information.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/BLL/device_BLL.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/BLL/device_BLL.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/BLL/member_BLL.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/BLL/member_BLL.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/BLL/usage_information_BLL.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/BLL/usage_information_BLL.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DAL/device_DAL.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/DAL/device_DAL.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DAL/member_DAL.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/DAL/member_DAL.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DAL/usage_information_DAL.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/DAL/usage_information_DAL.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/GUI/device_management$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/GUI/device_management$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/GUI/device_management$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/GUI/device_management$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/GUI/device_management$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/GUI/device_management$3.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/GUI/device_management$4.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/GUI/device_management$4.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/GUI/device_management$5.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/GUI/device_management$5.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/GUI/device_management$6.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/GUI/device_management$6.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/GUI/device_management$7.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/GUI/device_management$7.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/GUI/device_management$8.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/GUI/device_management$8.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/GUI/device_management$9.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/GUI/device_management$9.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/GUI/device_management.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/GUI/device_management.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/GUI/handle_violations$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/GUI/handle_violations$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/GUI/handle_violations$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/GUI/handle_violations$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/GUI/handle_violations$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/GUI/handle_violations$3.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/GUI/handle_violations.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/GUI/handle_violations.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/GUI/income_member_management$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/GUI/income_member_management$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/GUI/income_member_management$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/GUI/income_member_management$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/GUI/income_member_management$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/GUI/income_member_management$3.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/GUI/income_member_management$4.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/GUI/income_member_management$4.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/GUI/income_member_management$5.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/GUI/income_member_management$5.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/GUI/income_member_management$6.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/GUI/income_member_management$6.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/GUI/income_member_management.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/GUI/income_member_management.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/GUI/main_menu$7.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/GUI/main_menu$7.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/GUI/main_menu.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/GUI/main_menu.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/GUI/member_management.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/GUI/member_management.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/GUI/statistical$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/GUI/statistical$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/GUI/statistical$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/GUI/statistical$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/GUI/statistical$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/GUI/statistical$3.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/GUI/statistical.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/GUI/statistical.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/hibernate.cfg.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/hibernate.cfg.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../thietbi.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/../thietbi.xlsx" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 5
+}]]></component>
+  <component name="ProjectId" id="2fRluO6E8YMDvci1DFj3UuYhjP8" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.main_menu.executor": "Debug",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "D:/Studying/Junior/Semester 2/Xay dung phan mem theo mo hinh phan lop/MemberManagement_BTL02/quanlythanhvien-main"
+  }
+}]]></component>
+  <component name="RunManager">
+    <configuration name="main_menu" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="GUI.main_menu" />
+      <module name="quanlythanhvien-main" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="GUI.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.main_menu" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="jdk-20.0.2-azul-20.0.2-4caba194b151-eb49e076" />
+        <option value="jdk-21.0.2-openjdk-21.0.2-4caba194b151-4f524021" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="77cdf265-a29d-4500-8688-b85f981672fc" name="Changes" comment="" />
+      <created>1713771993082</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1713771993082</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/GUI/member_management.java</url>
+          <line>892</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/GUI/income_member_management.java</url>
+          <line>540</line>
+          <option name="timeStamp" value="13" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+    <watches-manager>
+      <configuration name="Application">
+        <watch expression="filtered.get(0).thanhvien" language="JAVA" />
+      </configuration>
+    </watches-manager>
+  </component>
+</project>
