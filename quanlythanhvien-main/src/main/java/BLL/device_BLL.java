@@ -30,12 +30,12 @@ public class device_BLL {
     }
     
     // CẬP NHẬT THÔNG TIN THIẾT BỊ
-    public void updateDevice(int id, device updatedDevice) throws Exception {
+    public void updateDevice(String id, device updatedDevice) throws Exception {
         data.updateDevice(id, updatedDevice);
     }
     
     // XÓA THIẾT BỊ
-    public void deleteDevice(int device_id) throws Exception {
+    public void deleteDevice(String device_id) throws Exception {
         data.deleteDevice(device_id);
     }
     
@@ -48,5 +48,21 @@ public class device_BLL {
             data.addDevice(d);
         }
     }
+    
+//    // XÓA TẤT CẢ CÁC THIẾT BỊ CÓ MÃ BẮT ĐẦU BẰNG prefix
+//    public void deleteDevicesWithPrefix(String prefix) throws Exception {
+//        data.deleteDevicesWithPrefix(prefix);
+//    }
+    
+    public ArrayList<device> getDevicesByPrefix(String prefix) throws Exception {
+        return data.getDevicesByPrefix(prefix);
+    }
+    
+    public void deleteDevicesByPrefix(String prefix) throws Exception {
+        data.deleteDevicesWithPrefix(prefix);
+    }
+
+    
+  
     
 }

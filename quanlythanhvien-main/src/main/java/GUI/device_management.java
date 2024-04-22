@@ -6,15 +6,24 @@ package GUI;
 
 import BLL.DTO.device;
 import BLL.device_BLL;
+import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
+import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.RowFilter;
 import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
+import javax.swing.text.AbstractDocument;
+import javax.swing.text.PlainDocument;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
@@ -26,6 +35,8 @@ public class device_management extends javax.swing.JInternalFrame {
     
     private final device_BLL deviceBLL = new device_BLL();
 
+
+
     /**
      * Creates new form service_management
      */
@@ -33,42 +44,129 @@ public class device_management extends javax.swing.JInternalFrame {
         initComponents();
         loadDevicesToTable();
         
+        text_device_id.setDocument(new PlainDocument());
+        ((AbstractDocument) text_device_id.getDocument()).setDocumentFilter(new IntegerFiiter());
+
+         
+        updateComboBox();
         // Gắn sự kiện lắng nghe khi chọn hàng trong bảng
-        table_device.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
-            @Override
-            public void valueChanged(ListSelectionEvent event) {
-                if (!event.getValueIsAdjusting()) {
-                    int selectedRow = table_device.getSelectedRow();
-                    if (selectedRow != -1) { // Đảm bảo rằng có ít nhất một hàng được chọn
-                        showDeviceInfo(selectedRow);
-                    }
+        table_device.getSelectionModel().addListSelectionListener((ListSelectionEvent event) -> {
+            if (!event.getValueIsAdjusting()) {
+                int selectedRow = table_device.getSelectedRow();
+                if (selectedRow != -1) { // Đảm bảo rằng có ít nhất một hàng được chọn
+                    showDeviceInfo(selectedRow);
                 }
             }
         });
+        
+        
+        cbCategory_device.addActionListener((ActionEvent e) -> {
+            String selectedPrefix = (String) cbCategory_device.getSelectedItem(); // Lấy tiền tố được chọn từ comboBox
+            try {
+                filterDevicesByPrefix(selectedPrefix); // Lọc dữ liệu và cập nhật bảng
+            } catch (Exception ex) {
+                Logger.getLogger(device_management.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        });  
+       
     }
     
+    private void cbCategory_deviceActionPerformed(java.awt.event.ActionEvent evt) throws Exception {
+        String selectedPrefix = (String) cbCategory_device.getSelectedItem();
+        if (selectedPrefix != null) {
+            filterDevicesByPrefix(selectedPrefix);
+        }
+    }
+
+    private void filterDevicesByPrefix(String prefix) throws Exception {
+        DefaultTableModel model = (DefaultTableModel) table_device.getModel();
+        model.setRowCount(0);   
+        try {
+            ArrayList<device> devices = deviceBLL.getDevicesByPrefix(prefix); // Lấy danh sách thiết bị dựa trên tiền tố
+            for (device d : devices) {
+                // Thêm các dòng mới vào bảng hiển thị
+                model.addRow(new Object[]{d.getMaTB(), d.getTenTB(), d.getMotaTB()});
+            }
+        } catch (Exception ex) {
+            // Xử lý lỗi khi không thể lấy danh sách thiết bị dựa trên tiền tố
+            JOptionPane.showMessageDialog(this, "Lỗi khi lọc thiết bị theo tiền tố: " + ex.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
+        }
+    }
     
+    // Cập nhật dữ liệu cho comboBox
+    private void updateComboBox() {
+//        cbCategory_device.removeAllItems();
+        // Thêm một dòng thông báo vào đầu comboBox
+         cbCategory_device.addItem(""); // Dòng trống hoặc thông báo
+        // Lấy danh sách số đầu tiên của các mã thiết bị
+        ArrayList<String> prefixes = getDevicePrefixes();
+
+        // Loại bỏ các giá trị trùng lặp
+        Set<String> uniquePrefixes = new LinkedHashSet<>(prefixes);
+
+        // Chuyển danh sách đã loại bỏ vào mảng để cập nhật vào comboBox
+        String[] prefixArray = uniquePrefixes.toArray(new String[0]);
+
+        // Cập nhật comboBox với mảng dữ liệu mới
+        cbCategory_device.setModel(new DefaultComboBoxModel<>(prefixArray));
+
+        // Chọn số đầu tiên làm giá trị mặc định nếu danh sách không trống
+        if (prefixArray.length > 0) {
+            cbCategory_device.setSelectedIndex(0);
+        }
+    }
+    
+    // Lấy danh sách số đầu tiên của các mã thiết bị từ bảng
+    private ArrayList<String> getDevicePrefixes() {
+        ArrayList<String> prefixes = new ArrayList<>();
+        DefaultTableModel model = (DefaultTableModel) table_device.getModel();
+        for (int i = 0; i < model.getRowCount(); i++) {
+            String deviceID = (String) model.getValueAt(i, 0); // Lấy mã thiết bị từ hàng đã chọn
+            String prefix = deviceID.substring(0, 1); // Lấy số đầu tiên của mã thiết bị
+            prefixes.add(prefix);
+        }
+        return prefixes;
+    }
+
+    
+    private void loadDevicesByCategoryId(int categoryId) {
+        DefaultTableModel model = (DefaultTableModel) table_device.getModel();
+        model.setRowCount(0); // Clear table
+
+        ArrayList<device> devices = deviceBLL.getAllDevices();
+        for (device d : devices) {
+            if (String.valueOf(d.getMaTB()).startsWith(String.valueOf(categoryId))) {
+                model.addRow(new Object[]{
+                    d.getMaTB(),
+                    d.getTenTB(),
+                    d.getMotaTB()
+                });
+            }
+        }
+    }
+
     private void showDeviceInfo(int row) {
         DefaultTableModel model = (DefaultTableModel) table_device.getModel();
-        int deviceID = (int) model.getValueAt(row, 0); // Lấy mã thiết bị từ hàng đã chọn
+        String deviceID = String.valueOf(model.getValueAt(row, 0)); // Lấy mã thiết bị từ hàng đã chọn
         device selectedDevice = null;
-        
+
         // Lấy thông tin của thiết bị đã chọn từ BLL
         ArrayList<device> devices = deviceBLL.getAllDevices();
         for (device d : devices) {
-            if (d.getMaTB() == deviceID) {
+            if (d.getMaTB().equals(deviceID)) {
                 selectedDevice = d;
                 break;
             }
         }
-        
+
         // Hiển thị thông tin của thiết bị đã chọn trên các textfield
         if (selectedDevice != null) {
-            text_device_id.setText(String.valueOf(selectedDevice.getMaTB()));
+            text_device_id.setText(selectedDevice.getMaTB());
             text_device_name.setText(selectedDevice.getTenTB());
             text_device_description.setText(selectedDevice.getMotaTB());
         }
     }
+
         
     
     private void loadDevicesToTable() {
@@ -84,6 +182,8 @@ public class device_management extends javax.swing.JInternalFrame {
             });
         }
     }
+    
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -118,15 +218,19 @@ public class device_management extends javax.swing.JInternalFrame {
         button_close_device = new javax.swing.JButton();
         jPanel14 = new javax.swing.JPanel();
         jLabel23 = new javax.swing.JLabel();
-        combobox_device = new javax.swing.JComboBox<>();
-        jLabel25 = new javax.swing.JLabel();
         button_delete_all_device = new javax.swing.JButton();
         jLabel26 = new javax.swing.JLabel();
-        text_device = new javax.swing.JTextField();
+        cbCategory_device = new javax.swing.JComboBox<>();
 
         jLabel14.setText("QUẢN LÝ THIẾT BỊ");
 
         jLabel15.setText("Thông tin tìm kiếm:");
+
+        text_find_device.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                text_find_deviceActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel11Layout = new javax.swing.GroupLayout(jPanel11);
         jPanel11.setLayout(jPanel11Layout);
@@ -297,13 +401,18 @@ public class device_management extends javax.swing.JInternalFrame {
 
         jPanel14.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        jLabel23.setText("Thiết bị:");
-
-        jLabel25.setText("Loại thiết bị:");
+        jLabel23.setText("Loại thiết bị:");
 
         button_delete_all_device.setText("Xóa tất cả");
+        button_delete_all_device.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_delete_all_deviceActionPerformed(evt);
+            }
+        });
 
         jLabel26.setText("CHỌN ĐIỀU KIỆN:");
+
+        cbCategory_device.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         javax.swing.GroupLayout jPanel14Layout = new javax.swing.GroupLayout(jPanel14);
         jPanel14.setLayout(jPanel14Layout);
@@ -312,18 +421,17 @@ public class device_management extends javax.swing.JInternalFrame {
             .addGroup(jPanel14Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel26)
                     .addGroup(jPanel14Layout.createSequentialGroup()
+                        .addComponent(jLabel26)
+                        .addGap(258, 258, 258))
+                    .addGroup(jPanel14Layout.createSequentialGroup()
+                        .addGap(112, 112, 112)
                         .addComponent(jLabel23)
-                        .addGap(18, 18, 18)
-                        .addComponent(combobox_device, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel25)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(text_device, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(button_delete_all_device, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(15, 15, 15))
+                        .addGap(51, 51, 51)
+                        .addComponent(cbCategory_device, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 57, Short.MAX_VALUE)
+                        .addComponent(button_delete_all_device, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(50, 50, 50))))
         );
         jPanel14Layout.setVerticalGroup(
             jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -334,9 +442,7 @@ public class device_management extends javax.swing.JInternalFrame {
                 .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel23)
                     .addComponent(button_delete_all_device)
-                    .addComponent(combobox_device, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel25)
-                    .addComponent(text_device, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cbCategory_device, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -387,7 +493,7 @@ public class device_management extends javax.swing.JInternalFrame {
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 739, Short.MAX_VALUE)
+            .addGap(0, 748, Short.MAX_VALUE)
             .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel4Layout.createSequentialGroup()
                     .addGap(0, 12, Short.MAX_VALUE)
@@ -408,7 +514,7 @@ public class device_management extends javax.swing.JInternalFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 750, Short.MAX_VALUE)
+            .addGap(0, 760, Short.MAX_VALUE)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                     .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -432,6 +538,10 @@ public class device_management extends javax.swing.JInternalFrame {
         text_device_id.setText("");
         text_device_name.setText("");
         text_device_description.setText("");
+        cbCategory_device.addItem("");
+        updateComboBox();
+        text_find_device.setText("");
+
     }
     private void text_device_descriptionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_text_device_descriptionActionPerformed
         // TODO add your handling code here:
@@ -443,7 +553,7 @@ public class device_management extends javax.swing.JInternalFrame {
             int selectedRow = table_device.getSelectedRow();
             if (selectedRow != -1) {
                 DefaultTableModel model = (DefaultTableModel) table_device.getModel();
-                int deviceID = (int) model.getValueAt(selectedRow, 0); // Lấy mã thiết bị từ hàng đã chọn
+                String deviceID = (String) model.getValueAt(selectedRow, 0); // Lấy mã thiết bị từ hàng đã chọn
                 
                 // Xác nhận xóa thiết bị
                 int confirm = JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn muốn xóa thiết bị này?", "Xác nhận xóa", JOptionPane.YES_NO_OPTION);
@@ -468,19 +578,19 @@ public class device_management extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
        
         try {
-            int deviceID = Integer.parseInt(text_device_id.getText());
+            String deviceID = text_device_id.getText();
             String deviceName = text_device_name.getText();
             String deviceDescription = text_device_description.getText();
             
             // Kiểm tra xem tên và mô tả thiết bị có được nhập hay không
-            if(deviceName.isEmpty() || deviceDescription.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "Tên và mô tả thiết bị không được để trống.", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            if(deviceName.isEmpty() || deviceDescription.isEmpty() || deviceID.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Mã tên và mô tả thiết bị không được để trống.", "Lỗi", JOptionPane.ERROR_MESSAGE);
                 return;
             }
 
             // Kiểm tra xem mã thiết bị đã tồn tại chưa
             for (device d : deviceBLL.getAllDevices()) {
-                if (d.getMaTB() == deviceID) {
+                if (d.getMaTB().equals(deviceID)) {
                     JOptionPane.showMessageDialog(this, "Mã thiết bị đã tồn tại!", "Lỗi", JOptionPane.ERROR_MESSAGE);
                     return; // Kết thúc phương thức nếu mã đã tồn tại
                 }
@@ -511,7 +621,7 @@ public class device_management extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         try {
         // Lấy thông tin từ các textfield
-        int deviceID = Integer.parseInt(text_device_id.getText());
+        String deviceID = text_device_id.getText();
         String deviceName = text_device_name.getText();
         String deviceDescription = text_device_description.getText();
         
@@ -524,7 +634,7 @@ public class device_management extends javax.swing.JInternalFrame {
         // Kiểm tra xem thiết bị có tồn tại trong danh sách hay không
         boolean deviceExists = false;
         for (device d : deviceBLL.getAllDevices()) {
-            if (d.getMaTB() == deviceID) {
+            if (d.getMaTB().equals(deviceID)) {
                 deviceExists = true;
                 break;
             }
@@ -557,6 +667,7 @@ public class device_management extends javax.swing.JInternalFrame {
     private void button_refresh_deviceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_refresh_deviceActionPerformed
         // TODO add your handling code here:
         clearFields();
+        loadDevicesToTable();
     }//GEN-LAST:event_button_refresh_deviceActionPerformed
 
     private void button_import_excel_deviceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_import_excel_deviceActionPerformed
@@ -576,13 +687,28 @@ public class device_management extends javax.swing.JInternalFrame {
                     if (row.getRowNum() == 0) {
                         continue; // Bỏ qua dòng tiêu đề
                     }
-                    int deviceID = (int) row.getCell(0).getNumericCellValue();
+                    int deviceID; // Số nguyên để lưu giá trị của mã thiết bị
+                    try {
+                        deviceID = (int) row.getCell(0).getNumericCellValue(); // Lấy giá trị số từ ô
+                    } catch (IllegalStateException e) {
+                        // Nếu không thể lấy giá trị số, thử lấy giá trị chuỗi
+                        try {
+                            deviceID = Integer.parseInt(row.getCell(0).getStringCellValue());
+                        } catch (NumberFormatException ex) {
+                            // Xử lý lỗi nếu không thể chuyển đổi thành số hoặc chuỗi
+                            System.err.println("Lỗi: không thể lấy giá trị từ ô " + row.getRowNum() + ", cột 0");
+                            continue; // Bỏ qua dòng này và tiếp tục với dòng tiếp theo
+                        }
+                    }
+
                     String deviceName = row.getCell(1).getStringCellValue();
                     String deviceDescription = row.getCell(2).getStringCellValue();
 
-                    device newDevice = new device(deviceID, deviceName, deviceDescription);
+                    String deviceIDString = String.valueOf(deviceID);
+                    device newDevice = new device(deviceIDString, deviceName, deviceDescription);
                     newDevices.add(newDevice);
                 }
+
 
                 // Thêm danh sách thiết bị mới vào cơ sở dữ liệu
                 deviceBLL.addDevices(newDevices);
@@ -602,6 +728,59 @@ public class device_management extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_button_import_excel_deviceActionPerformed
 
+    private void button_delete_all_deviceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_delete_all_deviceActionPerformed
+        // TODO add your handling code here:
+        String selectedPrefix = (String) cbCategory_device.getSelectedItem();
+            if (selectedPrefix != null && !selectedPrefix.isEmpty()) {
+                try {
+                    deviceBLL.deleteDevicesByPrefix(selectedPrefix);
+//                    updateComboBox();
+                    loadDevicesToTable();
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(this, "Đã xảy ra lỗi khi xóa thiết bị: " + ex.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "Vui lòng chọn một tiền tố để xóa.", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            }
+         // Lấy số nguyên từ txtCategory_device
+//        String prefixText = txtCategory_device.getText().trim();
+//        if (!prefixText.isEmpty()) {
+//            try {
+//               String prefix = prefixText;
+//                // Gọi phương thức xóa từ DAL
+//                deviceBLL.deleteDevicesWithPrefix(prefix);
+//
+//                // Cập nhật lại bảng sau khi xóa
+//                loadDevicesToTable();
+//            } catch (NumberFormatException e) {
+//                JOptionPane.showMessageDialog(this, "Vui lòng chỉ nhập số nguyên dương");
+//                txtCategory_device.setText(""); // Xóa nội dung nhập trong trường hợp nhập sai định dạng
+//            } catch (Exception ex) {
+//                JOptionPane.showMessageDialog(this, "Đã xảy ra lỗi khi xóa thiết bị");
+//                ex.printStackTrace(); // Xử lý lỗi khi xóa thiết bị
+//            }
+//        } else {
+//            JOptionPane.showMessageDialog(this, "Vui lòng nhập số nguyên dương vào trường");
+//        }
+
+        
+      
+    }//GEN-LAST:event_button_delete_all_deviceActionPerformed
+
+    private void text_find_deviceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_text_find_deviceActionPerformed
+        // TODO add your handling code here:
+        String keyword = text_find_device.getText().trim();
+        DefaultTableModel model = (DefaultTableModel) table_device.getModel();
+        TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(model);
+        table_device.setRowSorter(sorter);
+
+        if (keyword.trim().length() == 0) {
+            sorter.setRowFilter(null);
+        } else {
+            sorter.setRowFilter(RowFilter.regexFilter("(?i)" + keyword)); // Tìm kiếm không phân biệt chữ hoa thường
+        }
+    }//GEN-LAST:event_text_find_deviceActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton button_add_device;
@@ -611,14 +790,13 @@ public class device_management extends javax.swing.JInternalFrame {
     private javax.swing.JButton button_import_excel_device;
     private javax.swing.JButton button_refresh_device;
     private javax.swing.JButton button_update_device;
-    private javax.swing.JComboBox<String> combobox_device;
+    private javax.swing.JComboBox<String> cbCategory_device;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel23;
-    private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel26;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
@@ -628,7 +806,6 @@ public class device_management extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable table_device;
-    private javax.swing.JTextField text_device;
     private javax.swing.JTextField text_device_description;
     private javax.swing.JTextField text_device_id;
     private javax.swing.JTextField text_device_name;

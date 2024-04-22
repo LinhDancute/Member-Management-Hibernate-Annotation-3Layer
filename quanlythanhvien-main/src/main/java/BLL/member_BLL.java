@@ -21,6 +21,24 @@ public class member_BLL {
 
     public member_BLL() {
     }
+    
+    public List<String> getMemberNames() {
+        List<member> members = data.getAllMembers();
+        List<String> memberNames = new ArrayList<>();
+        for (member m : members) {
+            memberNames.add(m.getHoTen());
+        }
+        return memberNames;
+    }
+    
+    public int getMemberIdByName(String memberName) {
+        member member = data.getMemberByName(memberName);
+        if (member != null) {
+            return member.getMaTV();
+        } else {
+            return -1; // Hoặc giá trị khác thích hợp nếu không tìm thấy
+        }
+    }
 
     public static ArrayList<member> get_list_member() {
         return list_member;

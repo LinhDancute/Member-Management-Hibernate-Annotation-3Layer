@@ -9,7 +9,6 @@ import DAL.UTILS.hibernate_util;
 import java.util.ArrayList;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
 
 /**
  *
@@ -52,7 +51,7 @@ public class device_DAL {
     }
     
     // CẬP NHẬT THÔNG TIN THIẾT BỊ
-    public void updateDevice(int id, device updatedDevice) throws Exception {
+    public void updateDevice(String id, device updatedDevice) throws Exception {
         Session session = factory.openSession();
         try {
             session.beginTransaction();
@@ -69,7 +68,7 @@ public class device_DAL {
     }
     
     // XÓA THIẾT BỊ
-    public void deleteDevice(int device_id) throws Exception {
+    public void deleteDevice(String device_id) throws Exception {
         Session session = factory.openSession();
         try {
             session.beginTransaction();
@@ -84,7 +83,7 @@ public class device_DAL {
         }
     }
     
-    public boolean isDeviceExists(int deviceID) {
+    public boolean isDeviceExists(String deviceID) {
         Session session = factory.openSession();
         try {
             device existingDevice = session.get(device.class, deviceID);
@@ -93,6 +92,55 @@ public class device_DAL {
             session.close();
         }
     }
-
+    
+     // XÓA TẤT CẢ CÁC THIẾT BỊ CÓ MÃ BẮT ĐẦU BẰNG prefix
+//    public void deleteDevicesWithPrefix(String prefix) throws Exception {
+//        Session session = factory.openSession();
+//        try {
+//            session.beginTransaction();
+//            session.createQuery("DELETE FROM device WHERE MaTB LIKE :prefix")
+//                    .setParameter("prefix", (prefix) + "%")
+//                    .executeUpdate();
+//            session.getTransaction().commit();
+//        } catch (Exception e) {
+//            session.getTransaction().rollback();
+//            throw e;
+//        } finally {
+//            session.close();
+//        }
+//    }
+    
+    public ArrayList<device> getDevicesByPrefix(String prefix) throws Exception {
+        Session session = factory.openSession();
+        try {
+            session.beginTransaction();
+            ArrayList<device> devices = (ArrayList<device>) session.createQuery("FROM device WHERE MaTB LIKE :prefix")
+                                            .setParameter("prefix", prefix + "%")
+                                            .getResultList();
+            session.getTransaction().commit();
+            return devices;
+        } catch (Exception e) {
+            session.getTransaction().rollback();
+            throw e;
+        } finally {
+            session.close();
+        }
+    }
+    
+    public void deleteDevicesWithPrefix(String prefix) throws Exception {
+        Session session = factory.openSession();
+        try {
+            session.beginTransaction();
+            session.createQuery("DELETE FROM device WHERE MaTB LIKE :prefix")
+                    .setParameter("prefix", prefix + "%")
+                    .executeUpdate();
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            session.getTransaction().rollback();
+            throw e;
+        } finally {
+            session.close();
+        }
+    }
     
 }

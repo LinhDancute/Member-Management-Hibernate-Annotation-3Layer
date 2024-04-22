@@ -69,4 +69,60 @@ public class usage_information {
     
     public usage_information() {
     }
+
+    public int getMaTT() {
+        return MaTT;
+    }
+
+    public void setMaTT(int maTT) {
+        MaTT = maTT;
+    }
+
+    public LocalDateTime getTGVao() {
+        return TGVao;
+    }
+
+    public void setTGVao(LocalDateTime TGVao) {
+        this.TGVao = TGVao;
+    }
+
+    public LocalDateTime getTGMuon() {
+        return TGMuon;
+    }
+
+    public void setTGMuon(LocalDateTime TGMuon) {
+        this.TGMuon = TGMuon;
+    }
+
+    public LocalDateTime getTGTra() {
+        return TGTra;
+    }
+
+    public void setTGTra(LocalDateTime TGTra) {
+        this.TGTra = TGTra;
+    }
+
+    public Date getTGDatcho() {
+        return TGDatcho;
+    }
+
+    public void setTGDatcho(Date TGDatcho) {
+        this.TGDatcho = TGDatcho;
+    }
+
+    public device getThietbi() {
+        return thietbi;
+    }
+
+    public void setThietbi(device thietbi) {
+        this.thietbi = thietbi;
+    }
+
+    public member getThanhvien() {
+        return thanhvien;
+    }
+
+    public void setThanhvien(member thanhvien) {
+        this.thanhvien = thanhvien;
+    }
 }

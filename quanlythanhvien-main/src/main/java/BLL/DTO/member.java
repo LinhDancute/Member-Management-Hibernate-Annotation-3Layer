@@ -67,5 +67,73 @@ public class member {
     }
 
     public member() {
-    } 
+    }
+
+    public int getMaTV() {
+        return MaTV;
+    }
+
+    public void setMaTV(int maTV) {
+        MaTV = maTV;
+    }
+
+    public String getHoTen() {
+        return HoTen;
+    }
+
+    public void setHoTen(String hoTen) {
+        HoTen = hoTen;
+    }
+
+    public String getKhoa() {
+        return Khoa;
+    }
+
+    public void setKhoa(String khoa) {
+        Khoa = khoa;
+    }
+
+    public String getNganh() {
+        return Nganh;
+    }
+
+    public void setNganh(String nganh) {
+        Nganh = nganh;
+    }
+
+    public String getSDT() {
+        return SDT;
+    }
+
+    public void setSDT(String SDT) {
+        this.SDT = SDT;
+    }
+
+    public String getPassword() {
+        return Password;
+    }
+
+    public void setPassword(String password) {
+        Password = password;
+    }
+
+    public String getEmail() {
+        return Email;
+    }
+
+    public void setEmail(String email) {
+        Email = email;
+    }
+
+    public Set<usage_information> getThongtinsd() {
+        return thongtinsd;
+    }
+
+    public void setThongtinsd(Set<usage_information> thongtinsd) {
+        this.thongtinsd = thongtinsd;
+    }
+
+    // Constructor mặc định không có tham số
 }
+
+    

@@ -99,7 +99,7 @@
                           <EmptySpace min="-2" pref="173" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="1" attributes="0">
-                          <EmptySpace pref="344" max="32767" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
                           <Component id="jLabel7" min="-2" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="259" max="-2" attributes="0"/>
                       </Group>
@@ -145,24 +145,25 @@
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Component id="text_find_statistical_member" max="32767" attributes="0"/>
                                   </Group>
-                                  <Group type="102" attributes="0">
-                                      <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                                  </Group>
+                                  <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
                                   <Group type="102" alignment="0" attributes="0">
                                       <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
-                                      <Component id="combobox_statistical_batch" min="-2" pref="155" max="-2" attributes="0"/>
-                                      <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
+                                      <Component id="combobox_statistical_batch" min="-2" pref="106" max="-2" attributes="0"/>
+                                      <EmptySpace min="-2" pref="9" max="-2" attributes="0"/>
+                                      <Component id="jLabel10" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                      <Component id="combobox_statistical_department" min="-2" pref="124" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
                                       <Component id="jLabel26" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                                      <Component id="date_statistical_from_income" min="-2" pref="162" max="-2" attributes="0"/>
-                                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                      <Component id="date_statistical_from_income" min="-2" pref="138" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
                                       <Component id="jLabel27" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                                      <Component id="date_statistical_to_income" min="-2" pref="162" max="-2" attributes="0"/>
-                                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                                      <Component id="button_statistical_member" max="32767" attributes="0"/>
+                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                      <Component id="date_statistical_to_income" min="-2" pref="136" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="button_statistical_member" min="-2" pref="109" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
@@ -187,11 +188,13 @@
                                   <Group type="103" groupAlignment="3" attributes="0">
                                       <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
                                       <Component id="combobox_statistical_batch" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="jLabel10" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="combobox_statistical_department" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="jLabel26" alignment="3" min="-2" max="-2" attributes="0"/>
                                   </Group>
-                                  <Component id="jLabel26" alignment="1" min="-2" max="-2" attributes="0"/>
+                                  <Component id="date_statistical_to_income" min="-2" max="-2" attributes="0"/>
                                   <Component id="date_statistical_from_income" min="-2" max="-2" attributes="0"/>
                                   <Component id="jLabel27" min="-2" max="-2" attributes="0"/>
-                                  <Component id="date_statistical_to_income" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
                           </Group>
@@ -244,6 +247,21 @@
                       <AuxValues>
                         <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
                       </AuxValues>
+                    </Component>
+                    <Component class="javax.swing.JComboBox" name="combobox_statistical_department">
+                      <Properties>
+                        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+                          <StringArray count="0"/>
+                        </Property>
+                      </Properties>
+                      <AuxValues>
+                        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+                      </AuxValues>
+                    </Component>
+                    <Component class="javax.swing.JLabel" name="jLabel10">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="Khoa:"/>
+                      </Properties>
                     </Component>
                   </SubComponents>
                 </Container>
@@ -299,6 +317,9 @@
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Export Excel"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="button_export_excel_statistical_memberActionPerformed"/>
+                  </Events>
                 </Component>
                 <Component class="javax.swing.JButton" name="button_close_statistical_member">
                   <Properties>
@@ -615,8 +636,8 @@
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="jLabel19" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jPanel9" min="-2" pref="88" max="-2" attributes="0"/>
-                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Component id="jPanel9" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
                               <Component id="jScrollPane3" min="-2" pref="297" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
@@ -683,7 +704,7 @@
                                       <Component id="jLabel14" alignment="3" min="-2" max="-2" attributes="0"/>
                                       <Component id="text_find_statistical_device" alignment="3" min="-2" max="-2" attributes="0"/>
                                   </Group>
-                                  <EmptySpace max="32767" attributes="0"/>
+                                  <EmptySpace pref="11" max="32767" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Component id="button_statistical_device" alignment="0" min="-2" max="-2" attributes="0"/>
                                       <Component id="jLabel15" min="-2" max="-2" attributes="0"/>
@@ -916,11 +937,8 @@
                     </Component>
                     <Component class="javax.swing.JComboBox" name="combobox_statistical_status">
                       <Properties>
-                        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                          <StringArray count="2">
-                            <StringItem index="0" value="&#x110;&#xe3; x&#x1eed; l&#xfd;"/>
-                            <StringItem index="1" value="&#x110;ang x&#x1eed; l&#xfd;"/>
-                          </StringArray>
+                        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                          <Connection code="new javax.swing.DefaultComboBoxModel&lt;&gt;(new String[] { &quot;&#x110;ang x&#x1eed; l&#xfd;&quot;  ,&quot;&#x110;&#xe3; x&#x1eed; l&#xfd;&quot;})" type="code"/>
                         </Property>
                       </Properties>
                       <AuxValues>
@@ -950,11 +968,38 @@
                       <Properties>
                         <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                           <Table columnCount="4" rowCount="4">
-                            <Column editable="true" title="Title 1" type="java.lang.Object"/>
-                            <Column editable="true" title="Title 2" type="java.lang.Object"/>
-                            <Column editable="true" title="Title 3" type="java.lang.Object"/>
-                            <Column editable="true" title="Title 4" type="java.lang.Object"/>
+                            <Column editable="true" title="M&#xe3; x&#x1eed; l&#xfd;" type="java.lang.Object"/>
+                            <Column editable="true" title="H&#xec;nh th&#x1ee9;c x&#x1eed; l&#xfd;" type="java.lang.Object"/>
+                            <Column editable="true" title="S&#x1ed1; ti&#x1ec1;n" type="java.lang.Object"/>
+                            <Column editable="true" title="Ng&#xe0;y x&#x1eed; l&#xfd;" type="java.lang.Object"/>
                           </Table>
+                        </Property>
+                        <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
+                          <TableColumnModel selectionModel="0">
+                            <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                              <Title/>
+                              <Editor/>
+                              <Renderer/>
+                            </Column>
+                            <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                              <Title/>
+                              <Editor/>
+                              <Renderer/>
+                            </Column>
+                            <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                              <Title/>
+                              <Editor/>
+                              <Renderer/>
+                            </Column>
+                            <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                              <Title/>
+                              <Editor/>
+                              <Renderer/>
+                            </Column>
+                          </TableColumnModel>
+                        </Property>
+                        <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
+                          <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
                         </Property>
                       </Properties>
                     </Component>
@@ -964,11 +1009,17 @@
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Export Excel"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="button_statistical_export_excel_handle_violationsActionPerformed"/>
+                  </Events>
                 </Component>
                 <Component class="javax.swing.JButton" name="button_close_statistical_handle_violations">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="&#x110;&#xf3;ng"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="button_close_statistical_handle_violationsActionPerformed"/>
+                  </Events>
                 </Component>
               </SubComponents>
             </Container>

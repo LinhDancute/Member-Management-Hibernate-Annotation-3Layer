@@ -7,15 +7,33 @@ package GUI;
 import BLL.DTO.usage_information;
 import BLL.member_BLL;
 import BLL.usage_information_BLL;
-import java.awt.event.ActionEvent;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 import javax.swing.JComboBox;
-import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
-import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
+import BLL.DTO.handle_violations_DTO;
+import BLL.violation_statistic_BLL;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.table.DefaultTableModel;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
 
 /**
  *
@@ -25,6 +43,8 @@ public class statistical extends javax.swing.JInternalFrame {
     private DefaultTableModel model;
     private member_BLL mem_BLL;
     private usage_information_BLL information_BLL;
+    private final violation_statistic_BLL bll = new violation_statistic_BLL();
+    
 
     public statistical() throws Exception {
         initComponents();
@@ -36,6 +56,27 @@ public class statistical extends javax.swing.JInternalFrame {
             filter_table_member();
         });
         load_batch_member(combobox_statistical_batch);
+        
+        //LẮNG NGHE KHÓA -> HIỆN KHOA PHÙ HỢP
+        combobox_statistical_batch.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                if (e.getStateChange() == ItemEvent.SELECTED) {
+                    if (e.getSource() == combobox_statistical_batch) {
+                        try {
+                            String selected_department = combobox_statistical_batch.getSelectedItem().toString();
+                            List<String> department_listen_list = mem_BLL.load_departments_by_batch(selected_department);
+                            combobox_statistical_department.removeAllItems();
+                            for (String department : department_listen_list) {
+                                combobox_statistical_department.addItem(department);
+                            }
+                        } catch (Exception ex) {
+                            Logger.getLogger(member_management.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
+                }
+            }
+        });
     }
     
     //HIỂN THỊ DỮ LIỆU BATCH lên COMBOBOX (INCOME MEMBER)
@@ -47,6 +88,49 @@ public class statistical extends javax.swing.JInternalFrame {
         List<String> batch_list = mem_BLL.load_batch(); 
         for (String value : batch_list) {
             cb.addItem(value); 
+        }
+    }
+    
+    //EXPORT EXCEL (INCOME MEMBER)
+    private boolean export_excel_member(String file_path, ArrayList<usage_information> usage_information) {
+        try {
+            XSSFWorkbook workbook = new XSSFWorkbook();
+            XSSFSheet sheet = workbook.createSheet("Dữ liệu");
+            
+            Row labelRow = sheet.createRow(0);
+            labelRow.createCell(0).setCellValue("STT");
+            labelRow.createCell(1).setCellValue("Mã thông tin");
+            labelRow.createCell(2).setCellValue("Mã thành viên");
+            labelRow.createCell(3).setCellValue("Tên thành viên");
+            labelRow.createCell(4).setCellValue("SDT");
+            labelRow.createCell(5).setCellValue("Khoa");
+            labelRow.createCell(6).setCellValue("Thời gian vào");
+
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSSSSS");
+            int rowIndex = 1;
+            int stt = 1;
+            for (usage_information income_member : usage_information) {
+                Row row = sheet.createRow(rowIndex++);
+                row.createCell(0).setCellValue(stt++);
+                row.createCell(1).setCellValue(income_member.getMaTT());
+                row.createCell(2).setCellValue(income_member.getThanhvien().MaTV);
+                row.createCell(3).setCellValue(income_member.getThanhvien().HoTen);
+                row.createCell(4).setCellValue(income_member.getThanhvien().SDT);
+                row.createCell(5).setCellValue(income_member.getThanhvien().Khoa);
+                row.createCell(6).setCellValue(income_member.getTGVao());
+                
+                LocalDateTime date = income_member.getTGVao();
+                String formatted_date = formatter.format(date);
+                row.createCell(6).setCellValue(formatted_date);
+            }
+            
+            try (FileOutputStream file_out = new FileOutputStream(file_path)) {
+                workbook.write(file_out);
+                return true;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
         }
     }
     
@@ -116,6 +200,9 @@ public class statistical extends javax.swing.JInternalFrame {
             Object[] data = new Object[] {
                 usage.getMaTT(),
                 usage.getThanhvien().MaTV,
+                usage.getThanhvien().HoTen,
+                usage.getThanhvien().SDT,
+                usage.getThanhvien().Khoa,
                 usage.getTGVao()
             };
             result.add(data);
@@ -129,6 +216,9 @@ public class statistical extends javax.swing.JInternalFrame {
         header.add("STT");
         header.add("Mã thông tin");
         header.add("Mã thành viên");
+        header.add("Tên thành viên");
+        header.add("SDT");
+        header.add("Khoa");
         header.add("Thời gian vào");
 
         model = new DefaultTableModel(header, 0); 
@@ -145,9 +235,89 @@ public class statistical extends javax.swing.JInternalFrame {
             data.add(usage[0]);
             data.add(usage[1]);
             data.add(usage[2]);
+            data.add(usage[3]);
+            data.add(usage[4]);
+            data.add(usage[5]);
             model.addRow(data); 
         }
+        loadDataToTable();
+        combobox_statistical_status.addActionListener(new ActionListener() {
+        public void actionPerformed(ActionEvent e) {
+            String selectedStatus = combobox_statistical_status.getSelectedItem().toString();
+            if (selectedStatus.equals("Đang xử lý")) {
+                // Hiển thị tất cả thông tin
+                loadDataToTable();
+                text_statistical_money.setText("");
+            } else if (selectedStatus.equals("Đã xử lý")) {
+                // Hiển thị thông tin những xử lý có trạng thái là 0
+                loadResolvedDataToTable();
+                double totalMoney = violation_statistic_BLL.calculateTotalMoneyOfResolvedViolations();
+                text_statistical_money.setText(String.valueOf(totalMoney));
+            }
+        }
+     });
     }
+    
+   
+    
+    private void loadResolvedDataToTable(){
+        // Trong hàm khởi tạo hoặc hàm khởi động của giao diện
+        violation_statistic_BLL bll = new violation_statistic_BLL();
+        ArrayList<handle_violations_DTO> resolvedViolations = bll.getResolvedHandleViolations();
+        // Hiển thị dữ liệu trên bảng
+
+        // Ví dụ về cách hiển thị dữ liệu lên bảng (cần điều chỉnh phù hợp với giao diện của bạn)
+        DefaultTableModel model = (DefaultTableModel) table_statistical_handle_violations.getModel();
+        model.setRowCount(0);
+        for (handle_violations_DTO violation : resolvedViolations) {
+            Object[] row = {violation.getMaXL(), violation.getHinhThucXL(), violation.getSoTien(), violation.getNgayXL()};
+            model.addRow(row);
+        }
+        
+    }
+    private void loadDataToTable(){
+        // Trong hàm khởi tạo hoặc hàm khởi động của giao diện
+        violation_statistic_BLL bll = new violation_statistic_BLL();
+        ArrayList<handle_violations_DTO> unresolvedViolations = bll.getUnresolvedHandleViolations();
+        // Hiển thị dữ liệu trên bảng
+
+        // Ví dụ về cách hiển thị dữ liệu lên bảng (cần điều chỉnh phù hợp với giao diện của bạn)
+        DefaultTableModel model = (DefaultTableModel) table_statistical_handle_violations.getModel();
+        model.setRowCount(0);
+        for (handle_violations_DTO violation : unresolvedViolations) {
+            Object[] row = {violation.getMaXL(), violation.getHinhThucXL(), violation.getSoTien(), violation.getNgayXL()};
+            model.addRow(row);
+        }
+    }
+    
+    
+    // Phương thức để xuất dữ liệu vào tệp Excel
+    private boolean exportDataToExcel(String filePath, ArrayList<handle_violations_DTO> violations) {
+        try {
+            XSSFWorkbook workbook = new XSSFWorkbook();
+            XSSFSheet sheet = workbook.createSheet("Dữ liệu");
+            
+            // Viết dữ liệu vào các ô trong bảng
+            int rowIndex = 0;
+            for (handle_violations_DTO violation : violations) {
+                Row row = sheet.createRow(rowIndex++);
+                row.createCell(0).setCellValue(violation.getMaXL());
+                row.createCell(1).setCellValue(violation.getHinhThucXL());
+                row.createCell(2).setCellValue(violation.getSoTien());
+                // Tiếp tục thêm dữ liệu cho các cột khác nếu cần
+            }
+            
+            // Lưu workbook vào tệp
+            try (FileOutputStream fileOut = new FileOutputStream(filePath)) {
+                workbook.write(fileOut);
+                return true;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -168,6 +338,8 @@ public class statistical extends javax.swing.JInternalFrame {
         date_statistical_to_income = new com.toedter.calendar.JDateChooser();
         jLabel4 = new javax.swing.JLabel();
         combobox_statistical_batch = new javax.swing.JComboBox<>();
+        combobox_statistical_department = new javax.swing.JComboBox<>();
+        jLabel10 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         table_statistical_member = new javax.swing.JTable();
         button_export_excel_statistical_member = new javax.swing.JButton();
@@ -238,6 +410,8 @@ public class statistical extends javax.swing.JInternalFrame {
 
         jLabel4.setText("Khóa:");
 
+        jLabel10.setText("Khoa:");
+
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
@@ -249,23 +423,25 @@ public class statistical extends javax.swing.JInternalFrame {
                         .addComponent(jLabel5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(text_find_statistical_member))
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addComponent(jLabel6)
-                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jLabel6)
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addComponent(jLabel4)
                         .addGap(30, 30, 30)
-                        .addComponent(combobox_statistical_batch, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(33, 33, 33)
+                        .addComponent(combobox_statistical_batch, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(9, 9, 9)
+                        .addComponent(jLabel10)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(combobox_statistical_department, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel26)
-                        .addGap(18, 18, 18)
-                        .addComponent(date_statistical_from_income, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(date_statistical_from_income, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel27)
-                        .addGap(18, 18, 18)
-                        .addComponent(date_statistical_to_income, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(button_statistical_member, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(date_statistical_to_income, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(button_statistical_member, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         jPanel5Layout.setVerticalGroup(
@@ -283,11 +459,13 @@ public class statistical extends javax.swing.JInternalFrame {
                         .addComponent(button_statistical_member))
                     .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel4)
-                        .addComponent(combobox_statistical_batch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jLabel26)
+                        .addComponent(combobox_statistical_batch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel10)
+                        .addComponent(combobox_statistical_department, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel26))
+                    .addComponent(date_statistical_to_income, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(date_statistical_from_income, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel27)
-                    .addComponent(date_statistical_to_income, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel27))
                 .addGap(5, 5, 5))
         );
 
@@ -305,6 +483,11 @@ public class statistical extends javax.swing.JInternalFrame {
         jScrollPane1.setViewportView(table_statistical_member);
 
         button_export_excel_statistical_member.setText("Export Excel");
+        button_export_excel_statistical_member.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_export_excel_statistical_memberActionPerformed(evt);
+            }
+        });
 
         button_close_statistical_member.setText("Đóng");
         button_close_statistical_member.addActionListener(new java.awt.event.ActionListener() {
@@ -332,7 +515,7 @@ public class statistical extends javax.swing.JInternalFrame {
                 .addComponent(button_close_statistical_member)
                 .addGap(173, 173, 173))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(344, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel7)
                 .addGap(259, 259, 259))
         );
@@ -542,7 +725,7 @@ public class statistical extends javax.swing.JInternalFrame {
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel14)
                     .addComponent(text_find_statistical_device, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(button_statistical_device)
                     .addComponent(jLabel15)
@@ -600,8 +783,8 @@ public class statistical extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addComponent(jLabel19)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 297, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -634,7 +817,7 @@ public class statistical extends javax.swing.JInternalFrame {
 
         jLabel20.setText("Tình trạng xử lý:");
 
-        combobox_statistical_status.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Đã xử lý", "Đang xử lý" }));
+        combobox_statistical_status.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Đang xử lý"  ,"Đã xử lý"}));
 
         jLabel21.setText("Tổng bồi thường:");
 
@@ -680,14 +863,24 @@ public class statistical extends javax.swing.JInternalFrame {
                 {null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Mã xử lý", "Hình thức xử lý", "Số tiền", "Ngày xử lý"
             }
         ));
         jScrollPane4.setViewportView(table_statistical_handle_violations);
 
         button_statistical_export_excel_handle_violations.setText("Export Excel");
+        button_statistical_export_excel_handle_violations.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_statistical_export_excel_handle_violationsActionPerformed(evt);
+            }
+        });
 
         button_close_statistical_handle_violations.setText("Đóng");
+        button_close_statistical_handle_violations.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_close_statistical_handle_violationsActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -771,6 +964,73 @@ public class statistical extends javax.swing.JInternalFrame {
     private void button_close_statistical_memberActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_close_statistical_memberActionPerformed
         setVisible(false);
     }//GEN-LAST:event_button_close_statistical_memberActionPerformed
+    private void button_close_statistical_handle_violationsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_close_statistical_handle_violationsActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_button_close_statistical_handle_violationsActionPerformed
+
+    private void button_statistical_export_excel_handle_violationsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_statistical_export_excel_handle_violationsActionPerformed
+        // TODO add your handling code here:
+        // Khởi tạo JFileChooser
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("Chọn nơi lưu tệp");
+        
+        // Tạo bộ lọc để chỉ hiển thị các tệp Excel
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("Excel Files", "xlsx");
+        fileChooser.setFileFilter(filter);
+        
+        // Hiển thị hộp thoại chọn tệp và lấy đường dẫn của thư mục lưu
+        int userSelection = fileChooser.showSaveDialog(this);
+        if (userSelection == JFileChooser.APPROVE_OPTION) {
+            File fileToSave = fileChooser.getSelectedFile();
+            String filePath = fileToSave.getAbsolutePath();
+            
+            // Kiểm tra phần mở rộng của tệp
+            if (!filePath.toLowerCase().endsWith(".xlsx")) {
+                filePath += ".xlsx"; // Nếu không có phần mở rộng, tự động thêm phần mở rộng .xlsx
+            }
+            
+            // Lấy dữ liệu từ BLL
+            ArrayList<handle_violations_DTO> violations = bll.getViolationStatistics(1); // Thay 1 bằng trạng thái mong muốn
+            
+            // Xuất dữ liệu vào tệp Excel
+            boolean exportSuccess = exportDataToExcel(filePath, violations);
+            
+            // Hiển thị thông báo kết quả cho người dùng
+            if (exportSuccess) {
+                JOptionPane.showMessageDialog(this, "Xuất dữ liệu thành công.", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(this, "Xuất dữ liệu không thành công.", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }//GEN-LAST:event_button_statistical_export_excel_handle_violationsActionPerformed
+
+    private void button_export_excel_statistical_memberActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_export_excel_statistical_memberActionPerformed
+        JFileChooser file_chooser = new JFileChooser();
+        file_chooser.setDialogTitle("Chọn nơi lưu tệp");
+        
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("Excel Files", "xlsx");
+        file_chooser.setFileFilter(filter);
+        
+        int user_selection = file_chooser.showSaveDialog(this);
+        if (user_selection == JFileChooser.APPROVE_OPTION) {
+            File file_to_save = file_chooser.getSelectedFile();
+            String file_path = file_to_save.getAbsolutePath();
+            
+            if (!file_path.toLowerCase().endsWith(".xlsx")) {
+                file_path += ".xlsx"; 
+            }
+            
+            ArrayList<usage_information> income_member = (ArrayList<usage_information>) information_BLL.export_excel();
+            
+            boolean export_success = export_excel_member(file_path, income_member);
+            
+            if (export_success) {
+                JOptionPane.showMessageDialog(this, "Xuất dữ liệu thành công.", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(this, "Xuất dữ liệu không thành công.", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }//GEN-LAST:event_button_export_excel_statistical_memberActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -786,6 +1046,7 @@ public class statistical extends javax.swing.JInternalFrame {
     private javax.swing.JButton button_statistical_export_excel_handle_violations;
     private javax.swing.JButton button_statistical_member;
     private javax.swing.JComboBox<String> combobox_statistical_batch;
+    private javax.swing.JComboBox<String> combobox_statistical_department;
     private javax.swing.JComboBox<String> combobox_statistical_device_name;
     private javax.swing.JComboBox<String> combobox_statistical_status;
     private com.toedter.calendar.JDateChooser date_statistical_from_available_device;
@@ -795,6 +1056,7 @@ public class statistical extends javax.swing.JInternalFrame {
     private com.toedter.calendar.JDateChooser date_statistical_to_device;
     private com.toedter.calendar.JDateChooser date_statistical_to_income;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;

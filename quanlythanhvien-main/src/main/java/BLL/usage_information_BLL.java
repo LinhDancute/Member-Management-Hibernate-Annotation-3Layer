@@ -6,7 +6,14 @@ package BLL;
 
 import BLL.DTO.usage_information;
 import DAL.usage_information_DAL;
+
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.logging.Logger;
 
 /**
  *
@@ -49,5 +56,18 @@ public class usage_information_BLL {
                 return;
             }
         }
+    }
+
+    public List<usage_information> export_excel() {
+        return data.export_excel();
+    }
+
+    public List<usage_information> filter_by_date(Date start_date, Date end_date) {
+        Instant start_instant = start_date.toInstant();
+        Instant end_instant = end_date.toInstant();
+        LocalDateTime start_date_time = LocalDateTime.ofInstant(start_instant, ZoneId.systemDefault());
+        LocalDateTime end_date_time = LocalDateTime.ofInstant(end_instant, ZoneId.systemDefault());
+
+        return data.fetch_between_dates(start_date_time, end_date_time);
     }
 }

@@ -24,6 +24,25 @@ public class member_DAL {
     static final SessionFactory FACTORY = hibernate_util.getSessionFactory();
     
     //LẤY DỮ LIỆU
+    public List<member> getAllMembers() {
+        try (Session session = hibernate_util.getSessionFactory().openSession()) {
+            return session.createQuery("from member", member.class).list();
+        }
+    }
+    
+    public member getMemberByName(String memberName) {
+        try (Session session = hibernate_util.getSessionFactory().openSession()) {
+            Query<member> query = session.createQuery("from member where HoTen = :name", member.class);
+            query.setParameter("name", memberName);
+            List<member> members = query.list();
+            if (!members.isEmpty()) {
+                return members.get(0);
+            } else {
+                return null;
+            }
+        }
+    }
+    
     public List<member> load_member() {
         Transaction transaction = null;
         List<member> mem_list = null;
@@ -124,7 +143,6 @@ public class member_DAL {
         List<String> departments = new ArrayList<>();
         try (Session session = FACTORY.openSession()) {
             transaction = session.beginTransaction();
-            
             Query<String> query = session.createQuery(
                 "SELECT DISTINCT m.Khoa FROM member m WHERE substring(cast(m.MaTV as string), 3, 2) = :batch",
                 String.class
@@ -138,8 +156,10 @@ public class member_DAL {
             }
             e.printStackTrace();
         }
+        departments.removeAll(Collections.singleton(null));
         return departments;
     }
+
     
     //LẤY NGÀNH CÓ TRONG KHOA
     public List<String> get_majors_by_department(String major, String batch) {
@@ -203,12 +223,9 @@ public class member_DAL {
             query.setParameter("department", department);
             query.setParameter("major", major);
             query.setParameter("batch", batch);
-
-            int rowsAffected = query.executeUpdate();
-
+            int rowsDeleted = query.executeUpdate();
+            System.out.println("Rows deleted: " + rowsDeleted);
             transaction.commit();
-
-            System.out.println(rowsAffected + " member(s) deleted successfully.");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -251,10 +268,8 @@ public class member_DAL {
 
             if (member != null) {
                 String memberName = member.getHoTen();
-                System.out.println("Retrieved member name: " + memberName); // Add logging
                 return memberName;
             } else {
-                System.out.println("Member with ID " + member_id + " not found."); // Add logging
                 return null;
             }
         } catch (Exception e) {

@@ -13,6 +13,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Vector;
 import java.util.logging.Level;
@@ -129,6 +130,7 @@ public class income_member_management extends javax.swing.JInternalFrame {
             Object[] data = new Object[] {
                 usage.getMaTT(),
                 usage.getThanhvien().MaTV,
+                usage.getThanhvien().HoTen,
                 usage.getTGVao()
             };
             result.add(data);
@@ -158,6 +160,7 @@ public class income_member_management extends javax.swing.JInternalFrame {
         header.add("STT");
         header.add("Mã thông tin");
         header.add("Mã thành viên");
+        header.add("Tên thành viên");
         header.add("Thời gian vào");
 
         model = new DefaultTableModel(header, 0); 
@@ -173,6 +176,7 @@ public class income_member_management extends javax.swing.JInternalFrame {
             data.add(usage[0]);
             data.add(usage[1]);
             data.add(usage[2]);
+            data.add(usage[3]);
             model.addRow(data); 
         }
     }
@@ -336,6 +340,11 @@ public class income_member_management extends javax.swing.JInternalFrame {
         jLabel8.setText("Đến:");
 
         button_find_date_income.setText("Lọc");
+        button_find_date_income.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_find_date_incomeActionPerformed(evt);
+            }
+        });
 
         jLabel2.setText("Nhập thông tin:");
 
@@ -520,6 +529,23 @@ public class income_member_management extends javax.swing.JInternalFrame {
     private void button_close_incomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_close_incomeActionPerformed
         setVisible(false);
     }//GEN-LAST:event_button_close_incomeActionPerformed
+
+    private void button_find_date_incomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_find_date_incomeActionPerformed
+        try {
+            Date start_date = date_from_income.getDate();
+            Date end_date = date_to_income.getDate();
+
+            List<usage_information> filtered_income_member = information_BLL.filter_by_date(start_date, end_date);
+            clear_all();
+            
+            model.setRowCount(0);
+            List<Object[]> usage_information_array_list = convert_usage_information_to_arraylist(filtered_income_member);
+            insert_header();
+            out_model(model, usage_information_array_list);
+        } catch (Exception ex) {
+            Logger.getLogger(income_member_management.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_button_find_date_incomeActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

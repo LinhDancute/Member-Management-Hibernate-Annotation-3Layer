@@ -25,7 +25,7 @@ public class device {
 
     @Id
     @Column(name = "MaTB")
-    public int MaTB;
+    public String MaTB;
     
     @Column(name = "TenTB")
     public String TenTB;
@@ -36,12 +36,44 @@ public class device {
     @OneToMany(mappedBy = "thietbi")
     private Set<usage_information> thongtinsd;
     
-    public device(int MaTB, String TenTB, String MotaTB) {
+    public device(String MaTB, String TenTB, String MotaTB) {
         this.MaTB = MaTB;
         this.TenTB = TenTB;
         this.MotaTB = MotaTB;
     }
 
     public device() {
+    }
+
+    public String getMaTB() {
+        return MaTB;
+    }
+
+    public void setMaTB(String maTB) {
+        MaTB = maTB;
+    }
+
+    public String getTenTB() {
+        return TenTB;
+    }
+
+    public void setTenTB(String tenTB) {
+        TenTB = tenTB;
+    }
+
+    public String getMotaTB() {
+        return MotaTB;
+    }
+
+    public void setMotaTB(String motaTB) {
+        MotaTB = motaTB;
+    }
+
+    public Set<usage_information> getThongtinsd() {
+        return thongtinsd;
+    }
+
+    public void setThongtinsd(Set<usage_information> thongtinsd) {
+        this.thongtinsd = thongtinsd;
     }
 }

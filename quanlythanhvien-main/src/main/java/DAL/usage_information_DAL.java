@@ -6,11 +6,17 @@ package DAL;
 
 import BLL.DTO.usage_information;
 import DAL.UTILS.hibernate_util;
+
+import java.time.Instant;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.List;
+
+import jakarta.persistence.TemporalType;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 
 /**
  *
@@ -63,5 +69,43 @@ public class usage_information_DAL {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public List<usage_information> export_excel() {
+        try (Session session = FACTORY.openSession()) {
+            Transaction transaction = session.beginTransaction();
+            List<usage_information> income_member = session.createQuery("FROM usage_information", usage_information.class).list();
+            transaction.commit();
+            return income_member;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public List<usage_information> fetch_between_dates(LocalDateTime startDateTime, LocalDateTime endDateTime) {
+        Transaction transaction = null;
+        List<usage_information> result = null;
+
+        try (Session session = FACTORY.openSession()) {
+            transaction = session.beginTransaction();
+
+            Query<usage_information> query = session.createQuery(
+                    "FROM usage_information WHERE TGVao BETWEEN :start AND :end",
+                    usage_information.class
+            );
+            query.setParameter("start", startDateTime);
+            query.setParameter("end", endDateTime);
+
+            result = query.getResultList();
+
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        }
+        return result;
     }
 }

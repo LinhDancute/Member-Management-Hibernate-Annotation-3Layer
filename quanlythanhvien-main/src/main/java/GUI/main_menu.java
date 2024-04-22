@@ -165,12 +165,16 @@ public class main_menu extends javax.swing.JFrame {
     }//GEN-LAST:event_item_handle_violationsActionPerformed
 
     private void item_statisticalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_item_statisticalActionPerformed
-        DesktopShow.removeAll();
-        DesktopShow.repaint();
-        
-        statistical statistical = new statistical();
-        DesktopShow.add(statistical);
-        statistical.setVisible(true);
+        try {
+            DesktopShow.removeAll();
+            DesktopShow.repaint();
+            
+            statistical statistical = new statistical();
+            DesktopShow.add(statistical);
+            statistical.setVisible(true);
+        } catch (Exception ex) {
+            Logger.getLogger(main_menu.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_item_statisticalActionPerformed
 
     private void item_income_member_managementActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_item_income_member_managementActionPerformed
