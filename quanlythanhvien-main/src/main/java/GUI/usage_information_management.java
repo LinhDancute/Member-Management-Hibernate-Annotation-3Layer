@@ -7,12 +7,27 @@ package GUI;
 import BLL.DTO.device;
 import BLL.DTO.member;
 import BLL.DTO.usage_information;
+import BLL.member_BLL;
 import BLL.usage_information_BLL;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import java.io.File;
+import java.io.FileInputStream;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Vector;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import java.util.Iterator;
+import org.apache.poi.ss.usermodel.CellType;
+import org.apache.poi.ss.usermodel.CellValue;
+import org.apache.poi.ss.usermodel.FormulaEvaluator;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
 
 /**
  *
@@ -25,12 +40,15 @@ public class usage_information_management extends javax.swing.JInternalFrame {
      */
     private DefaultTableModel model;
     private usage_information_BLL usageInformationBll;
+    private member_BLL memberBll;
 
     public usage_information_management() {
         initComponents();
         try {
             usageInformationBll = new usage_information_BLL();
+            memberBll = new member_BLL();
             show_database();
+            updateDeviceCombobox();
         } catch (Exception exception){
             exception.printStackTrace();
         }
@@ -54,8 +72,8 @@ public class usage_information_management extends javax.swing.JInternalFrame {
     private void insert_header() {
         Vector header = new Vector();
         header.add("Mã thông tin");
-        header.add("Tên thành viên");
-        header.add("Tên thiết bị");
+        header.add("Mã thành viên");
+        header.add("Mã thiết bị");
         header.add("Thời gian vào");
         header.add("Thời gian mượn");
         header.add("Thời gian trả");
@@ -70,11 +88,11 @@ public class usage_information_management extends javax.swing.JInternalFrame {
         for (usage_information usage : usage_information){
             data = new Vector();
             data.add(usage.getMaTT());
-            data.add(usage.getThanhvien().HoTen);
+            data.add(usage.getThanhvien().MaTV);
             if (usage.getThietbi() == null){
                 data.add("");
             }else
-                data.add(usage.getThietbi().TenTB);
+                data.add(usage.getThietbi().MaTB);
             data.add(usage.getTGVao());
             data.add(usage.getTGMuon());
             data.add(usage.getTGTra());
@@ -119,17 +137,17 @@ public class usage_information_management extends javax.swing.JInternalFrame {
         jLabel28 = new javax.swing.JLabel();
         text_service_id_listen = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        textThoiGianVao = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jDateChooser1 = new com.toedter.calendar.JDateChooser();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
+        textThoiGianMuon = new javax.swing.JTextField();
+        textThoiGianTra = new javax.swing.JTextField();
         text_member_name = new javax.swing.JTextField();
         jPanel19 = new javax.swing.JPanel();
         button_add_usage_information = new javax.swing.JButton();
-        button_update_service1 = new javax.swing.JButton();
+        button_TraThietBi = new javax.swing.JButton();
         button_import_excel_service1 = new javax.swing.JButton();
         button_refresh_service1 = new javax.swing.JButton();
         button_close_service = new javax.swing.JButton();
@@ -196,6 +214,11 @@ public class usage_information_management extends javax.swing.JInternalFrame {
                 "Mã thông tin", "Tên thành viên", "Tên thiết bị", "Thời gian vào", "Thời gian mượn", "Thời gian trả", "Thời gian đặt chỗ"
             }
         ));
+        table_usage_information.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                table_MouseClicked(evt);
+            }
+        });
         jScrollPane3.setViewportView(table_usage_information);
 
         jPanel18.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -234,7 +257,7 @@ public class usage_information_management extends javax.swing.JInternalFrame {
 
         jLabel1.setText("Thời gian vào:");
 
-        jTextField1.setEnabled(false);
+        textThoiGianVao.setEnabled(false);
 
         jLabel2.setText("Thời gian đặt chỗ:");
 
@@ -242,9 +265,9 @@ public class usage_information_management extends javax.swing.JInternalFrame {
 
         jLabel4.setText("Thời gian trả:");
 
-        jTextField2.setEnabled(false);
+        textThoiGianMuon.setEnabled(false);
 
-        jTextField3.setEnabled(false);
+        textThoiGianTra.setEnabled(false);
 
         text_member_name.setEnabled(false);
         text_member_name.addActionListener(new java.awt.event.ActionListener() {
@@ -290,11 +313,11 @@ public class usage_information_management extends javax.swing.JInternalFrame {
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel18Layout.createSequentialGroup()
                                 .addComponent(jLabel3)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(textThoiGianMuon, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel18Layout.createSequentialGroup()
                                 .addComponent(jLabel1)
                                 .addGap(18, 18, 18)
-                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(textThoiGianVao, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2)
@@ -302,7 +325,7 @@ public class usage_information_management extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel18Layout.createSequentialGroup()
-                                .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(textThoiGianTra, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 0, Short.MAX_VALUE))
                             .addComponent(jDateChooser1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap())
@@ -330,31 +353,51 @@ public class usage_information_management extends javax.swing.JInternalFrame {
                 .addGroup(jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel1)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(textThoiGianVao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel2))
                     .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel3)
-                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(textThoiGianMuon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel4)
-                        .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(textThoiGianTra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
         jPanel19.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         button_add_usage_information.setText("Mượn thiết bị");
+        button_add_usage_information.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_add_usage_informationActionPerformed(evt);
+            }
+        });
 
-        button_update_service1.setText("Trả thiết bị");
+        button_TraThietBi.setText("Trả thiết bị");
+        button_TraThietBi.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_TraThietBi(evt);
+            }
+        });
 
         button_import_excel_service1.setText("Import excel");
 
         button_refresh_service1.setText("Làm mới");
+        button_refresh_service1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_refresh_service1(evt);
+            }
+        });
 
         button_close_service.setText("Đóng");
+        button_close_service.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                setVisible(false);
+            }
+        });
 
         javax.swing.GroupLayout jPanel19Layout = new javax.swing.GroupLayout(jPanel19);
         jPanel19.setLayout(jPanel19Layout);
@@ -365,7 +408,7 @@ public class usage_information_management extends javax.swing.JInternalFrame {
                 .addGroup(jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(button_add_usage_information, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(button_import_excel_service1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(button_update_service1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(button_TraThietBi, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(button_refresh_service1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(button_close_service, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -378,7 +421,7 @@ public class usage_information_management extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(button_add_usage_information)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(button_update_service1)
+                .addComponent(button_TraThietBi)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(button_refresh_service1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -480,6 +523,153 @@ public class usage_information_management extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_text_member_id_listenActionPerformed
 
+    private void updateDeviceCombobox(){
+        if (usageInformationBll != null){
+            usageInformationBll.update_device_combobox(combobox_service_name);
+        }else {
+            System.out.println("BLL is null!");
+        }
+    }
+
+    private void table_MouseClicked(java.awt.event.MouseEvent evt) {
+        int selectedRow = table_usage_information.getSelectedRow();
+        if (selectedRow != -1) {
+            if (table_usage_information.getRowSorter() != null){
+                selectedRow = table_usage_information.getRowSorter().convertRowIndexToModel(selectedRow);
+            }
+        }
+
+        //check value get from selected row
+        System.out.println("Row selected: ");
+        for (int column = 0; column < table_usage_information.getColumnCount(); column++) {
+            Object value = table_usage_information.getValueAt(selectedRow, column);
+            if (value != null){
+                System.out.println(value.toString() + " ");
+            }else{
+                System.out.println("null");
+            }
+        }
+        System.out.println();
+
+        text_service_id1.setText(table_usage_information.getValueAt(selectedRow, 0).toString());
+        text_member_id_listen.setText(table_usage_information.getValueAt(selectedRow, 1).toString());
+        int memberID = Integer.parseInt(table_usage_information.getValueAt(selectedRow, 1).toString());
+        try {
+            String memberName = memberBll.getMemberNameById(memberID);
+            text_member_name.setText(memberName.toString());
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+        if (table_usage_information.getValueAt(selectedRow, 2) != ""){
+            text_service_id_listen.setText(table_usage_information.getValueAt(selectedRow, 2).toString());
+            int deviceId = Integer.parseInt(table_usage_information.getValueAt(selectedRow, 2).toString());
+            String deviceName = usageInformationBll.getDeviceNameById(deviceId);
+            combobox_service_name.setSelectedItem(deviceName.toString());
+        }else {
+            text_service_id_listen.setText("");
+        }
+
+        if (table_usage_information.getValueAt(selectedRow, 3) != null){
+            textThoiGianVao.setText(table_usage_information.getValueAt(selectedRow, 3).toString());
+        }else {
+            textThoiGianVao.setText("");
+        }
+
+        if (table_usage_information.getValueAt(selectedRow, 4) != null){
+            textThoiGianMuon.setText(table_usage_information.getValueAt(selectedRow, 4).toString());
+        }else {
+            textThoiGianMuon.setText("");
+        }
+
+        if (table_usage_information.getValueAt(selectedRow,5) != null){
+            textThoiGianTra.setText(table_usage_information.getValueAt(selectedRow, 5).toString());
+        }else {
+            textThoiGianTra.setText("");
+        }
+    }
+
+    private void refresh_database() throws Exception{
+        try {
+            ArrayList<usage_information> usageInformationArrayList = usageInformationBll.load_usage_information_list();
+            usageInformationBll.setUsage_information_list(usageInformationArrayList);
+            insert_header();
+            out_model(model, usage_information_BLL.get_usage_information_list());
+        }catch (Exception exception){
+            JOptionPane.showMessageDialog(this, "Không thể load dữ liệu ",
+                    "Thông Báo Lỗi", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private void button_TraThietBi(java.awt.event.ActionEvent evt) {
+        usage_information obj       =   new usage_information();
+        Date currentTime            =   new Date();
+        SimpleDateFormat dateFormat =   new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String MaTT                 =   text_service_id1.getText();
+        String TimeReturn           =   dateFormat.format(currentTime);
+
+        obj.setMaTT(Integer.parseInt(MaTT));
+
+        try {
+            obj.setTGTra(dateFormat.parse(TimeReturn));
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+
+        try {
+            usage_information_BLL usageBLL = new usage_information_BLL();
+            usageBLL.update_return_device_time(obj.MaTT, obj.getTGTra());
+            JOptionPane.showMessageDialog(this, "Trả thành công",
+                    "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            textThoiGianTra.setText(TimeReturn.toString());
+            refresh_database();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Không thể trả",
+                    "Thông báo lỗi", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private void button_add_usage_informationActionPerformed(java.awt.event.ActionEvent evt) {
+        usage_information obj       =   new usage_information();
+        Date currentTime            =   new Date();
+        SimpleDateFormat dateFormat =   new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S");
+        String MaTT                 =   text_service_id1.getText();
+        String MaTB                 =   text_member_id_listen.getText();
+        String TenTB                =   combobox_service_name.getSelectedItem().toString();
+        String TimeIn               =   textThoiGianVao.getText();
+        String TimeBorrow           =   dateFormat.format(currentTime);
+        System.out.println(TimeBorrow);
+
+        device deviceObj = new device();
+        deviceObj.setTenTB(TenTB);
+
+        obj.setMaTT(Integer.parseInt(MaTT));
+        obj.setThietbi(deviceObj);
+
+        try {
+            obj.setTGVao(dateFormat.parse(TimeIn));
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+
+        try {
+            obj.setTGMuon(dateFormat.parse(TimeBorrow));
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+
+        try {
+            usage_information_BLL usageBLL = new usage_information_BLL();
+            usageBLL.update_usage_information(obj.MaTT, obj.getThietbi().TenTB, obj.getTGMuon());
+            JOptionPane.showMessageDialog(this, "Mượn thành công",
+                    "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            refresh_database();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Không thể mượn",
+                    "Thông báo lỗi", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
     private void combobox_service_nameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_combobox_service_nameActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_combobox_service_nameActionPerformed
@@ -492,6 +682,20 @@ public class usage_information_management extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_text_member_nameActionPerformed
 
+    private void button_refresh_service1(java.awt.event.ActionEvent evt) {
+        text_service_id1.setText("");
+        text_member_name.setText("");
+        text_service_id_listen.setText("");
+        text_member_id_listen.setText("");
+        text_service_id_listen.setText("");
+        textThoiGianVao.setText("");
+        textThoiGianMuon.setText("");
+        textThoiGianTra.setText("");
+    }
+
+    private void button_import_excel_usage_information_ActionPerformed(java.awt.event.ActionEvent evt) {
+
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton button_add_usage_information;
@@ -499,7 +703,7 @@ public class usage_information_management extends javax.swing.JInternalFrame {
     private javax.swing.JButton button_find_date_income;
     private javax.swing.JButton button_import_excel_service1;
     private javax.swing.JButton button_refresh_service1;
-    private javax.swing.JButton button_update_service1;
+    private javax.swing.JButton button_TraThietBi;
     private javax.swing.JComboBox<String> combobox_service_name;
     private com.toedter.calendar.JDateChooser date_from_income;
     private com.toedter.calendar.JDateChooser date_to_income;
@@ -524,9 +728,9 @@ public class usage_information_management extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel19;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
+    private javax.swing.JTextField textThoiGianVao;
+    private javax.swing.JTextField textThoiGianMuon;
+    private javax.swing.JTextField textThoiGianTra;
     private javax.swing.JTable table_usage_information;
     private javax.swing.JTextField text_find_usage_information;
     private javax.swing.JTextField text_member_id_listen;

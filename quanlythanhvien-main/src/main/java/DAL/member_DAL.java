@@ -75,4 +75,20 @@ public class member_DAL {
             e.printStackTrace();
         }
     }
+
+    public member getMemberById(int member_id) throws Exception {
+        Transaction transaction = null;
+        try (Session session = FACTORY.openSession()) {
+            transaction = session.beginTransaction();
+            member memberObj = session.get(member.class, member_id);
+            transaction.commit();
+            return memberObj;
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+            return null;
+        }
+    }
 }

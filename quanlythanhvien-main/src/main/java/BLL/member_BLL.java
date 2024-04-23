@@ -75,6 +75,16 @@ public class member_BLL {
         }
     }
 
+    public String getMemberNameById(int memberID) throws Exception {
+        member memberObj = data.getMemberById(memberID);
+
+        if (memberObj != null) {
+            return memberObj.getHoTen();
+        }else
+            return null;
+    }
+
+
     public void import_excel(File selectedFile) throws IOException {
 //            // Load Excel file
 //            FileInputStream inputStream = new FileInputStream(selectedFile);

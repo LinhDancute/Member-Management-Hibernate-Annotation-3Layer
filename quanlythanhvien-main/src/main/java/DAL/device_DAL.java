@@ -1,7 +1,6 @@
 package DAL;
 
 import BLL.DTO.device;
-import BLL.DTO.usage_information;
 import DAL.UTILS.hibernate_util;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -10,32 +9,32 @@ import org.hibernate.query.Query;
 
 import java.util.List;
 
-public class usage_information_DAL {
-    public static final SessionFactory FACTORY = hibernate_util.getSessionFactory();
+public class device_DAL {
+    static final SessionFactory FACTORY = hibernate_util.getSessionFactory();
 
-    public List<usage_information> load_usage_information() {
+    public List<device> load_device() {
         Transaction transaction = null;
-        List<usage_information> usage_information_list = null;
+        List<device> device_list = null;
         try (Session session = FACTORY.openSession()){
             transaction = session.beginTransaction();
-            usage_information_list = session.createQuery("FROM usage_information").list();
+            device_list = session.createQuery("FROM device").list();
             transaction.commit();
-        } catch (Exception e) {
+        }catch (Exception e){
             transaction.rollback();
             e.printStackTrace();
         }
-        return usage_information_list;
+        return device_list;
     }
 
-    public usage_information getUsageInformationById(int serviceId) {
+    public device getDeviceByName(String deviceName) {
         Transaction transaction = null;
         try (Session session = FACTORY.openSession()){
             transaction = session.beginTransaction();
-            Query query = session.createQuery("FROM usage_information WHERE MaTT = :serviceId");
-            query.setParameter("serviceId", serviceId);
-            usage_information usageInfo = (usage_information) query.uniqueResult();
+            Query query = session.createQuery("FROM device WHERE TenTB = :deviceName");
+            query.setParameter("deviceName", deviceName);
+            device deviceObj = (device) query.uniqueResult();
             transaction.commit();
-            return usageInfo;
+            return deviceObj;
         } catch (Exception e) {
             if (transaction != null) {
                 transaction.rollback();
@@ -45,19 +44,33 @@ public class usage_information_DAL {
         }
     }
 
-    public boolean updateUsageInformation(usage_information usageInfoToUpdate) throws Exception {
+    public device getDeviceById(int deviceId) {
         Transaction transaction = null;
         try (Session session = FACTORY.openSession()){
             transaction = session.beginTransaction();
-            session.merge(usageInfoToUpdate); // Update the usage information
+            device deviceObj = session.get(device.class, deviceId);
             transaction.commit();
-            return true; // Return true to indicate successful update
+            return deviceObj;
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public void saveDevice(device deviceObj) {
+        Transaction transaction = null;
+        try (Session session = FACTORY.openSession()){
+            transaction = session.beginTransaction();
+            session.save(deviceObj); // Save the device object
+            transaction.commit();
         } catch (Exception e) {
             if (transaction != null) {
                 transaction.rollback(); // Rollback transaction if an exception occurs
             }
             e.printStackTrace();
-            return false; // Return false to indicate update failure
         }
     }
 }
