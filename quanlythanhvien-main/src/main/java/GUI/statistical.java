@@ -94,9 +94,10 @@ public class statistical extends javax.swing.JInternalFrame {
             cb.addItem(value); 
         }
     }
+
     
     //EXPORT EXCEL (INCOME MEMBER)
-    private boolean export_excel_member(String file_path, ArrayList<usage_information> usage_information) {
+    private boolean export_excel_member(String file_path, List<usage_information> usage_information) {
         try {
             XSSFWorkbook workbook = new XSSFWorkbook();
             XSSFSheet sheet = workbook.createSheet("Dữ liệu");
@@ -160,13 +161,13 @@ public class statistical extends javax.swing.JInternalFrame {
     }
 
     //HIỂN THỊ DỮ LIỆU LÊN TABLE SAU KHI LỌC NGÀY
-    private void statistical_member(Date start_date, Date end_date, String batch, String department) {
+    private List<usage_information> statistical_member(Date start_date, Date end_date, String batch, String department) {
         List<usage_information> filtered_income_member = information_BLL.statistical_income_member(start_date, end_date, batch, department);
-        clear_all_member();
         model.setRowCount(0);
         List<Object[]> usage_information_array_list = convert_usage_information_to_arraylist(filtered_income_member);
         insert_header_member();
         out_model_member(model, usage_information_array_list);
+        return filtered_income_member;
     }
 
 
@@ -1043,30 +1044,66 @@ public class statistical extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_button_statistical_export_excel_handle_violationsActionPerformed
 
     private void button_export_excel_statistical_memberActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_export_excel_statistical_memberActionPerformed
-        JFileChooser file_chooser = new JFileChooser();
-        file_chooser.setDialogTitle("Chọn nơi lưu tệp");
-        
-        FileNameExtensionFilter filter = new FileNameExtensionFilter("Excel Files", "xlsx");
-        file_chooser.setFileFilter(filter);
-        
-        int user_selection = file_chooser.showSaveDialog(this);
-        if (user_selection == JFileChooser.APPROVE_OPTION) {
-            File file_to_save = file_chooser.getSelectedFile();
-            String file_path = file_to_save.getAbsolutePath();
-            
-            if (!file_path.toLowerCase().endsWith(".xlsx")) {
-                file_path += ".xlsx"; 
+        try {
+            String file_path = "";
+            JFileChooser file_chooser = new JFileChooser();
+            file_chooser.setDialogTitle("Chọn nơi lưu tệp");
+            FileNameExtensionFilter filter = new FileNameExtensionFilter("Excel Files", "xlsx");
+            file_chooser.setFileFilter(filter);
+            int user_selection = file_chooser.showSaveDialog(this);
+            if (user_selection == JFileChooser.APPROVE_OPTION) {
+                File file_to_save = file_chooser.getSelectedFile();
+                file_path = file_to_save.getAbsolutePath();
+
+                File existing_file = new File(file_path);
+                if (existing_file.exists()) {
+                    int response = JOptionPane.showConfirmDialog(this, "Tệp đã tồn tại. Bạn có muốn ghi đè lên tệp hiện có không?", "Xác nhận ghi đè", JOptionPane.YES_NO_OPTION);
+                    if (response != JOptionPane.YES_OPTION) {
+                        return;
+                    }
+                }
+
+                if (!file_path.toLowerCase().endsWith(".xlsx")) {
+                    file_path += ".xlsx";
+                }
+
+                Date start_date = date_statistical_from_income.getDate();
+                Date end_date = date_statistical_to_income.getDate();
+                String batch = combobox_statistical_batch.getSelectedItem().toString();
+                String department = combobox_statistical_department.getSelectedItem() != null ? combobox_statistical_department.getSelectedItem().toString() : null;
+
+                List<usage_information> filtered_data;
+
+                if (start_date == null && end_date == null && department == null) {
+                    ArrayList<usage_information> income_member = (ArrayList<usage_information>) information_BLL.export_excel();
+                    boolean export_success = export_excel_member(file_path, income_member);
+                    if (export_success) {
+                        JOptionPane.showMessageDialog(this, "Xuất dữ liệu thành công.", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+                    } else {
+                        JOptionPane.showMessageDialog(this, "Xuất dữ liệu không thành công.", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                    }
+                    return;
+                } else if (start_date != null && end_date != null && start_date.before(end_date)) {
+                    LocalDate startDate = start_date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                    LocalDate endDate = end_date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                    filtered_data = statistical_member(Date.from(startDate.atStartOfDay(ZoneId.systemDefault()).toInstant()),
+                            Date.from(endDate.atStartOfDay(ZoneId.systemDefault()).toInstant()),
+                            batch, department);
+                } else {
+                    JOptionPane.showMessageDialog(this, "Ngày bắt đầu phải trước ngày kết thúc.", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+
+                boolean export_success = export_excel_member(file_path, filtered_data);
+
+                if (export_success) {
+                    JOptionPane.showMessageDialog(this, "Xuất dữ liệu thành công.", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(this, "Xuất dữ liệu không thành công.", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                }
             }
-            
-            ArrayList<usage_information> income_member = (ArrayList<usage_information>) information_BLL.export_excel();
-            
-            boolean export_success = export_excel_member(file_path, income_member);
-            
-            if (export_success) {
-                JOptionPane.showMessageDialog(this, "Xuất dữ liệu thành công.", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
-            } else {
-                JOptionPane.showMessageDialog(this, "Xuất dữ liệu không thành công.", "Lỗi", JOptionPane.ERROR_MESSAGE);
-            }
+        } catch (Exception ex) {
+            Logger.getLogger(income_member_management.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_button_export_excel_statistical_memberActionPerformed
 

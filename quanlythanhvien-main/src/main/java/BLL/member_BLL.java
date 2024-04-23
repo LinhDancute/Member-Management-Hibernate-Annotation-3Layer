@@ -83,7 +83,7 @@ public class member_BLL {
         if (list_member == null) {
             list_member = new ArrayList<member>();
         }
-        data.add_member(m);// gọi Layer DAL hàm đọc data từ CSDL
+        data.add_member(m);
     }
 
     //XÓA
@@ -92,7 +92,7 @@ public class member_BLL {
             if (m.getMaTV()== member_id) {
                 try {
                     data.delete_member(member_id);
-                    list_member.remove(m);// xoá trong arraylist
+                    list_member.remove(m);
                 } catch (Exception e) {
                     System.out.println("Không thể xóa thành viên khỏi CSDL");
                 }
@@ -132,6 +132,7 @@ public class member_BLL {
         }
     }
 
+    //KIỂM TRA THÀNH VIÊN TỒN TẠI
     public boolean is_member_existed(int member_id) {
         try {
             return data.is_member_existed(member_id);

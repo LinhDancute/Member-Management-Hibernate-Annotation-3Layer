@@ -99,7 +99,7 @@ public class member_management extends javax.swing.JInternalFrame {
         }
     }
     
-    //HIỂN THỊ DỮ LIỆU batch lên COMBOBOX
+    //HIỂN THỊ DỮ LIỆU KHÓA lên COMBOBOX
     public void load_batch(JComboBox cb) throws Exception {
         refresh_database();
         if (mem_BLL.get_list_member()== null) {
@@ -635,24 +635,30 @@ public class member_management extends javax.swing.JInternalFrame {
 
     private void button_add_memberActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_add_memberActionPerformed
         int member_id = Integer.parseInt(text_member_id.getText());
-        String member_name = text_member_name.getText();
-        String department = combobox_department.getSelectedItem().toString();
-        String major = combobox_major.getSelectedItem().toString();
-        String phone_number = text_phone_number.getText();
-        String email = member_id + "@sv.sgu.edu.vn";
-        String password = String.valueOf(member_id);
+        String memberIdString = String.valueOf(member_id);
 
-        try {
-            member member = new member(member_id, member_name, department, major, phone_number, password, email);
-            mem_BLL.add_member(member);
-            JOptionPane.showMessageDialog(this, "Thêm mới thành viên thành công",
-                    "Thông báo", JOptionPane.INFORMATION_MESSAGE);
-            clear_all();
-            refresh_database();
-            
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, "Không thể thêm mới thành viên",
-                    "Thông báo lỗi", JOptionPane.ERROR_MESSAGE);
+        if (memberIdString.length() > 11) {
+            JOptionPane.showMessageDialog(this, "Mã thành viên phải đúng 11 ký tự.", "Lỗi", JOptionPane.ERROR_MESSAGE);
+        } else {
+            String member_name = text_member_name.getText();
+            String department = combobox_department.getSelectedItem().toString();
+            String major = combobox_major.getSelectedItem().toString();
+            String phone_number = text_phone_number.getText();
+            String email = member_id + "@sv.sgu.edu.vn";
+            String password = String.valueOf(member_id);
+
+            try {
+                member member = new member(member_id, member_name, department, major, phone_number, password, email);
+                mem_BLL.add_member(member);
+                JOptionPane.showMessageDialog(this, "Thêm mới thành viên thành công",
+                        "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+                clear_all();
+                refresh_database();
+
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this, "Không thể thêm mới thành viên",
+                        "Thông báo lỗi", JOptionPane.ERROR_MESSAGE);
+            }
         }
     }//GEN-LAST:event_button_add_memberActionPerformed
 
@@ -878,7 +884,7 @@ public class member_management extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_button_import_excel_memberActionPerformed
 
-    
+    //BUTTON XÓA NHIỀU
     private void button_delete_all_memberActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_delete_all_memberActionPerformed
         int confirm = JOptionPane.showConfirmDialog(null, "Bạn chắc chắn muốn xóa?",
                 "Thông báo", JOptionPane.YES_NO_OPTION);
@@ -901,6 +907,8 @@ public class member_management extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(this, "Không thể xoá những thành viên này",
                     "Thông báo lỗi", JOptionPane.ERROR_MESSAGE);
         } else
+            JOptionPane.showMessageDialog(this, "Đã hủy bỏ xóa nhiều.",
+                    "Thông báo", JOptionPane.INFORMATION_MESSAGE);
             return;
     }//GEN-LAST:event_button_delete_all_memberActionPerformed
 

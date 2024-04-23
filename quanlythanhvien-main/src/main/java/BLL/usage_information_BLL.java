@@ -8,6 +8,7 @@ import BLL.DTO.usage_information;
 import DAL.usage_information_DAL;
 
 import java.time.Instant;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
@@ -63,19 +64,19 @@ public class usage_information_BLL {
     }
 
     public List<usage_information> filter_by_date(Date start_date, Date end_date) {
-        Instant start_instant = start_date.toInstant();
-        Instant end_instant = end_date.toInstant();
-        LocalDateTime start_date_time = LocalDateTime.ofInstant(start_instant, ZoneId.systemDefault());
-        LocalDateTime end_date_time = LocalDateTime.ofInstant(end_instant, ZoneId.systemDefault());
+        LocalDate startLocalDate = start_date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        LocalDate endLocalDate = end_date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        LocalDateTime start_date_time = startLocalDate.atStartOfDay();
+        LocalDateTime end_date_time = endLocalDate.atTime(23, 59, 59, 999999999);
 
         return data.fetch_between_dates(start_date_time, end_date_time);
     }
 
-    public List<usage_information> statistical_income_member(Date start_date, Date end_date,String batch, String department) {
-        Instant start_instant = start_date.toInstant();
-        Instant end_instant = end_date.toInstant();
-        LocalDateTime start_date_time = LocalDateTime.ofInstant(start_instant, ZoneId.systemDefault());
-        LocalDateTime end_date_time = LocalDateTime.ofInstant(end_instant, ZoneId.systemDefault());
+    public List<usage_information> statistical_income_member(Date start_date, Date end_date, String batch, String department) {
+        LocalDate startLocalDate = start_date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        LocalDate endLocalDate = end_date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        LocalDateTime start_date_time = startLocalDate.atStartOfDay();
+        LocalDateTime end_date_time = endLocalDate.atTime(23, 59, 59, 999999999);
 
         return data.statistical_income_member(start_date_time, end_date_time, batch, department);
     }

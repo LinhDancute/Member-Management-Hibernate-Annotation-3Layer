@@ -203,7 +203,6 @@ public class income_member_management extends javax.swing.JInternalFrame {
         text_member_name_listen = new javax.swing.JTextField();
         jPanel3 = new javax.swing.JPanel();
         button_add_income = new javax.swing.JButton();
-        button_delete_income = new javax.swing.JButton();
         button_refresh_income = new javax.swing.JButton();
         button_close_income = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
@@ -274,7 +273,7 @@ public class income_member_management extends javax.swing.JInternalFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(text_usage_information_id, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(27, 27, 27)
+                .addGap(19, 19, 19)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(text_member_id, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -287,13 +286,6 @@ public class income_member_management extends javax.swing.JInternalFrame {
         button_add_income.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 button_add_incomeActionPerformed(evt);
-            }
-        });
-
-        button_delete_income.setText("Xóa");
-        button_delete_income.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                button_delete_incomeActionPerformed(evt);
             }
         });
 
@@ -322,9 +314,6 @@ public class income_member_management extends javax.swing.JInternalFrame {
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(button_add_income))
                     .addComponent(button_refresh_income, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(button_delete_income, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(button_close_income, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -333,13 +322,11 @@ public class income_member_management extends javax.swing.JInternalFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(button_add_income)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(button_delete_income)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(button_refresh_income)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(button_close_income)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(8, Short.MAX_VALUE))
         );
 
         jLabel7.setText("Từ:");
@@ -508,31 +495,6 @@ public class income_member_management extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_button_add_incomeActionPerformed
 
-    private void button_delete_incomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_delete_incomeActionPerformed
-        int confirm = JOptionPane.showConfirmDialog(null, "Bạn chắc chắn muốn xóa thông tin vào này?",
-                "Thông báo", JOptionPane.YES_NO_OPTION);
-        if (confirm == 0)
-        try {
-            int usage_information_id = Integer.parseInt(text_usage_information_id.getText());
-
-            information_BLL.load_usage_information();
-            information_BLL.delete_income_member_information(usage_information_id);
-            JOptionPane.showMessageDialog(this, "Xóa thành công",
-                "Thông báo", JOptionPane.INFORMATION_MESSAGE);
-
-            List<Object[]> usage_information_array_list = convert_usage_information_to_arraylist(information_BLL.load_usage_information());
-
-            insert_header();
-            out_model(model, usage_information_array_list);
-            clear_all();
-
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, "Không thể xoá thông tin này",
-                    "Thông báo lỗi", JOptionPane.ERROR_MESSAGE);
-        } else
-            return;
-    }//GEN-LAST:event_button_delete_incomeActionPerformed
-
     private void button_close_incomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_close_incomeActionPerformed
         setVisible(false);
     }//GEN-LAST:event_button_close_incomeActionPerformed
@@ -560,7 +522,6 @@ public class income_member_management extends javax.swing.JInternalFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton button_add_income;
     private javax.swing.JButton button_close_income;
-    private javax.swing.JButton button_delete_income;
     private javax.swing.JButton button_find_date_income;
     private javax.swing.JButton button_refresh_income;
     private com.toedter.calendar.JDateChooser date_from_income;
